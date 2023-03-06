@@ -141,3 +141,33 @@
     background-color: #0d72ea;
     color: white;
 }
+
+#footer {
+    background-color: var(--first-color);
+    padding: 80px 0;
+}
+.social-media-icon {
+    width: 50px;
+    height: 50px;
+    padding: 12px;
+    background-color: #222326;
+    margin: 0 7px;
+}
+.social-media-icon > img {
+    width: 100%;
+    background-color: white;
+}
+.social-media-icon > img:hover {
+    background-color: #919496;
+    cursor: pointer;
+}
+.footer-li > li {
+    padding: 10px 0;
+    font-size: 17px;
+}
+.footer-li > li > a:hover {
+    color: #919496 !important;
+}
+.footer-li > li:first-child {
+    color: #919496;
+}
