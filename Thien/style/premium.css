@@ -16,6 +16,71 @@
     text-decoration: none;
 }
 
+/* The side navigation menu */
+#opacityForSideNav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    right: 0;
+    background-color: var(--first-color); /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+#sidenav-wrapper {
+    padding-left: 32px;
+    height: 100%;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#sidenav-wrapper > .img {
+    width: 100px;
+}
+.sidenav a {
+    padding: 8px 0;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
+    display: block;
+    transition: 0.3s;
+}
+.separator {
+    height: 2px;
+    width: 20px;
+    background: white;
+    margin: 18px 0 40px;
+}
+
+.sidenav a:hover {
+    color: #1ed760;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* End The side navigation menu */
 
 #navbar {
     background-color: var(--first-color);
@@ -40,6 +105,10 @@
 #nav span:hover {
     cursor: pointer;
     color: #49c487;
+}
+#menu-bar {
+    color: white;
+    font-size: 20px;
 }
 
 #freeMonth {
@@ -170,4 +239,15 @@
 }
 .footer-li > li:first-child {
     color: #919496;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media only screen and (max-width: 768px) {
+    #nav > .img {
+        width: 120px;
+    }
+}
+@media only screen and (max-width: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
 }
