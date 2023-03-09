@@ -154,6 +154,7 @@ svg#icon-user {
 
 .sidePanel {
   min-width: fit-content;
+  min-height: 700px;
 
   @media (max-width: 768px) {
     display: none;
