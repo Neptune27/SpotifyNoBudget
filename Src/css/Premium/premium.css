@@ -161,7 +161,7 @@
 .payment {
     background-color: white;
     width: 400px;
-    height: 520px;
+    height: 562px;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
@@ -170,7 +170,7 @@
     -moz-box-shadow: -1px 1px 16px 2px rgba(0,0,0,0.37);
 }
 .payment-category {
-    height: 169px;
+    height: 190px;
     border-bottom: 1px solid black;
     margin-bottom: 25px;
 }
