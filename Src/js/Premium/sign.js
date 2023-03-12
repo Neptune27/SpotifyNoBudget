@@ -1,23 +1,15 @@
-var sign = document.getElementsByName("sign")
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+const validate = (event) => {
+    'use strict'
+    event.preventDefault()
+    console.log(event)
 
-function check(){
-    for (const key of sign) {
-        if (key.value=="") {
-            alert("Bạn cần điển dầy đủ thông tin")   
-                return false 
-        }
-        
+    if (!event.target.checkValidity()) {
+        event.stopPropagation()
     }
-    let a;
-    for(let i =4; i<7;i++)
-        if(sign[i].checked==false){
-              
-            a=1
-        }
-if(a==1)
-{alert("Bạn cần điển dầy đủ thông tin") 
-return false}
-    return true
+
+
+    event.target.classList.add('was-validated')
 }
 
 
