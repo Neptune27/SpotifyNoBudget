@@ -21,8 +21,8 @@
             <h1 class="custom-h1">Introducing Premium Mini</h1>
             <p class="font-size-22">30 song downloads and unlimited ad-free music listening, on 1 mobile device.</p>
             <div style="padding: 36px 0;">
-                <button class="btn btn-light custom-btn">GET 1 DAY FOR 2,300<sup><u>đ</u></sup></button>
-                <button class="btn btn-light custom-btn">GET 1 WEEK FOR 8,800<sup><u>đ</u></sup></button>
+                <button class="btn btn-light mt-2 custom-btn">GET 1 DAY FOR 2,300<sup><u>đ</u></sup></button>
+                <button class="btn btn-light mt-2 custom-btn">GET 1 WEEK FOR 8,800<sup><u>đ</u></sup></button>
             </div>
             <p class="font-size-12"><a href="#" class="text-white">Terms and conditions apply.</a></p>
         </div>
