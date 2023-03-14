@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  php:
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - ../:/var/www/html/
+    ports:
+      - 80:80
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
+
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: gg
+    ports:
+      - 3306:3306
