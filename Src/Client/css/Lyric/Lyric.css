@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&family=Roboto:wght@700&display=swap");
+:root {
+  --lyric-transistion-time: 300ms;
+}
+
+body {
+  background: black;
+}
+
+.lyricMain {
+  font-family: "Roboto", sans-serif, "Noto Sans JP", sans-serif;
+  overflow-y: scroll;
+  transition: all var(--lyric-transistion-time) ease-in-out;
+  font-size: 2rem;
+  --lyricActivateColor: rgba(255, 255, 255, 0.79);
+  color: gray;
+}
+.lyricMain::-webkit-scrollbar {
+  display: none;
+}
+.lyricMain > div[data-state=ACTIVE] {
+  color: var(--lyricActivateColor);
+  text-shadow: 0 0 7px #fff;
+  transition: all var(--lyric-transistion-time) ease-in-out;
+}
+.lyricMain > div[data-state=ACTIVATED] {
+  color: var(--lyricActivateColor);
+  transition: all var(--lyric-transistion-time) ease-in-out;
+}
+.lyricMain > div[data-state=INACTIVE] {
+  color: gray;
+  transition: all var(--lyric-transistion-time) ease-in-out;
+}
+.lyricMain > div {
+  cursor: pointer;
+}
+@media (max-width: 780px) {
+  .lyricMain > div {
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 500px) {
+  .lyricMain > div {
+    font-size: 1rem;
+  }
+}
+.lyricMain > div:hover {
+  color: white;
+  transition: all var(--lyric-transistion-time) ease-in-out;
+}
+
+.lyricImg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  aspect-ratio: 1/1;
+  filter: blur(60px);
+  background-size: cover;
+  background-blend-mode: luminosity;
+  opacity: 0;
+  animation: scale-in 500ms linear forwards;
+  transform-origin: center center;
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.audioPlayerBar {
+  --audioPlayerBackground: #22242f;
+  position: fixed;
+  border-radius: 0.5rem;
+  width: 90%;
+  height: 3rem;
+  background: var(--audioPlayerBackground);
+  z-index: 4;
+  bottom: 1rem;
+}
+
+.songRange {
+  --audioSliderBackground: #4d4f57;
+  -webkit-appearance: none;
+  margin: 0 1rem;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-image: linear-gradient(to right, #75fba9 0, #75fba9 var(--pos), var(--audioSliderBackground) var(--pos));
+}
+.songRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 4px #303039 solid;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+}
+.songRange::-webkit-slider-thumb:hover {
+  border: 2px black solid;
+  transition: all 200ms ease-in-out;
+}
+
+.mediaControl {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-size: 1.25rem;
+}
+.mediaControl > * {
+  margin: 0 1rem;
+}
+.mediaControl .playBtn {
+  cursor: pointer;
+  display: block;
+}
+.mediaControl .pauseBtn {
+  cursor: pointer;
+  display: none;
+}
+.mediaControl[data-played=TRUE] .pauseBtn {
+  display: block;
+}
+.mediaControl[data-played=TRUE] .playBtn {
+  display: none;
+}
+
+/*# sourceMappingURL=Lyric.css.map */

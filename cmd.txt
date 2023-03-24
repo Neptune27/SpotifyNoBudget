@@ -1,1 +1,2 @@
-sass --watch src/scss:src/css
+sass --watch Src/Client/scss:Src/Client/css
+tsc -w
