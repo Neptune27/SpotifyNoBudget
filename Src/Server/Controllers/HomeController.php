@@ -11,19 +11,20 @@ class HomeController extends Controller
         $this->view($this->homeTemplate, []);
     }
 
-    function a()
-    {
-        $this->view($this->homeTemplate, []);
-    }
 
     function index() : void
     {
+
         header("Location: /Home/Premium");
+    }
+
+    function Support() : void {
+        $this->view($this->homeTemplate, []);
     }
 
     function SignIn()
     {
-        $this->view($this->signTemplate, []);
+        $this->view($this->homeTemplate, []);
     }
 
     function SignUp()
@@ -31,5 +32,8 @@ class HomeController extends Controller
         $this->view($this->signTemplate, []);
     }
 
+    function hello() {
+        $this->view($this->homeTemplate, []);
+    }
 
 }

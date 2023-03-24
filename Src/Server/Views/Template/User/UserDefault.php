@@ -23,6 +23,7 @@
 <body>
 <?php
 require_once __DIR__."/../_header.html";
+
 if (!isset($data["View"])) {
     $data["View"] = "";
 }

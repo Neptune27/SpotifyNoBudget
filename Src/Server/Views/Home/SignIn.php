@@ -4,11 +4,9 @@
 
 <script src="/Src/Client/js/Premium/sign.js" defer></script>
 
-
 <main class="loginContent ">
     <section class="m-auto mt-5 mb-5 bg-white rounded-4 text-dark">
         <h1 class="text-center p-4 fw-bold">Đăng nhập</h1>
-
         <form action="" onsubmit="validate(event)" id="signInForm" class="p-4 needs-validation" novalidate>
 
             <div class="mt-4 has-validation">

@@ -47,7 +47,7 @@ abstract class Controller{
             $defaultView = explode("Controller",$backtrace[1]["class"])[0];
             $data["View"] = $defaultView."/";
         }
-
+//        echo '<h1>'.$data["Page"].' '.$data["View"].' '.$template.'</h1>';
 
         require_once __DIR__."/../Views/Template/".$template.".php";
     }

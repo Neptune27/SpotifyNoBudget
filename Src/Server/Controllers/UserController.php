@@ -8,14 +8,20 @@ class UserController extends Controller
     public function Overview() {
         $this->view($this->defaultTemplate , [
             "Title" => "Overview",
-            "Banner" => "_Banner"
+            "Banner" => "_Banner",
+            "Page" => "Profile"
         ]);
     }
 
     public function Profile() {
         $this->view($this->defaultTemplate,[
-            "Title" => "Profile"
+            "Title" => "Profile",
+//            "Banner" => "_Banner"
         ]);
+    }
+
+    function a() {
+        $this->view($this->defaultTemplate, []);
     }
 
     public function ChangePassword() {

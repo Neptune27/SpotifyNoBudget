@@ -12,12 +12,11 @@
             $data["Title"] .= " - ";
         }
         echo '<title>'.$data["Title"].'Spotify</title>';
-        echo '<link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css">';
-        echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">';
-        echo '<link rel="stylesheet" href="/Src/Client/css/Premium/premium.css" >';
-        echo '<script src="/Src/Client/js/Premium/script.js" defer></script>';
     ?>
-
+    <link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="/Src/Client/css/Premium/premium.css" >
+    <script src="/Src/Client/js/Premium/script.js" defer></script>
 </head>
 <body>
     <?php
