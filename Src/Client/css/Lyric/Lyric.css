@@ -1,4 +1,85 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&family=Roboto:wght@700&display=swap");
+.homeIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f015";
+}
+
+.editIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f303";
+}
+
+.lockIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f023";
+}
+
+.bellIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f0f3";
+}
+
+.cardIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f09d";
+}
+
+.reloadIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f2f9";
+}
+
+.clockRotateLeftIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f1da";
+}
+
+.puzzlePieceIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f12e";
+}
+
+.giftIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f06b";
+}
+
 :root {
   --lyric-transistion-time: 300ms;
 }
@@ -74,7 +155,7 @@ body {
   }
 }
 .audioPlayerBar {
-  --audioPlayerBackground: #22242f;
+  --audioPlayerBackground: rgba(34, 36, 47, 0.4);
   position: fixed;
   border-radius: 0.5rem;
   width: 90%;
@@ -108,6 +189,31 @@ body {
   transition: all 200ms ease-in-out;
 }
 
+.repeatIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  padding-right: 0;
+  font: var(--fa-font-solid);
+  content: "\f363";
+  transition: color 300ms ease-in-out;
+}
+
+.volumeIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  padding-right: 0;
+  font: var(--fa-font-solid);
+  content: "\f6a8";
+}
+
+.shuffle:before {
+  transition: color 300ms ease-in-out;
+}
+
 .mediaControl {
   display: flex;
   justify-content: center;
@@ -116,7 +222,10 @@ body {
   font-size: 1.25rem;
 }
 .mediaControl > * {
-  margin: 0 1rem;
+  margin: 0 0.75rem;
+}
+.mediaControl > i {
+  cursor: pointer;
 }
 .mediaControl .playBtn {
   cursor: pointer;
@@ -131,6 +240,45 @@ body {
 }
 .mediaControl[data-played=TRUE] .playBtn {
   display: none;
+}
+.mediaControl[data-shuffle=TRUE] .shuffle:before {
+  color: #4CAF50;
+  transition: color 300ms ease-in-out;
+}
+.mediaControl[data-repeat=ONE] .repeatIcon:before {
+  color: #4CAF50;
+  content: "\f365";
+  transition: color 300ms ease-in-out;
+}
+.mediaControl[data-repeat=ALL] .repeatIcon:before {
+  color: #4CAF50;
+  transition: color 300ms ease-in-out;
+}
+
+.songRangeContainer {
+  display: flex;
+  color: white;
+}
+
+.volumeQueueArea {
+  z-index: 1;
+  min-width: 25%;
+  max-width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.volumeQueueArea[data-muted=TRUE] .volumeIcon:before {
+  content: "\f2e2";
+}
+.volumeQueueArea .songRange {
+  background-image: linear-gradient(to right, #75fba9 0, #75fba9 var(--audioPos), var(--audioSliderBackground) var(--audioPos));
+}
+
+.img100 {
+  height: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 10%;
 }
 
 /*# sourceMappingURL=Lyric.css.map */

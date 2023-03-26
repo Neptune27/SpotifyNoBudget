@@ -39,14 +39,14 @@ let lyrics = [
 ]
 const testMusics: IMusic[] = [{
     artist: "A",
-    imageUrl: "/Src/Client/img/AkumaNoKo.jpg",
+    imageUrl: "/Src/Client/img/Album/AkumaNoKo.jpg",
     songUrl: "/Src/Client/mp3/AkumaNoKo.mp3",
     lyric: lyrics,
     songName: "Akuma No Ko"
 }, {
     artist: "Yoasobi",
     songName: "Romance",
-    imageUrl: "/Src/Client/img/Romance.jpg",
+    imageUrl: "/Src/Client/img/Album/Romance.jpg",
     songUrl: "/Src/Client/mp3/Romance.mp3",
     lyric: [
         [3, "Happening so suddenly, there it was"],
@@ -93,115 +93,115 @@ const testMusics: IMusic[] = [{
 }, {
     artist: "Bo Burnham",
     songName: "Welcome to the Internet",
-    imageUrl: "/Src/Client/img/WCTTI.png",
+    imageUrl: "/Src/Client/img/Album/WCTTI.png",
     songUrl: "/Src/Client/mp3/Welcome to the Internet.mp3",
     lyric: [
-        [1,"Welcome to the internet"],
-        [3,"Have a look around"],
-        [5,"Anything that brain of yours can think of can be found"],
-        [8,"We've got mountains of content"],
-        [10,"Some better, some worse"],
-        [13,"If none of it's of interest to you, you'd be the first"],
-        [16,"Welcome to the internet"],
-        [18,"Come and take a seat"],
-        [20,"Would you like to see the news or any famous women's feet?"],
-        [24,"There's no need to panic"],
-        [26,"This isn't a test, haha"],
-        [28,"Just nod or shake your head and we'll do the rest"],
-        [32,"Welcome to the internet"],
-        [33,"What would you prefer?"],
-        [35,"Would you like to fight for civil rights or tweet a racial slur?"],
-        [39,"Be happy"],
-        [40,"Be horny"],
-        [41,"Be bursting with rage"],
-        [44,"We got a million different ways to engage"],
-        [47,"Welcome to the internet"],
-        [49,"Put your cares aside"],
-        [50,"Here's a tip for straining pasta"],
-        [52,"Here's a nine-year-old who died"],
-        [54.5,"We got movies, and doctors, and fantasy sports"],
-        [58,"And a bunch of colored pencil drawings"],
-        [60,"Of all the different characters in Harry Potter fucking each other"],
-        [62,"Welcome to the internet"],
-        [64,"Hold on to your socks"],
-        [65,"'Cause a random guy just kindly sent you photos of his cock"],
-        [68,"They are grainy and off-putting"],
-        [69.5,"He just sent you more"],
-        [72,"Don't act surprised, you know you like it, you whore"],
-        [74,"See a man beheaded"],
-        [75,"Get offended, see a shrink"],
-        [77,"Show us pictures of your children"],
-        [79,"Tell us every thought you think"],
-        [80,"Start a rumor, buy a broom"],
-        [81,"Or send a death threat to a boomer"],
-        [83,"Or DM a girl and groom her"],
-        [84,"Do a Zoom or find a tumor in your"],
-        [86,"Here's a healthy breakfast option"],
-        [88,"You should kill your mom"],
-        [89,"Here's why women never fuck you"],
-        [90,"Here's how you can build a bomb"],
-        [92,"Which Power Ranger are you?"],
-        [93,"Take this quirky quiz"],
-        [95,"Obama sent the immigrants to vaccinate your kids"],
-        [99,"Could I interest you in everything?"],
-        [100,"All of the time?"],
-        [102,"A little bit of everything"],
-        [104,"All of the time"],
-        [105,"Apathy's a tragedy"],
-        [106,"And boredom is a crime"],
-        [108,"Anything and everything"],
-        [110,"All of the time"],
-        [111,"Could I interest you in everything?"],
-        [112,"All of the time?"],
-        [114,"A little bit of everything"],
-        [115,"All of the time"],
-        [117,"Apathy's a tragedy"],
-        [118,"And boredom is a crime"],
-        [120,"Anything and everything"],
-        [121,"All of the time"],
-        [132,"You know, it wasn't always like this"],
-        [139,"Not very long ago"],
-        [143,"Just before your time"],
-        [147,"Right before the towers fell, circa '99"],
-        [154,"This was catalogs"],
-        [156,"Travel blogs"],
-        [158,"A chat room or two"],
-        [162,"We set our sights and spent our nights"],
-        [165,"Waiting"],
-        [168,"For you, you, insatiable you"],
-        [176,"Mommy let you use her iPad"],
-        [181,"You were barely two"],
-        [184,"And it did all the things"],
-        [187,"We designed it to do"],
-        [191,"Now look at you, oh"],
-        [196,"Look at you, you, you"],
-        [203,"Unstoppable, watchable"],
-        [207,"Your time is now"],
-        [209,"Your inside's out"],
-        [214,"Honey, how you grew"],
-        [215,"And if we stick together"],
-        [218,"Who knows what we'll do"],
-        [222,"It was always the plan"],
-        [226,"To put the world in your hand"],
-        [233,"Hahaha"],
-        [242,"Could I interest you in everything?"],
-        [245,"All of the time"],
-        [248,"A bit of everything"],
-        [250,"All of the time"],
-        [252,"Apathy's a tragedy"],
-        [255,"And boredom is a crime"],
-        [257,"Anything and everything"],
-        [260,"All of the time"],
-        [261,"Could I interest you in everything?"],
-        [263,"All of the time"],
-        [264.5,"A little bit of everything"],
-        [266,"All of the time"],
-        [267,"Apathy's a tragedy"],
-        [268,"And boredom is a crime"],
-        [270,"Anything and everything"],
-        [271,"And anything and everything"],
-        [272,"And anything and everything"],
-        [273.5,"And all of the time"]
+        [1, "Welcome to the internet"],
+        [3, "Have a look around"],
+        [5, "Anything that brain of yours can think of can be found"],
+        [8, "We've got mountains of content"],
+        [10, "Some better, some worse"],
+        [13, "If none of it's of interest to you, you'd be the first"],
+        [16, "Welcome to the internet"],
+        [18, "Come and take a seat"],
+        [20, "Would you like to see the news or any famous women's feet?"],
+        [24, "There's no need to panic"],
+        [26, "This isn't a test, haha"],
+        [28, "Just nod or shake your head and we'll do the rest"],
+        [32, "Welcome to the internet"],
+        [33, "What would you prefer?"],
+        [35, "Would you like to fight for civil rights or tweet a racial slur?"],
+        [39, "Be happy"],
+        [40, "Be horny"],
+        [41, "Be bursting with rage"],
+        [44, "We got a million different ways to engage"],
+        [47, "Welcome to the internet"],
+        [49, "Put your cares aside"],
+        [50, "Here's a tip for straining pasta"],
+        [52, "Here's a nine-year-old who died"],
+        [54.5, "We got movies, and doctors, and fantasy sports"],
+        [58, "And a bunch of colored pencil drawings"],
+        [60, "Of all the different characters in Harry Potter fucking each other"],
+        [62, "Welcome to the internet"],
+        [64, "Hold on to your socks"],
+        [65, "'Cause a random guy just kindly sent you photos of his cock"],
+        [68, "They are grainy and off-putting"],
+        [69.5, "He just sent you more"],
+        [72, "Don't act surprised, you know you like it, you whore"],
+        [74, "See a man beheaded"],
+        [75, "Get offended, see a shrink"],
+        [77, "Show us pictures of your children"],
+        [79, "Tell us every thought you think"],
+        [80, "Start a rumor, buy a broom"],
+        [81, "Or send a death threat to a boomer"],
+        [83, "Or DM a girl and groom her"],
+        [84, "Do a Zoom or find a tumor in your"],
+        [86, "Here's a healthy breakfast option"],
+        [88, "You should kill your mom"],
+        [89, "Here's why women never fuck you"],
+        [90, "Here's how you can build a bomb"],
+        [92, "Which Power Ranger are you?"],
+        [93, "Take this quirky quiz"],
+        [95, "Obama sent the immigrants to vaccinate your kids"],
+        [99, "Could I interest you in everything?"],
+        [100, "All of the time?"],
+        [102, "A little bit of everything"],
+        [104, "All of the time"],
+        [105, "Apathy's a tragedy"],
+        [106, "And boredom is a crime"],
+        [108, "Anything and everything"],
+        [110, "All of the time"],
+        [111, "Could I interest you in everything?"],
+        [112, "All of the time?"],
+        [114, "A little bit of everything"],
+        [115, "All of the time"],
+        [117, "Apathy's a tragedy"],
+        [118, "And boredom is a crime"],
+        [120, "Anything and everything"],
+        [121, "All of the time"],
+        [132, "You know, it wasn't always like this"],
+        [139, "Not very long ago"],
+        [143, "Just before your time"],
+        [147, "Right before the towers fell, circa '99"],
+        [154, "This was catalogs"],
+        [156, "Travel blogs"],
+        [158, "A chat room or two"],
+        [162, "We set our sights and spent our nights"],
+        [165, "Waiting"],
+        [168, "For you, you, insatiable you"],
+        [176, "Mommy let you use her iPad"],
+        [181, "You were barely two"],
+        [184, "And it did all the things"],
+        [187, "We designed it to do"],
+        [191, "Now look at you, oh"],
+        [196, "Look at you, you, you"],
+        [203, "Unstoppable, watchable"],
+        [207, "Your time is now"],
+        [209, "Your inside's out"],
+        [214, "Honey, how you grew"],
+        [215, "And if we stick together"],
+        [218, "Who knows what we'll do"],
+        [222, "It was always the plan"],
+        [226, "To put the world in your hand"],
+        [233, "Hahaha"],
+        [242, "Could I interest you in everything?"],
+        [245, "All of the time"],
+        [248, "A bit of everything"],
+        [250, "All of the time"],
+        [252, "Apathy's a tragedy"],
+        [255, "And boredom is a crime"],
+        [257, "Anything and everything"],
+        [260, "All of the time"],
+        [261, "Could I interest you in everything?"],
+        [263, "All of the time"],
+        [264.5, "A little bit of everything"],
+        [266, "All of the time"],
+        [267, "Apathy's a tragedy"],
+        [268, "And boredom is a crime"],
+        [270, "Anything and everything"],
+        [271, "And anything and everything"],
+        [272, "And anything and everything"],
+        [273.5, "And all of the time"]
     ]
 }]
 
@@ -212,6 +212,12 @@ const timeConverter = (timestamp: number) => {
     return `${minute}:${secondFormatted}`
 }
 
+const enum ERepeat {
+    NONE,
+    ONE,
+    ALL
+}
+
 
 class AudioPlayer {
     private audioElem: HTMLAudioElement;
@@ -220,41 +226,83 @@ class AudioPlayer {
     private lyricParentElem: HTMLElement;
     private prevLyricIntervalId: number = -1;
     private sliderUpdateIntervalId: number = -1;
+    private startEndIntervalId: number = -1;
+    private shuffleActive: boolean = false;
+    private repeatType: ERepeat = ERepeat.NONE;
+
+    private previousPlaylist: IMusic[] = []
+
+    private currentlyPlaying: IMusic = {
+        artist: "", lyric: [], songUrl: "", imageUrl: "", songName: ""
+    }
+
+    private queue: IMusic[] = []
+    private randomPlaylist: IMusic[] = []
     private currentPos: number = 0;
     private sliderElem: HTMLInputElement;
     private audioPlayerElem: HTMLElement;
     private playlist: IMusic[];
     private lyricImg: HTMLElement;
     private mediaControlElem: HTMLElement;
+    private audioPlayerBarElem: HTMLElement;
+    private coverImgElem: HTMLElement;
+    private titleElem: HTMLElement;
+    private artistElem: HTMLElement;
+    private volumeQueueAreaElem: HTMLElement;
+    private audioSliderElem: HTMLInputElement;
 
-    constructor(playlist: IMusic[], elems: {
-        audioElems: HTMLAudioElement, startElem: HTMLElement, endElem: HTMLElement, lyricParentElem: HTMLElement,
-        sliderElem: HTMLInputElement, audioPlayerElem: HTMLElement, lyricImg: HTMLElement, mediaControlElem: HTMLElement
-    }) {
 
-        const {audioElems, startElem, endElem, lyricParentElem, sliderElem, audioPlayerElem, lyricImg, mediaControlElem}
+    constructor(playlist: IMusic[], elems: { endElem: HTMLElement; audioSliderElem: HTMLInputElement; audioPlayerElem: HTMLElement; mediaControlElem: HTMLElement; lyricImg: HTMLElement; titleElem: HTMLElement; volumeQueueAreaElem: HTMLElement; artistElem: HTMLElement; coverImgElem: HTMLElement; audioElem: HTMLAudioElement; audioPlayerBarElem: HTMLElement; sliderElem: HTMLInputElement; lyricParentElem: HTMLElement; startElem: HTMLElement }) {
+
+        const {
+            audioElem,
+            startElem,
+            endElem,
+            lyricParentElem,
+            sliderElem,
+            audioPlayerElem,
+            lyricImg,
+            mediaControlElem,
+            audioPlayerBarElem,
+            coverImgElem,
+            titleElem,
+            artistElem,
+            volumeQueueAreaElem,
+            audioSliderElem
+        }
             = elems
 
         this.playlist = playlist
-        this.audioElem = audioElems
+        this.audioElem = audioElem
         this.startElem = startElem
         this.endElem = endElem
         this.lyricParentElem = lyricParentElem
         this.sliderElem = sliderElem
         this.audioPlayerElem = audioPlayerElem
+        this.audioPlayerBarElem = audioPlayerBarElem
         this.lyricImg = lyricImg;
         this.mediaControlElem = mediaControlElem
+        this.coverImgElem = coverImgElem
+        this.titleElem = titleElem
+        this.artistElem = artistElem
+        this.volumeQueueAreaElem = volumeQueueAreaElem
+        this.audioSliderElem = audioSliderElem
+
         this.updateSliderInterval()
 
-        this.setupEventListener()
-        // this.updateLyrics(playlist[0].lyric)
-        this.setupAudio(this.playlist[0])
+        this.setupButtonAndEvent()
+        this.setupQueue(playlist)
+        this.forwardAudio()
+        this.updateStartEnd()
     }
 
-    setupEventListener = () => {
+    setupButtonAndEvent = () => {
         const mCEChildren = this.mediaControlElem.children
         for (const mCEChildElement of mCEChildren) {
             switch (mCEChildElement.id) {
+                case "repeat":
+                    mCEChildElement.addEventListener("click", this.repeat)
+                    break
                 case "backward":
                     mCEChildElement.addEventListener("click", this.backwardAudio)
                     break
@@ -265,18 +313,33 @@ class AudioPlayer {
                     mCEChildElement.addEventListener("click", this.pauseAudio)
                     break;
                 case "play":
-                    mCEChildElement.addEventListener("click", this.playAudio)
+                    mCEChildElement.addEventListener("click", this.playAudioEvent)
+                    break;
+                case "shuffle":
+                    mCEChildElement.addEventListener("click", this.shuffle)
+                    break;
             }
         }
 
-        this.sliderElem.addEventListener("input", (e)=>this.sliderHandler(e as DragEvent))
-        this.sliderElem.addEventListener("mouseup", (e)=>this.sliderMouseUpHandler(e))
-        this.sliderElem.addEventListener("keyup", (e)=>this.sliderKeyUpHandler(e))
+        // for (const childElem of this.volumeQueueAreaElem.children) {
+        //     console.log(childElem)
+        // }
+
+        this.audioSliderElem.addEventListener("input", this.volumeInputSliderHandler)
+
+        this.audioPlayerBarElem.addEventListener("keyup", this.musicSliderKeyUpHandler)
+        this.sliderElem.addEventListener("input", this.musicInputSliderHandler)
+        this.sliderElem.addEventListener("mouseup", this.musicSliderMouseUpHandler)
+
+
     }
 
     updateStartEnd = () => {
-        this.startElem.innerHTML = timeConverter(this.audioElem.currentTime)
-        this.endElem.innerHTML = timeConverter(this.audioElem.duration)
+        clearInterval(this.startEndIntervalId)
+        this.startEndIntervalId = setInterval(() => {
+            this.startElem.innerHTML = timeConverter(this.audioElem.currentTime)
+            this.endElem.innerHTML = timeConverter(this.audioElem.duration)
+        }, 250)
     }
 
     updateLyrics = (lyrics: (string | number)[][]) => {
@@ -288,7 +351,7 @@ class AudioPlayer {
             `
         }
         this.lyricParentElem.innerHTML = lyrics.reduce(
-            (acc, lyric)=>acc+=`<div data-timestamp="${lyric[0]}">${lyric[1]}</div>`,"")
+            (acc, lyric) => acc += `<div data-timestamp="${lyric[0]}">${lyric[1]}</div>`, "")
 
         const elems = document.querySelectorAll("#lyricMain>div")
 
@@ -333,7 +396,7 @@ class AudioPlayer {
                 return
             }
 
-            console.log(`Current Index: ${currentIndex}`)
+            // console.log(`Current Index: ${currentIndex}`)
 
             const elemAttr = elems[currentIndex].getAttribute("data-state")
             if (elemAttr === "ACTIVATED") {
@@ -363,30 +426,49 @@ class AudioPlayer {
 
         this.prevLyricIntervalId = setInterval(() => {
             update(this.audioElem.currentTime)
-            this.updateStartEnd()
-
         }, 250);
     }
 
     updateSliderColor = () => {
-        this.sliderElem.setAttribute("style", `--pos: ${this.sliderElem.value}%`)
+        const duration = this.audioElem.duration
+        const percentage = parseInt(this.sliderElem.value)/duration *100
+        this.sliderElem.setAttribute("style", `--pos: ${percentage}%`)
     }
 
     updateSlider = () => {
-        this.sliderElem.value = String(this.audioElem.currentTime / this.audioElem.duration * 100)
+        this.sliderElem.value = String(this.audioElem.currentTime)
         this.updateSliderColor()
     }
 
     updateSliderInterval = () => {
         this.sliderUpdateIntervalId = setInterval(() => {
-            let slider = document.getElementById("songSlider") as HTMLInputElement
             this.updateSlider()
         }, 1000)
     }
 
-    sliderHandler(event: DragEvent) {
+    volumeInputSliderHandler = () => {
+        this.volumeQueueAreaElem.setAttribute("style", `--audioPos: ${this.audioSliderElem.value}%`)
+        this.audioElem.volume = parseInt(this.audioSliderElem.value)/100
+        if (this.audioElem.volume === 0) {
+            this.volumeQueueAreaElem.setAttribute("data-muted", "TRUE")
+        }
+        else {
+            this.volumeQueueAreaElem.setAttribute("data-muted", "FALSE")
+        }
+    }
+
+
+    musicInputSliderHandler = (event: Event) => {
         clearInterval(this.sliderUpdateIntervalId)
+        clearInterval(this.startEndIntervalId)
         this.updateSliderColor()
+        this.startElem.innerHTML = timeConverter(parseInt(this.sliderElem.value))
+    }
+
+    musicSliderMouseUpHandler = async () => {
+        await this.updateMusic(Number(this.sliderElem.value))
+        this.updateStartEnd()
+
     }
 
     updateMusic = async (timestamp: number) => {
@@ -400,10 +482,29 @@ class AudioPlayer {
         this.updateSliderInterval()
     }
 
-    sliderMouseUpHandler = async (event: MouseEvent) => {
-        let inputElem = event.target as HTMLInputElement
-        let currentTimestamp = this.audioElem.duration * Number(inputElem.value) / 100;
-        await this.updateMusic(currentTimestamp)
+    shuffle = () => {
+        this.shuffleActive = !this.shuffleActive;
+        if (this.shuffleActive) {
+            this.mediaControlElem.setAttribute("data-shuffle", "TRUE")
+        } else {
+            this.mediaControlElem.setAttribute("data-shuffle", "FALSE")
+        }
+    }
+
+    repeat = () => {
+        this.repeatType = (this.repeatType + 1) % 3
+        switch (this.repeatType) {
+            case ERepeat.NONE:
+                this.mediaControlElem.setAttribute("data-repeat", "NONE")
+                break;
+            case ERepeat.ONE:
+                this.mediaControlElem.setAttribute("data-repeat", "ONE")
+
+                break;
+            case ERepeat.ALL:
+                this.mediaControlElem.setAttribute("data-repeat", "ALL")
+                break;
+        }
     }
 
     pauseAudio = () => {
@@ -411,21 +512,9 @@ class AudioPlayer {
         this.audioElem.pause()
     }
 
-    playAudio = (event: Event) => {
+    playAudioEvent = (event: Event) => {
         this.audioElem.play()
         this.mediaControlElem.setAttribute("data-played", "TRUE")
-    }
-
-    backwardAudio = () => {
-        if (this.audioElem.currentTime < 10) {
-            if (this.currentPos > 0) {
-                this.currentPos--
-                this.setupAudio(this.playlist[this.currentPos])
-                this.audioElem.play()
-                return
-            }
-        }
-        this.audioElem.currentTime = 0
     }
 
     setupAudioImg = (imgUrl: string) => {
@@ -437,18 +526,21 @@ class AudioPlayer {
             <img src="${imgUrl}" alt="Background Cover" class="lyricImg">
         `
 
-        setTimeout(()=>{
-                if (t !== null) {
-                    this.lyricImg.innerHTML = t.innerHTML
-                }}, 500)
-
+        setTimeout(() => {
+            if (t !== null) {
+                this.lyricImg.innerHTML = t.innerHTML
+            }
+        }, 500)
     }
 
     setupAudio = (music: IMusic) => {
-        let {imageUrl, songUrl, lyric} = music;
-        if (lyric === undefined) {
+        let {imageUrl, songUrl, lyric, songName, artist} = music;
+
+
+        if (lyric.length === 0) {
             lyric = [[0, "No"]]
         }
+        const volume = this.audioElem.volume
         this.audioElem.remove()
         // @ts-ignore
         document.getElementById("audioSection").innerHTML += `
@@ -459,44 +551,110 @@ class AudioPlayer {
         let newAudioElem = document.getElementById("audioFile") as HTMLAudioElement
         if (newAudioElem !== null) {
             this.audioElem = newAudioElem
+            this.audioElem.volume = volume
             this.audioElem.addEventListener("ended", this.forwardAudio)
         }
         this.setupAudioImg(imageUrl)
-        // @ts-ignore
+        this.coverImgElem.setAttribute("src", imageUrl)
+        this.titleElem.innerHTML = songName
+        this.artistElem.innerHTML = artist
+
+
         this.audioElem.load()
         this.updateLyrics(lyric)
-        this.updateStartEnd()
+        this.updateSliderDuration()
     }
 
-    private forwardAudio = () => {
-        if (this.currentPos === this.playlist.length - 1) {
-            this.pauseAudio()
-            this.audioElem.currentTime = this.audioElem.duration
-        }
-        else {
-            this.currentPos++
-            this.setupAudio(this.playlist[this.currentPos])
+    private updateSliderDuration = () => {
+        let id = setInterval(()=>{
+            if (!isNaN(this.audioElem.duration)) {
+                this.sliderElem.max = String(this.audioElem.duration)
+                clearInterval(id)
+            }
+        }, 100)
+    }
+
+    private setupQueue = (playlist: IMusic[]) => {
+        this.queue = [...playlist]
+    }
+
+    private playAudio = () => {
+        if (this.mediaControlElem.getAttribute("data-played") === "TRUE") {
             this.audioElem.play()
         }
     }
 
-    private sliderKeyUpHandler = (e: KeyboardEvent) => {
+    private backwardAudio = () => {
+        const repeatType = this.mediaControlElem.getAttribute("data-repeat")
+        console.log(repeatType)
+        if (this.audioElem.currentTime < 10) {
+            if (repeatType === "ONE") {
+                this.audioElem.currentTime = 0
+            }
+            else {
+                const prev = this.previousPlaylist.pop()
+                if (prev === undefined) {
+                    this.audioElem.currentTime = 0
+                }
+                else {
+                    this.queue.splice(0, 0, this.currentlyPlaying);
+                    this.currentlyPlaying = prev
+                    this.setupAudio(this.currentlyPlaying)
+                }
+            }
+        }
+        this.audioElem.currentTime = 0
+        this.playAudio()
+    }
+
+    private forwardAudio = () => {
+        const isAtEnd = this.queue.length === 0
+        const repeatType = this.mediaControlElem.getAttribute("data-repeat")
+
+        if (isAtEnd && (repeatType === null || repeatType === "NONE")) {
+            this.pauseAudio()
+            this.audioElem.currentTime = this.audioElem.duration
+            return;
+        }
+        if (this.currentlyPlaying.songName !== "")
+            this.previousPlaylist.push(this.currentlyPlaying)
+
+        if (repeatType === "ONE") {
+            this.queue.splice(0, 0, this.currentlyPlaying);
+        }
+        const current = this.queue.shift()
+
+        // This should not be happened
+        if (current === undefined) {
+            alert("Sth wrong")
+            return;
+        }
 
 
+        this.currentlyPlaying = current
+        console.log(this.queue)
+
+        if (repeatType === "ALL") {
+            this.queue.push(current);
+        }
+
+        this.setupAudio(this.currentlyPlaying)
+        this.playAudio()
+
+    }
+
+    private musicSliderKeyUpHandler = (e: KeyboardEvent) => {
         const duration = 10
         if (e.key === "ArrowRight") {
             if (this.audioElem.currentTime < this.audioElem.duration - duration) {
                 this.audioElem.currentTime += duration
-            }
-            else {
+            } else {
                 this.forwardAudio()
             }
-        }
-        else if (e.key === "ArrowLeft") {
+        } else if (e.key === "ArrowLeft") {
             if (this.audioElem.currentTime > duration) {
                 this.audioElem.currentTime -= duration
-            }
-            else {
+            } else {
                 this.audioElem.currentTime = 0
             }
         }
@@ -506,11 +664,17 @@ class AudioPlayer {
 
 const audioPlayer = new AudioPlayer(testMusics, {
     audioPlayerElem: document.getElementById("audioPlayer") as HTMLElement,
-    audioElems: document.getElementById("audioFile") as HTMLAudioElement,
+    audioPlayerBarElem: document.getElementById("audioPlayerBar") as HTMLElement,
+    audioElem: document.getElementById("audioFile") as HTMLAudioElement,
     startElem: document.getElementById("timeStart") as HTMLElement,
     endElem: document.getElementById("timeEnd") as HTMLElement,
     lyricParentElem: document.getElementById("lyricMain") as HTMLElement,
     lyricImg: document.getElementById("lyricImg") as HTMLElement,
     mediaControlElem: document.getElementById("mediaControl") as HTMLElement,
     sliderElem: document.getElementById("songSlider") as HTMLInputElement,
+    coverImgElem: document.getElementById("mediaCoverImg") as HTMLElement,
+    titleElem: document.getElementById("mediaTitle") as HTMLElement,
+    artistElem: document.getElementById("mediaArtist") as HTMLElement,
+    volumeQueueAreaElem: document.getElementById("volumeQueueArea") as HTMLElement,
+    audioSliderElem: document.getElementById("audioSlider") as HTMLInputElement
 })

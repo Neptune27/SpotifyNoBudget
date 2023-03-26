@@ -39,14 +39,14 @@ let lyrics = [
 ];
 const testMusics = [{
         artist: "A",
-        imageUrl: "/Src/Client/img/AkumaNoKo.jpg",
+        imageUrl: "/Src/Client/img/Album/AkumaNoKo.jpg",
         songUrl: "/Src/Client/mp3/AkumaNoKo.mp3",
         lyric: lyrics,
         songName: "Akuma No Ko"
     }, {
         artist: "Yoasobi",
         songName: "Romance",
-        imageUrl: "/Src/Client/img/Romance.jpg",
+        imageUrl: "/Src/Client/img/Album/Romance.jpg",
         songUrl: "/Src/Client/mp3/Romance.mp3",
         lyric: [
             [3, "Happening so suddenly, there it was"],
@@ -93,7 +93,7 @@ const testMusics = [{
     }, {
         artist: "Bo Burnham",
         songName: "Welcome to the Internet",
-        imageUrl: "/Src/Client/img/WCTTI.png",
+        imageUrl: "/Src/Client/img/Album/WCTTI.png",
         songUrl: "/Src/Client/mp3/Welcome to the Internet.mp3",
         lyric: [
             [1, "Welcome to the internet"],
@@ -214,11 +214,23 @@ class AudioPlayer {
     constructor(playlist, elems) {
         this.prevLyricIntervalId = -1;
         this.sliderUpdateIntervalId = -1;
+        this.startEndIntervalId = -1;
+        this.shuffleActive = false;
+        this.repeatType = 0 /* ERepeat.NONE */;
+        this.previousPlaylist = [];
+        this.currentlyPlaying = {
+            artist: "", lyric: [], songUrl: "", imageUrl: "", songName: ""
+        };
+        this.queue = [];
+        this.randomPlaylist = [];
         this.currentPos = 0;
-        this.setupEventListener = () => {
+        this.setupButtonAndEvent = () => {
             const mCEChildren = this.mediaControlElem.children;
             for (const mCEChildElement of mCEChildren) {
                 switch (mCEChildElement.id) {
+                    case "repeat":
+                        mCEChildElement.addEventListener("click", this.repeat);
+                        break;
                     case "backward":
                         mCEChildElement.addEventListener("click", this.backwardAudio);
                         break;
@@ -229,16 +241,27 @@ class AudioPlayer {
                         mCEChildElement.addEventListener("click", this.pauseAudio);
                         break;
                     case "play":
-                        mCEChildElement.addEventListener("click", this.playAudio);
+                        mCEChildElement.addEventListener("click", this.playAudioEvent);
+                        break;
+                    case "shuffle":
+                        mCEChildElement.addEventListener("click", this.shuffle);
+                        break;
                 }
             }
-            this.sliderElem.addEventListener("input", (e) => this.sliderHandler(e));
-            this.sliderElem.addEventListener("mouseup", (e) => this.sliderMouseUpHandler(e));
-            this.sliderElem.addEventListener("keyup", (e) => this.sliderKeyUpHandler(e));
+            // for (const childElem of this.volumeQueueAreaElem.children) {
+            //     console.log(childElem)
+            // }
+            this.audioSliderElem.addEventListener("input", this.volumeInputSliderHandler);
+            this.audioPlayerBarElem.addEventListener("keyup", this.musicSliderKeyUpHandler);
+            this.sliderElem.addEventListener("input", this.musicInputSliderHandler);
+            this.sliderElem.addEventListener("mouseup", this.musicSliderMouseUpHandler);
         };
         this.updateStartEnd = () => {
-            this.startElem.innerHTML = timeConverter(this.audioElem.currentTime);
-            this.endElem.innerHTML = timeConverter(this.audioElem.duration);
+            clearInterval(this.startEndIntervalId);
+            this.startEndIntervalId = setInterval(() => {
+                this.startElem.innerHTML = timeConverter(this.audioElem.currentTime);
+                this.endElem.innerHTML = timeConverter(this.audioElem.duration);
+            }, 250);
         };
         this.updateLyrics = (lyrics) => {
             clearInterval(this.prevLyricIntervalId);
@@ -285,7 +308,7 @@ class AudioPlayer {
                 if (currentIndex < 0) {
                     return;
                 }
-                console.log(`Current Index: ${currentIndex}`);
+                // console.log(`Current Index: ${currentIndex}`)
                 const elemAttr = elems[currentIndex].getAttribute("data-state");
                 if (elemAttr === "ACTIVATED") {
                     reset(timestamp);
@@ -310,21 +333,41 @@ class AudioPlayer {
             };
             this.prevLyricIntervalId = setInterval(() => {
                 update(this.audioElem.currentTime);
-                this.updateStartEnd();
             }, 250);
         };
         this.updateSliderColor = () => {
-            this.sliderElem.setAttribute("style", `--pos: ${this.sliderElem.value}%`);
+            const duration = this.audioElem.duration;
+            const percentage = parseInt(this.sliderElem.value) / duration * 100;
+            this.sliderElem.setAttribute("style", `--pos: ${percentage}%`);
         };
         this.updateSlider = () => {
-            this.sliderElem.value = String(this.audioElem.currentTime / this.audioElem.duration * 100);
+            this.sliderElem.value = String(this.audioElem.currentTime);
             this.updateSliderColor();
         };
         this.updateSliderInterval = () => {
             this.sliderUpdateIntervalId = setInterval(() => {
-                let slider = document.getElementById("songSlider");
                 this.updateSlider();
             }, 1000);
+        };
+        this.volumeInputSliderHandler = () => {
+            this.volumeQueueAreaElem.setAttribute("style", `--audioPos: ${this.audioSliderElem.value}%`);
+            this.audioElem.volume = parseInt(this.audioSliderElem.value) / 100;
+            if (this.audioElem.volume === 0) {
+                this.volumeQueueAreaElem.setAttribute("data-muted", "TRUE");
+            }
+            else {
+                this.volumeQueueAreaElem.setAttribute("data-muted", "FALSE");
+            }
+        };
+        this.musicInputSliderHandler = (event) => {
+            clearInterval(this.sliderUpdateIntervalId);
+            clearInterval(this.startEndIntervalId);
+            this.updateSliderColor();
+            this.startElem.innerHTML = timeConverter(parseInt(this.sliderElem.value));
+        };
+        this.musicSliderMouseUpHandler = async () => {
+            await this.updateMusic(Number(this.sliderElem.value));
+            this.updateStartEnd();
         };
         this.updateMusic = async (timestamp) => {
             clearInterval(this.sliderUpdateIntervalId);
@@ -334,29 +377,36 @@ class AudioPlayer {
             document.getElementById("mediaControl")?.setAttribute("data-played", "TRUE");
             this.updateSliderInterval();
         };
-        this.sliderMouseUpHandler = async (event) => {
-            let inputElem = event.target;
-            let currentTimestamp = this.audioElem.duration * Number(inputElem.value) / 100;
-            await this.updateMusic(currentTimestamp);
+        this.shuffle = () => {
+            this.shuffleActive = !this.shuffleActive;
+            if (this.shuffleActive) {
+                this.mediaControlElem.setAttribute("data-shuffle", "TRUE");
+            }
+            else {
+                this.mediaControlElem.setAttribute("data-shuffle", "FALSE");
+            }
+        };
+        this.repeat = () => {
+            this.repeatType = (this.repeatType + 1) % 3;
+            switch (this.repeatType) {
+                case 0 /* ERepeat.NONE */:
+                    this.mediaControlElem.setAttribute("data-repeat", "NONE");
+                    break;
+                case 1 /* ERepeat.ONE */:
+                    this.mediaControlElem.setAttribute("data-repeat", "ONE");
+                    break;
+                case 2 /* ERepeat.ALL */:
+                    this.mediaControlElem.setAttribute("data-repeat", "ALL");
+                    break;
+            }
         };
         this.pauseAudio = () => {
             this.mediaControlElem.setAttribute("data-played", "FALSE");
             this.audioElem.pause();
         };
-        this.playAudio = (event) => {
+        this.playAudioEvent = (event) => {
             this.audioElem.play();
             this.mediaControlElem.setAttribute("data-played", "TRUE");
-        };
-        this.backwardAudio = () => {
-            if (this.audioElem.currentTime < 10) {
-                if (this.currentPos > 0) {
-                    this.currentPos--;
-                    this.setupAudio(this.playlist[this.currentPos]);
-                    this.audioElem.play();
-                    return;
-                }
-            }
-            this.audioElem.currentTime = 0;
         };
         this.setupAudioImg = (imgUrl) => {
             let t = document.getElementById("transitionImg");
@@ -373,10 +423,11 @@ class AudioPlayer {
             }, 500);
         };
         this.setupAudio = (music) => {
-            let { imageUrl, songUrl, lyric } = music;
-            if (lyric === undefined) {
+            let { imageUrl, songUrl, lyric, songName, artist } = music;
+            if (lyric.length === 0) {
                 lyric = [[0, "No"]];
             }
+            const volume = this.audioElem.volume;
             this.audioElem.remove();
             // @ts-ignore
             document.getElementById("audioSection").innerHTML += `
@@ -387,26 +438,83 @@ class AudioPlayer {
             let newAudioElem = document.getElementById("audioFile");
             if (newAudioElem !== null) {
                 this.audioElem = newAudioElem;
+                this.audioElem.volume = volume;
                 this.audioElem.addEventListener("ended", this.forwardAudio);
             }
             this.setupAudioImg(imageUrl);
-            // @ts-ignore
+            this.coverImgElem.setAttribute("src", imageUrl);
+            this.titleElem.innerHTML = songName;
+            this.artistElem.innerHTML = artist;
             this.audioElem.load();
             this.updateLyrics(lyric);
-            this.updateStartEnd();
+            this.updateSliderDuration();
         };
-        this.forwardAudio = () => {
-            if (this.currentPos === this.playlist.length - 1) {
-                this.pauseAudio();
-                this.audioElem.currentTime = this.audioElem.duration;
-            }
-            else {
-                this.currentPos++;
-                this.setupAudio(this.playlist[this.currentPos]);
+        this.updateSliderDuration = () => {
+            let id = setInterval(() => {
+                if (!isNaN(this.audioElem.duration)) {
+                    this.sliderElem.max = String(this.audioElem.duration);
+                    clearInterval(id);
+                }
+            }, 100);
+        };
+        this.setupQueue = (playlist) => {
+            this.queue = [...playlist];
+        };
+        this.playAudio = () => {
+            if (this.mediaControlElem.getAttribute("data-played") === "TRUE") {
                 this.audioElem.play();
             }
         };
-        this.sliderKeyUpHandler = (e) => {
+        this.backwardAudio = () => {
+            const repeatType = this.mediaControlElem.getAttribute("data-repeat");
+            console.log(repeatType);
+            if (this.audioElem.currentTime < 10) {
+                if (repeatType === "ONE") {
+                    this.audioElem.currentTime = 0;
+                }
+                else {
+                    const prev = this.previousPlaylist.pop();
+                    if (prev === undefined) {
+                        this.audioElem.currentTime = 0;
+                    }
+                    else {
+                        this.queue.splice(0, 0, this.currentlyPlaying);
+                        this.currentlyPlaying = prev;
+                        this.setupAudio(this.currentlyPlaying);
+                    }
+                }
+            }
+            this.audioElem.currentTime = 0;
+            this.playAudio();
+        };
+        this.forwardAudio = () => {
+            const isAtEnd = this.queue.length === 0;
+            const repeatType = this.mediaControlElem.getAttribute("data-repeat");
+            if (isAtEnd && (repeatType === null || repeatType === "NONE")) {
+                this.pauseAudio();
+                this.audioElem.currentTime = this.audioElem.duration;
+                return;
+            }
+            if (this.currentlyPlaying.songName !== "")
+                this.previousPlaylist.push(this.currentlyPlaying);
+            if (repeatType === "ONE") {
+                this.queue.splice(0, 0, this.currentlyPlaying);
+            }
+            const current = this.queue.shift();
+            // This should not be happened
+            if (current === undefined) {
+                alert("Sth wrong");
+                return;
+            }
+            this.currentlyPlaying = current;
+            console.log(this.queue);
+            if (repeatType === "ALL") {
+                this.queue.push(current);
+            }
+            this.setupAudio(this.currentlyPlaying);
+            this.playAudio();
+        };
+        this.musicSliderKeyUpHandler = (e) => {
             const duration = 10;
             if (e.key === "ArrowRight") {
                 if (this.audioElem.currentTime < this.audioElem.duration - duration) {
@@ -425,34 +533,43 @@ class AudioPlayer {
                 }
             }
         };
-        const { audioElems, startElem, endElem, lyricParentElem, sliderElem, audioPlayerElem, lyricImg, mediaControlElem } = elems;
+        const { audioElem, startElem, endElem, lyricParentElem, sliderElem, audioPlayerElem, lyricImg, mediaControlElem, audioPlayerBarElem, coverImgElem, titleElem, artistElem, volumeQueueAreaElem, audioSliderElem } = elems;
         this.playlist = playlist;
-        this.audioElem = audioElems;
+        this.audioElem = audioElem;
         this.startElem = startElem;
         this.endElem = endElem;
         this.lyricParentElem = lyricParentElem;
         this.sliderElem = sliderElem;
         this.audioPlayerElem = audioPlayerElem;
+        this.audioPlayerBarElem = audioPlayerBarElem;
         this.lyricImg = lyricImg;
         this.mediaControlElem = mediaControlElem;
+        this.coverImgElem = coverImgElem;
+        this.titleElem = titleElem;
+        this.artistElem = artistElem;
+        this.volumeQueueAreaElem = volumeQueueAreaElem;
+        this.audioSliderElem = audioSliderElem;
         this.updateSliderInterval();
-        this.setupEventListener();
-        // this.updateLyrics(playlist[0].lyric)
-        this.setupAudio(this.playlist[0]);
-    }
-    sliderHandler(event) {
-        clearInterval(this.sliderUpdateIntervalId);
-        this.updateSliderColor();
+        this.setupButtonAndEvent();
+        this.setupQueue(playlist);
+        this.forwardAudio();
+        this.updateStartEnd();
     }
 }
 const audioPlayer = new AudioPlayer(testMusics, {
     audioPlayerElem: document.getElementById("audioPlayer"),
-    audioElems: document.getElementById("audioFile"),
+    audioPlayerBarElem: document.getElementById("audioPlayerBar"),
+    audioElem: document.getElementById("audioFile"),
     startElem: document.getElementById("timeStart"),
     endElem: document.getElementById("timeEnd"),
     lyricParentElem: document.getElementById("lyricMain"),
     lyricImg: document.getElementById("lyricImg"),
     mediaControlElem: document.getElementById("mediaControl"),
     sliderElem: document.getElementById("songSlider"),
+    coverImgElem: document.getElementById("mediaCoverImg"),
+    titleElem: document.getElementById("mediaTitle"),
+    artistElem: document.getElementById("mediaArtist"),
+    volumeQueueAreaElem: document.getElementById("volumeQueueArea"),
+    audioSliderElem: document.getElementById("audioSlider")
 });
 //# sourceMappingURL=AudioPlayer.js.map
