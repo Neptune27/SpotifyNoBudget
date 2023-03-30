@@ -1,14 +1,16 @@
 // Sample data
-    let artists = [
-        {name: "Adele", avatar: "/Src/Client/img/Artist/sample.jpg"},
-        {name: "Aurora", avatar: "/Src/Client/img/Artist/sample.jpg"},
-        {name: "Eminem", avatar: "/Src/Client/img/Artist/sample.jpg"},
-        {name: "Maroon 5", avatar: "/Src/Client/img/Artist/sample.jpg"},
-        {name: "John Cena", avatar: "/Src/Client/img/Artist/sample.jpg"},
-    ];
+
+    class Artist {
+        constructor(id, name, avatar) {
+            this.id = id;
+            this.name = name;
+            this.avatar = avatar;
+        }
+    }
 
     class Song {
-        constructor(name, artist, duration, songImg) {
+        constructor(id, name, artist, duration, songImg) {
+            this.id = id;
             this.name = name;
             this.artist = artist;
             this.duration = duration;
@@ -17,7 +19,8 @@
     }
 
     class Album {
-        constructor(name, description, albumImg) {
+        constructor(id, name, description, albumImg) {
+            this.id = id;
             this.name = name;
             this.description = description;
             this.albumImg = albumImg;
@@ -25,19 +28,27 @@
     }
 
     let songs = [
-        new Song("One more night", "Maroon 5", "4:25", "/Src/Client/img/Artist/sample.jpg"),
-        new Song("Apologize", "Justin", "4:10", "/Src/Client/img/Artist/sample.jpg"),
-        new Song("Bocchi", "Maria Ana", "3:25", "/Src/Client/img/Artist/sample.jpg"),
-        new Song("Hello World", "Chicken", "3:15", "/Src/Client/img/Artist/sample.jpg"),
-        new Song("We are one", "Deroid", "3:20", "/Src/Client/img/Artist/sample.jpg"),
+        new Song("S01", "One more night", "Maroon 5", "4:25", "/Src/Client/img/Artist/sample.jpg"),
+        new Song("S02", "Apologize", "Justin", "4:10", "/Src/Client/img/Artist/sample.jpg"),
+        new Song("S03", "Bocchi", "Maria Ana", "3:25", "/Src/Client/img/Artist/sample.jpg"),
+        new Song("S04", "Hello World", "Chicken", "3:15", "/Src/Client/img/Artist/sample.jpg"),
+        new Song("S05", "We are one", "Deroid", "3:20", "/Src/Client/img/Artist/sample.jpg"),
     ];
 
     let albums = [
-        new Album("This is the end", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
-        new Album("Morning Sunshine", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
-        new Album("An afternoon", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
-        new Album("Beep boo", "2022 album", "/Src/Client/img/Artist/sample.jpg"),
-        new Album("Customer", "2023 album", "/Src/Client/img/Artist/sample.jpg"),
+        new Album("Ab01", "This is the end", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
+        new Album("Ab02", "Morning Sunshine", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
+        new Album("Ab03", "An afternoon", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
+        new Album("Ab04", "Beep boo", "2022 album", "/Src/Client/img/Artist/sample.jpg"),
+        new Album("Ab05", "Customer", "2023 album", "/Src/Client/img/Artist/sample.jpg"),
+    ];
+
+    let artists = [
+        new Artist("A01", "Adele", "/Src/Client/img/Artist/sample.jpg"),
+        new Artist("A02", "Aurora", "/Src/Client/img/Artist/sample.jpg"),
+        new Artist("A03", "Eminem", "/Src/Client/img/Artist/sample.jpg"),
+        new Artist("A04", "Maroon 5", "/Src/Client/img/Artist/sample.jpg"),
+        new Artist("A05", "John Cena", "/Src/Client/img/Artist/sample.jpg"),
     ];
 // =============================================================================================
 document.getElementById("input-search").addEventListener("input", function (e) {
@@ -56,6 +67,7 @@ document.getElementById("clear-search").addEventListener("click", function (e) {
    document.getElementById("input-search").value = "";
 });
 
+//==========================================================================================================================
 // add click listener for favorite icon
 function addClickEventForFav_icons(fav_icons = document.querySelectorAll('.favorite-icon')) {
 
@@ -69,28 +81,77 @@ function addClickEventForFav_icons(fav_icons = document.querySelectorAll('.favor
                 if (child.classList.contains('clicked')) {
                     child.classList.remove('clicked');
                     child.classList.add('not-click');
+                    // if icon favorite is not clicked show that song id
+                    if (child.classList.contains("fa-solid")) {
+                        console.log("Remove: " + child.closest(".row").getAttribute("id"));
+                    }
                 }
                 else if (child.classList.contains('not-click')) {
                     child.classList.remove('not-click');
                     child.classList.add('clicked');
+                    // if icon favorite is click show that song id
+                    if (child.classList.contains("fa-solid")) {
+                        console.log("Add: " + child.closest(".row").getAttribute("id"));
+                    }
                 }
             }
         });
     });
 }
-addClickEventForFav_icons();
+
+// Add click event for song to get song id
+function addClickEventForSong(songRows = document.querySelectorAll('#song-wrapper > .row')) {
+    songRows.forEach(element => {
+        element.addEventListener('click', function (e) {
+            e.stopPropagation();
+            console.log(element.getAttribute('id'));
+        });
+    });
+}
+
+// Add click event for artist row display and redirect it to artist_homepage.php
+function addClickEventForArtist(artistRow = document.querySelectorAll('#artist-display > div')) {
+    artistRow.forEach(element => {
+       element.addEventListener('click', function (e) {
+           e.stopPropagation();
+           let data = `artistId=${element.getAttribute("id")}`;
+           window.location.href = "../Artist/artist_homepage?" + data;
+       });
+    });
+}
+
+// Add click event for album display row to show album id
+function addClickEventForAlbum(albumRow = document.querySelectorAll('#album-display > div')) {
+    albumRow.forEach(element => {
+       element.addEventListener('click', function (e) {
+           e.stopPropagation();
+           console.log(element.getAttribute('id'));
+       });
+    });
+}
+document.getElementById("artist-wrapper").addEventListener("click", function (e) {
+    e.stopPropagation();
+    // if artist in top result is existed
+    let artistExist = e.target.querySelector("div");
+    if (artistExist) {
+        let data = `artistId=${artistExist.getAttribute("id")}`;
+        window.location.href = "../Artist/artist_homepage?" + data;
+    }
+});
+
+//==========================================================================================================================
 function loadDataIntoSearchResult(search_result, input_search) {
     let artist_wrapper = search_result.querySelector('#artist-wrapper');
-    let song_wrapper = search_result.querySelector('.song-wrapper');
-    let artist_row_display = search_result.querySelector('#artist-row > div');
-    let album_row_display = search_result.querySelector('#album-row > div');
+    let song_wrapper = search_result.querySelector('#song-wrapper');
+    let artist_row_display = search_result.querySelector('#artist-display');
+    let album_row_display = search_result.querySelector('#album-display');
 
 //    This is for top result
     let top_result = '';
     for (let artist of artists) {
         // Find artist name for top result
         if (artist.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
-            top_result = `<div class="circle mb-4" style="background-image: url('${artist.avatar}');
+            top_result = `<div id="${artist.id}" class="circle mb-4" style="background-image: url('${artist.avatar}');
                                                                background-position: center center;"></div>
                 <!--                            ========================== -->
                 <!--                            Artist's name-->
@@ -112,7 +173,7 @@ function loadDataIntoSearchResult(search_result, input_search) {
             break;
         }
         if (song.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
-            song_result += `<div class="row align-items-center song-row rounded">
+            song_result += `<div id="${song.id}" class="row align-items-center song-row rounded">
                                 <div class="col-10">
                                     <div class="d-flex align-items-center">
                                         <div class="square d-flex align-items-center justify-content-center"
@@ -139,14 +200,15 @@ function loadDataIntoSearchResult(search_result, input_search) {
         }
     }
     song_wrapper.innerHTML = song_result;
-    // Add click event for favorite icon
+    // Add click event for favorite icon and for song rows
     addClickEventForFav_icons(search_result.querySelectorAll('.favorite-icon'));
+    addClickEventForSong(Array.from(song_wrapper.children));
 
 //     This is for artist result
     let artist_result = '';
     for (let artist of artists) {
         if (artist.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
-            artist_result += `<div class="card rounded">
+            artist_result += `<div id="${artist.id}" class="card rounded">
                                     <div class="circle"
                                         style="background-image: url('${artist.avatar}');
                                                background-position: center center;">
@@ -160,12 +222,14 @@ function loadDataIntoSearchResult(search_result, input_search) {
         }
     }
     artist_row_display.innerHTML = artist_result;
+    // add event click for artist display row
+    addClickEventForArtist(Array.from(artist_row_display.children));
 
 //     This is for album result
     let album_result = '';
     for (let album of albums) {
         if (album.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
-            album_result += `<div class="card rounded">
+            album_result += `<div id="${album.id}" class="card rounded">
                                 <div class="square rounded"
                                     style="background-image: url('${album.albumImg}');
                                            background-position: center center;">
@@ -179,6 +243,8 @@ function loadDataIntoSearchResult(search_result, input_search) {
         }
     }
     album_row_display.innerHTML = album_result;
+    // add event click for album display row
+    addClickEventForAlbum(Array.from(album_row_display.children));
 }
 
 loadDataIntoSearchResult(document.getElementById("search-result"), document.getElementById("input-search"));

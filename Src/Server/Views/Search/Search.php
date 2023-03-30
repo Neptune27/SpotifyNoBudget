@@ -50,7 +50,7 @@
 <!--                    Column song -->
                     <div class="col-md-6">
                         <h1 class="header-name">Song</h1>
-                        <div class="song-wrapper">
+                        <div id="song-wrapper">
 
 <!--                            Row Song -->
                             <div class="row align-items-center song-row rounded">
@@ -86,7 +86,7 @@
                 <div id="artist-row">
                     <h1 class="header-name">Artists</h1>
 <!--                    Display row artist -->
-                    <div class="d-flex flex-wrap">
+                    <div class="d-flex flex-wrap" id="artist-display">
                         <div class="card rounded">
                             <div class="circle">
                                 <div class='play-icon'>
@@ -105,7 +105,7 @@
                 <div id="album-row">
                     <h1 class="header-name">Albums</h1>
 <!--                    Display row album -->
-                    <div class="d-flex flex-wrap">
+                    <div class="d-flex flex-wrap" id="album-display">
                         <div class="card rounded">
                             <div class="square rounded">
                                 <div class='play-icon'>

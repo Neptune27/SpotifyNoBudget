@@ -1,74 +1,74 @@
 <?php
 // This is a section for class definition
     class Album {
+    public string $id;
     public string $name;
     public string $coverImg;
     public string $description;
     public int $listeners;
 
-    /**
-     * @param $name
-     * @param $coverImg
-     * @param $description
-     * @param $listeners
-     */
-    public function __construct($name, $coverImg, $description, $listeners)
-    {
-        $this->name = $name;
-        $this->coverImg = $coverImg;
-        $this->description = $description;
-        $this->listeners = $listeners;
-    }
-
-
+        /**
+         * @param string $id
+         * @param string $name
+         * @param string $coverImg
+         * @param string $description
+         * @param int $listeners
+         */
+        public function __construct(string $id, string $name, string $coverImg, string $description, int $listeners)
+        {
+            $this->id = $id;
+            $this->name = $name;
+            $this->coverImg = $coverImg;
+            $this->description = $description;
+            $this->listeners = $listeners;
+        }
 }
     class Song {
+        public string $id;
         public string $name;
         public string $coverImg;
         public int $listeners;
         public string $duration;
         public string $albumName;
 
-//        constructor
+        /**
+         * @param string $id
+         * @param string $name
+         * @param string $coverImg
+         * @param int $listeners
+         * @param string $duration
+         * @param string $albumName
+         */
+        public function __construct(string $id, string $name, string $coverImg, int $listeners, string $duration, string $albumName)
+        {
+            $this->id = $id;
+            $this->name = $name;
+            $this->coverImg = $coverImg;
+            $this->listeners = $listeners;
+            $this->duration = $duration;
+            $this->albumName = $albumName;
+        }
 
-    /**
-     * @param $name
-     * @param $coverImg
-     * @param $listeners
-     * @param $duration
-     * @param $albumName
-     */
-    public function __construct($name, $coverImg, $listeners, $duration, $albumName)
-    {
-        $this->name = $name;
-        $this->coverImg = $coverImg;
-        $this->listeners = $listeners;
-        $this->duration = $duration;
-        $this->albumName = $albumName;
     }
-}
     class Artist {
+        public string $id;
         public string $name;
         public string $listeners;
-        public array $songs;
-        public array $albums;
         public bool $verify;
         public string $avatar;
 
         /**
-         * @param $name
-         * @param $listeners
-         * @param $songs
-         * @param $albums
-         * @param $verify
-         * @param $avatar
+         * @param string $id
+         * @param string $name
+         * @param string $listeners
+         * @param bool $verify
+         * @param string $avatar
          */
-        public function __construct($name, $listeners, $songs, $albums, $verify, $avatar)
+        public function __construct(string $id, string $name, string $listeners, bool $verify, string $avatar)
         {
+            $this->id = $id;
             $this->name = $name;
             $this->listeners = $listeners;
-            $this->songs = $songs;
-            $this->albums = $albums;
             $this->verify = $verify;
             $this->avatar = $avatar;
         }
@@ -77,20 +77,28 @@
 
 // End class definition
 
+// Get POST value for artist id
+    if (isset($_GET['artistId'])) {
+        $artistId = $_GET['artistId'];
+    } else {
+        echo "Not receive";
+    }
+
 //    Test sample
     $songs = [
-            new Song("No game no life", "/Src/Client/img/Artist/sample.jpg", 100, "3:20", "This is the end"),
-            new Song("Your name", "/Src/Client/img/Artist/sample.jpg", 200, "3:21", "This is the end"),
-            new Song("Bocchi", "/Src/Client/img/Artist/sample.jpg", 300, "4:20", "This is the end"),
-            new Song("No game no life", "/Src/Client/img/Artist/sample.jpg", 100, "3:20", "This is the end"),
-            new Song("Your name", "/Src/Client/img/Artist/sample.jpg", 200, "3:21", "This is the end"),
-            new Song("Bocchi", "/Src/Client/img/Artist/sample.jpg", 300, "4:20", "This is the end"),
+            new Song("S01","No game no life", "/Src/Client/img/Artist/sample.jpg", 100, "3:20", "This is the end"),
+            new Song("S02","Your name", "/Src/Client/img/Artist/sample.jpg", 200, "3:21", "This is the end"),
+            new Song("S03","Bocchi", "/Src/Client/img/Artist/sample.jpg", 300, "4:20", "This is the end"),
+            new Song("S04","No game no life", "/Src/Client/img/Artist/sample.jpg", 100, "3:20", "This is the end"),
+            new Song("S05","Your name", "/Src/Client/img/Artist/sample.jpg", 200, "3:21", "This is the end"),
+            new Song("S06","Bocchi", "/Src/Client/img/Artist/sample.jpg", 300, "4:20", "This is the end"),
     ];
     $albums = [
-            new Album("This is the end", "/Src/Client/img/Artist/sample.jpg", "2021 Albums", 200),
-            new Album("This is the beginning", "/Src/Client/img/Artist/sample.jpg", "2022 Albums", 300),
+            new Album("Ab01","This is the end", "/Src/Client/img/Artist/sample.jpg", "2021 Albums", 200),
+            new Album("Ab02","This is the beginning", "/Src/Client/img/Artist/sample.jpg", "2022 Albums", 300),
     ];
-    $artist = new Artist("Aurora", 2000000, $songs, $albums, true, "/Src/Client/img/Artist/sample.jpg");
+
+    $artist = new Artist("A01", "Aurora", 2000000,true, "/Src/Client/img/Artist/sample.jpg");
 
 //    Compare function for song and album
     function cmp($a, $b): int {
@@ -110,7 +118,7 @@
                 break;
             }
             $stt = $key + 1;
-            $row .= "<tr>
+            $row .= "<tr id='{$song->id}'>
                         <td class=\"No\">
                             <span>{$stt}</span>
                             <i class=\"fa-solid fa-play play-for-song\"></i>
@@ -141,7 +149,7 @@
 //        global $albums;
         $row = "";
         foreach ($albums as $album) {
-            $row .= "<div class='song-wrapper'>
+            $row .= "<div class='song-wrapper' id='{$album->id}'>
                     <div class='song-img'>
                         <img src={$album->coverImg} alt=''>
                     </div>
@@ -171,7 +179,7 @@
                 break;
             }
             if ($song instanceof Song) {
-                $row .= "<div class='song-wrapper'>
+                $row .= "<div class='song-wrapper' id='{$song->id}'>
                         <div class='song-img'>
                             <img src='{$song->coverImg}' alt=''>
                         </div>
@@ -185,7 +193,7 @@
                     </div>";
             }
             else if ($song instanceof Album) {
-                $row .= "<div class='song-wrapper'>
+                $row .= "<div class='song-wrapper' id='{$song->id}'>
                         <div class='song-img'>
                             <img src='{$song->coverImg}' alt=''>
                         </div>
@@ -227,7 +235,7 @@
                 <span>Verified Artist</span>
             </div>
 
-            <h1 class="fw-bolder pb-3" style="font-size: 70px; margin-top: -10px;">Aurora</h1>
+            <h1 class="fw-bolder pb-3" style="font-size: 70px; margin-top: -10px;"><?php echo $artist->name ?></h1>
 
             <span><?php echo $artist->listeners ?> listeners</span>
         </div>
