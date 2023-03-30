@@ -159,7 +159,7 @@ body {
   position: fixed;
   border-radius: 0.5rem;
   width: 90%;
-  height: 3rem;
+  height: 75px;
   background: var(--audioPlayerBackground);
   z-index: 4;
   bottom: 1rem;
@@ -194,9 +194,9 @@ body {
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   padding-right: 20px;
+  font-family: "bootstrap-icons", serif;
   padding-right: 0;
-  font: var(--fa-font-solid);
-  content: "\f363";
+  content: "\f813";
   transition: color 300ms ease-in-out;
 }
 
@@ -205,21 +205,26 @@ body {
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   padding-right: 20px;
+  font-family: "bootstrap-icons", serif;
   padding-right: 0;
-  font: var(--fa-font-solid);
-  content: "\f6a8";
+  font-family: "bootstrap-icons", serif;
+  content: "\f610";
+  font-size: 1.5rem;
 }
 
 .shuffle:before {
   transition: color 300ms ease-in-out;
 }
 
+.lyricBtn {
+  cursor: pointer;
+}
+
 .mediaControl {
   display: flex;
   justify-content: center;
-  margin-bottom: 0.5rem;
   color: white;
-  font-size: 1.25rem;
+  font-size: 1.75rem;
 }
 .mediaControl > * {
   margin: 0 0.75rem;
@@ -247,7 +252,7 @@ body {
 }
 .mediaControl[data-repeat=ONE] .repeatIcon:before {
   color: #4CAF50;
-  content: "\f365";
+  content: "\f812";
   transition: color 300ms ease-in-out;
 }
 .mediaControl[data-repeat=ALL] .repeatIcon:before {
@@ -255,9 +260,17 @@ body {
   transition: color 300ms ease-in-out;
 }
 
+.mainLyric {
+  display: none;
+}
+
 .songRangeContainer {
   display: flex;
   color: white;
+}
+
+.paneBtn {
+  cursor: pointer;
 }
 
 .volumeQueueArea {
@@ -268,11 +281,27 @@ body {
   align-items: center;
   justify-content: right;
 }
+.volumeQueueArea > * {
+  margin-right: 1rem;
+}
 .volumeQueueArea[data-muted=TRUE] .volumeIcon:before {
-  content: "\f2e2";
+  content: "\f60c";
 }
 .volumeQueueArea .songRange {
   background-image: linear-gradient(to right, #75fba9 0, #75fba9 var(--audioPos), var(--audioSliderBackground) var(--audioPos));
+}
+
+main[data-pane=LYRIC] .lyricBtn {
+  color: #4CAF50;
+}
+main[data-pane=LYRIC] .mainLyric {
+  display: block;
+}
+main[data-pane=QUEUE] .paneBtn {
+  color: #4CAF50;
+}
+main[data-pane=QUEUE] .mainQueue {
+  display: block;
 }
 
 .img100 {

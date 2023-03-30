@@ -13,6 +13,7 @@
     }
     echo '<title>'.$data["Title"].'Spotify</title>';
     ?>
+    <link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css">
 </head>
 <body>
 

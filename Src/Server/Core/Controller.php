@@ -16,6 +16,13 @@ abstract class Controller{
     }
 
     abstract function index():void;
+
+    public function model(string $model): Model
+    {
+        require_once __DIR__."/../Models/".$model.".php";
+        return new $model;
+    }
+
     public function view($template, $data): void
     {
 
