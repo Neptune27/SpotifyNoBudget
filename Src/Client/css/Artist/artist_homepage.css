@@ -39,9 +39,14 @@ main {
     display: none;
 }
 
-.favorite-icon {
+.favorite-icon > .fa-regular {
+    color: var(--font-color-fade);
+    display: none;
+}
+
+.favorite-icon > .fa-solid {
     color: var(--spotify-green);
-    opacity: 0;
+    display: none;
 }
 
 #popular-playlist > table {
@@ -90,8 +95,8 @@ td {
     color: #9e9e9e;
 }
 
-#popular-playlist tr:hover  .favorite-icon {
-    opacity: 1;
+#popular-playlist tr:hover  .favorite-icon > .clicked {
+    display: block;
 }
 
 #popular-playlist tr:hover > .No > span {
@@ -103,8 +108,8 @@ td {
 }
 
 #popular-playlist .song-img {
-    width: 15%;
-    height: 42px;
+    width: 30px;
+    height: 30px;
     overflow: hidden;
     margin-right: 5px;
 }

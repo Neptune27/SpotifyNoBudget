@@ -126,7 +126,10 @@
                         <td class=\"listeners\">{$song->listeners}</td>
                         <td class=\"song-length\">
                             <div class=\"song-length-wrapper\">
-                                <i class=\"fa-regular fa-heart favorite-icon\"></i>
+                                <div class=\"favorite-icon\">
+                                    <i class=\"fa-regular fa-heart clicked\"></i>
+                                    <i class=\"fa-solid fa-heart not-click\"></i>
+                                </div>
                                 <span>{$song->duration}</span>
                             </div>
                         </td>
@@ -210,6 +213,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/Src/Client/css/Artist/artist_homepage.css">
+    <script src="/Src/Client/js/Artist/artist_homepage.js" defer></script>
 </head>
 <body>
     <main>
