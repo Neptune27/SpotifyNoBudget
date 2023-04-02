@@ -132,7 +132,7 @@ function addClickEventForAlbum(albumRow = document.querySelectorAll('#album-disp
 document.getElementById("artist-wrapper").addEventListener("click", function (e) {
     e.stopPropagation();
     // if artist in top result is existed
-    let artistExist = e.target.querySelector("div");
+    let artistExist = this.querySelector("div");
     if (artistExist) {
         let data = `artistId=${artistExist.getAttribute("id")}`;
         window.location.href = "../Artist/artist_homepage?" + data;
@@ -147,25 +147,24 @@ function loadDataIntoSearchResult(search_result, input_search) {
     let album_row_display = search_result.querySelector('#album-display');
 
 //    This is for top result
-    let top_result = '';
-    for (let artist of artists) {
-        // Find artist name for top result
-        if (artist.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
-            top_result = `<div id="${artist.id}" class="circle mb-4" style="background-image: url('${artist.avatar}');
-                                                               background-position: center center;"></div>
-                <!--                            ========================== -->
-                <!--                            Artist's name-->
-                                <h1 class="top-result-name mb-3">${artist.name}</h1>
-                                <h1 class="name-light">Artist</h1>
-                                <div class='play-icon'>
-                                    <i class='fa-solid fa-play'></i>
-                                </div>`;
-
-            //     Show result to top result
-            break;
-        }
+    let firstMatchArtist = artists.find(element => {
+        return element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase();
+    });
+    if (!firstMatchArtist) {
+        artist_wrapper.innerHTML = '';
     }
-    artist_wrapper.innerHTML = top_result;
+    else {
+        artist_wrapper.innerHTML = `<div id="${firstMatchArtist.id}" class="circle mb-4" style="background-image: url('${firstMatchArtist.avatar}');
+                                                                                                background-position: center center;"></div>
+                            <!--                            ========================== -->
+                            <!--                            Artist's name-->
+                                    <h1 class="top-result-name mb-3">${firstMatchArtist.name}</h1>
+                                    <h1 class="name-light">Artist</h1>
+                                    <div class='play-icon'>
+                                        <i class='fa-solid fa-play'></i>
+                                    </div>`;
+    }
+
 //     This is for song result
     let song_result = '';
     for (let [index, song] of songs.entries()) {
@@ -205,44 +204,42 @@ function loadDataIntoSearchResult(search_result, input_search) {
     addClickEventForSong(Array.from(song_wrapper.children));
 
 //     This is for artist result
-    let artist_result = '';
-    for (let artist of artists) {
-        if (artist.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
-            artist_result += `<div id="${artist.id}" class="card rounded">
-                                    <div class="circle"
-                                        style="background-image: url('${artist.avatar}');
-                                               background-position: center center;">
-                                        <div class='play-icon'>
-                                            <i class='fa-solid fa-play'></i>
-                                        </div>
-                                    </div>
-                                    <h1 class="name-light pt-2">${artist.name}</h1>
-                                    <h1 class="sub-name">Artist</h1>
-                               </div>`;
+    let artist_result = artists.map(element => {
+        if (element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
+            return `<div id="${element.id}" class="card rounded">
+                        <div class="circle"
+                            style="background-image: url('${element.avatar}');
+                                   background-position: center center;">
+                            <div class='play-icon'>
+                                <i class='fa-solid fa-play'></i>
+                            </div>
+                        </div>
+                        <h1 class="name-light pt-2">${element.name}</h1>
+                        <h1 class="sub-name">Artist</h1>
+                   </div>`;
         }
-    }
-    artist_row_display.innerHTML = artist_result;
+    });
+    artist_row_display.innerHTML = artist_result.join('');
     // add event click for artist display row
     addClickEventForArtist(Array.from(artist_row_display.children));
 
 //     This is for album result
-    let album_result = '';
-    for (let album of albums) {
-        if (album.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
-            album_result += `<div id="${album.id}" class="card rounded">
+    let album_result = albums.map(element => {
+        if (element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
+            return `<div id="${element.id}" class="card rounded">
                                 <div class="square rounded"
-                                    style="background-image: url('${album.albumImg}');
+                                    style="background-image: url('${element.albumImg}');
                                            background-position: center center;">
                                     <div class='play-icon'>
                                         <i class='fa-solid fa-play'></i>
                                     </div>
                                 </div>
-                                <h1 class="name-light pt-2">${album.name}</h1>
-                                <h1 class="sub-name">${album.description}</h1>
+                                <h1 class="name-light pt-2">${element.name}</h1>
+                                <h1 class="sub-name">${element.description}</h1>
                             </div>`;
         }
-    }
-    album_row_display.innerHTML = album_result;
+    });
+    album_row_display.innerHTML = album_result.join('');
     // add event click for album display row
     addClickEventForAlbum(Array.from(album_row_display.children));
 }
