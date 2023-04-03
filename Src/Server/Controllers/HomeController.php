@@ -8,6 +8,7 @@ class HomeController extends Controller
 
     function Premium()
     {
+        print_r($_SESSION["user"]);
         $this->view($this->homeTemplate, []);
     }
 
@@ -24,7 +25,34 @@ class HomeController extends Controller
 
     function SignIn()
     {
-        $this->view($this->homeTemplate, []);
+        $this->view($this->signTemplate, []);
+    }
+
+    public function GetSignIn() {
+        ["password"=>$password, "username"=>$username] = $_GET;
+        if (!isset($username)) {
+            header('X-PHP-Response-Code: 404', true, 404);
+            echo json_encode([
+                "status" => 404
+            ]);
+            return;
+        }
+
+
+        $model = $this->model("TestModel");
+        $res = $model->getData("SELECT * FROM USER WHERE PASSWORD='{$password}' AND USERNAME='{$username}'");
+
+        if (!isset($res[0])) {
+            header('X-PHP-Response-Code: 403', true, 403);
+            echo json_encode([
+                "status" => 403
+            ]);
+            return;
+        }
+
+        echo json_encode($res[0]);
+        $_SESSION["user"] = $username;
+
     }
 
     function SignUp()

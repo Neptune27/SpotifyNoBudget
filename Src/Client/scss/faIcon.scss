@@ -1,0 +1,61 @@
+
+@mixin icon-display {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+}
+
+
+.homeIcon:before {
+  @include icon-display();
+  font: var(--fa-font-solid);
+  content: '\f015';
+}
+
+.editIcon:before {
+  @include icon-display();
+  font: var(--fa-font-solid);
+  content: '\f303';
+}
+
+.lockIcon:before {
+  @include icon-display();
+  font: var(--fa-font-solid);
+  content: '\f023';
+}
+.bellIcon:before {
+  @include icon-display();
+  font: var(--fa-font-solid);
+  content: '\f0f3';
+}
+
+.cardIcon:before {
+  @include icon-display();
+  font: var(--fa-font-solid);
+  content: '\f09d';
+}
+
+.reloadIcon:before {
+  @include icon-display();
+  font: var(--fa-font-solid);
+  content: '\f2f9';
+}
+
+.clockRotateLeftIcon:before {
+  @include icon-display();
+  font: var(--fa-font-solid);
+  content: '\f1da';
+}
+
+.puzzlePieceIcon:before {
+  @include icon-display();
+  font: var(--fa-font-solid);
+  content: '\f12e';
+}
+
+.giftIcon:before {
+  @include icon-display();
+  font: var(--fa-font-solid);
+  content: '\f06b';
+}

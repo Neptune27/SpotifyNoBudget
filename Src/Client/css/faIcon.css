@@ -1,0 +1,82 @@
+.homeIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f015";
+}
+
+.editIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f303";
+}
+
+.lockIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f023";
+}
+
+.bellIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f0f3";
+}
+
+.cardIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f09d";
+}
+
+.reloadIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f2f9";
+}
+
+.clockRotateLeftIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f1da";
+}
+
+.puzzlePieceIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f12e";
+}
+
+.giftIcon:before {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-right: 20px;
+  font: var(--fa-font-solid);
+  content: "\f06b";
+}
+
+/*# sourceMappingURL=faIcon.css.map */

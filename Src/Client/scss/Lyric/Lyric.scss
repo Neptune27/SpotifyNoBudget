@@ -1,4 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&family=Roboto:wght@700&display=swap');
+@import "../faIcon.scss";
+
+
+@mixin bootstrap-icon{
+  @include icon-display();
+  font-family: "bootstrap-icons", serif;
+}
 
 :root {
   --lyric-transistion-time: 300ms;
@@ -65,8 +72,11 @@ body {
   background-size: cover;
   background-blend-mode: luminosity;
   opacity: 0;
-  animation: scale-in 500ms linear forwards;
   transform-origin: center center;
+}
+
+.lyricImgAnimation {
+  animation: scale-in 500ms linear forwards;
 }
 
 @keyframes scale-in {
@@ -81,11 +91,11 @@ body {
 }
 
 .audioPlayerBar {
-  --audioPlayerBackground: #22242f;
+  --audioPlayerBackground: rgba(34, 36, 47, 0.4);
   position: fixed;
   border-radius: 0.5rem;
   width: 90%;
-  height: 3rem;
+  height: 75px;
   background: var(--audioPlayerBackground);
 
   z-index: 4;
@@ -120,15 +130,42 @@ body {
   }
 }
 
+.repeatIcon:before {
+  @include bootstrap-icon();
+  padding-right: 0;
+  content: '\F813';
+  transition: color 300ms ease-in-out;
+}
+
+.volumeIcon:before {
+  @include bootstrap-icon();
+  padding-right: 0;
+  font-family: 'bootstrap-icons', serif;
+  content: '\F610';
+  font-size: 1.5rem;
+}
+
+
+.shuffle:before {
+  transition: color 300ms ease-in-out;
+}
+
+.lyricBtn {
+  cursor: pointer;
+}
+
 .mediaControl {
   display: flex;
   justify-content: center;
-  margin-bottom: 0.5rem;
   color: white;
-  font-size: 1.25rem;
+  font-size: 1.75rem;
 
   > * {
-    margin: 0 1rem;
+    margin: 0 0.75rem;
+  }
+  
+  > i {
+    cursor: pointer;
   }
 
   .playBtn {
@@ -149,6 +186,98 @@ body {
       display: none;
     }
   }
+
+  &[data-shuffle = "TRUE"] {
+    .shuffle:before {
+      color: #4CAF50;
+      transition: color 300ms ease-in-out;
+    }
+  }
+
+  &[data-repeat = "ONE"] {
+    .repeatIcon:before {
+      color: #4CAF50;
+      content: '\F812';
+      transition: color 300ms ease-in-out;
+    }
+  }
+
+  &[data-repeat = "ALL"] {
+    .repeatIcon:before {
+      color: #4CAF50;
+      transition: color 300ms ease-in-out;
+    }
+  }
+
+
+}
+
+
+.mainLyric {
+  display: none;
+
+}
+
+.songRangeContainer {
+  display: flex; color: white;
+}
+
+.paneBtn {
+  cursor: pointer;
+}
+
+
+
+.volumeQueueArea {
+  z-index: 1;
+  min-width: 25%;
+  max-width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+
+  > * {
+    margin-right: 1rem;
+  }
+
+  &[data-muted = "TRUE"] {
+    .volumeIcon:before {
+      content: '\F60C';
+    }
+  }
+  .songRange {
+    background-image: linear-gradient(to right, #75fba9 0, #75fba9 var(--audioPos), var(--audioSliderBackground) var(--audioPos));
+  }
+
+
+}
+
+main {
+  &[data-pane = "LYRIC"] {
+    .lyricBtn {
+      color: #4CAF50;
+    }
+    .mainLyric {
+      display: block;
+    }
+  }
+
+
+  &[data-pane = "QUEUE"] {
+    .paneBtn {
+      color: #4CAF50;
+    }
+
+    .mainQueue {
+      display: block;
+    }
+  }
+}
+
+.img100 {
+  height: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 10%;
 }
 
 

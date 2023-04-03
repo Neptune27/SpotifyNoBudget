@@ -1,0 +1,62 @@
+.queueContainer {
+  width: 100%;
+  background: #222229;
+  border-radius: 2px;
+  padding: 1.5rem 1rem;
+  border: 1px #3c3c3c solid;
+}
+.queueContainer .queueItem {
+  padding: 0.25rem 1rem;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.queueContainer .queueItem .queueId {
+  min-width: 5%;
+  max-width: 5%;
+}
+.queueContainer .queueItem .queueId i {
+  display: none;
+}
+.queueContainer .queueItem .queueMain {
+  min-width: 50%;
+  display: flex;
+  gap: 0.5rem;
+  max-width: 50%;
+  height: 50px;
+}
+.queueContainer .queueItem .queueMain > img {
+  height: 100%;
+  border-radius: 10%;
+}
+.queueContainer .queueItem .queueTitle {
+  width: 30%;
+}
+.queueContainer .queueItem .queueOther {
+  width: 15%;
+}
+.queueContainer .queueItem .queueOther i {
+  margin-left: 1rem;
+  cursor: pointer;
+  display: none;
+}
+.queueContainer .queueItem:hover, .queueContainer .queueItem:focus {
+  background: #2c2c35;
+}
+.queueContainer .queueItem:hover i, .queueContainer .queueItem:focus i {
+  display: initial;
+}
+.queueContainer .queueItem:hover .queueId span, .queueContainer .queueItem:focus .queueId span {
+  display: none;
+}
+
+.mainQueue {
+  display: none;
+}
+
+main[data-pane=QUEUE] .mainQueue {
+  display: block;
+}
+
+/*# sourceMappingURL=Queue.css.map */
