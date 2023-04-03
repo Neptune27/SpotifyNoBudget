@@ -61,7 +61,7 @@ class AudioPlayer {
     private artistElem: HTMLElement;
     private volumeQueueAreaElem: HTMLElement;
     private audioSliderElem: HTMLInputElement;
-    private updateQueue: (currentlyPlaying: IMusic, nextQueue: IMusic[]) => void;
+    private readonly updateQueue: (currentlyPlaying: IMusic, nextQueue: IMusic[]) => void;
 
 
     constructor(playlist: IMusic[], props: { updateQueue: (currentlyPlaying: IMusic, nextQueue: IMusic[]) => void },
@@ -397,14 +397,21 @@ class AudioPlayer {
             return
         }
         t.innerHTML = `
-            <img src="${imgUrl}" alt="Background Cover" class="lyricImg">
+            <img src="${imgUrl}" alt="Background Cover" class="lyricImg lyricImgAnimation">
         `
 
-        setTimeout(() => {
-            if (t !== null) {
-                this.lyricImg.innerHTML = t.innerHTML
-            }
-        }, 500)
+        const elems = document.getElementsByClassName("lyricImgAnimation")
+        for (const elem of elems) {
+            elem.addEventListener("animationend", (e)=> {
+                const imgElem = e.target as HTMLImageElement
+                imgElem.setAttribute("style", "opacity: 1");
+                imgElem.setAttribute("class", "lyricImg")
+                if (t !== null) {
+                    this.lyricImg.innerHTML = t.innerHTML
+                }
+                console.log(event)
+            })
+        }
     }
 
     setupAudio = (music: IMusic) => {

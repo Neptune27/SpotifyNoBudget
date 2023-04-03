@@ -267,13 +267,19 @@ class AudioPlayer {
                 return;
             }
             t.innerHTML = `
-            <img src="${imgUrl}" alt="Background Cover" class="lyricImg">
+            <img src="${imgUrl}" alt="Background Cover" class="lyricImg lyricImgAnimation">
         `;
-            setTimeout(() => {
-                if (t !== null) {
-                    this.lyricImg.innerHTML = t.innerHTML;
-                }
-            }, 500);
+            const elems = document.getElementsByClassName("lyricImgAnimation");
+            for (const elem of elems) {
+                elem.addEventListener("animationend", (e) => {
+                    const imgElem = e.target;
+                    imgElem.setAttribute("style", "opacity: 1");
+                    imgElem.setAttribute("class", "lyricImg");
+                    if (t !== null) {
+                        this.lyricImg.innerHTML = t.innerHTML;
+                    }
+                });
+            }
         };
         this.setupAudio = (music) => {
             let { imageUrl, songUrl, lyric, songName, artist } = music;

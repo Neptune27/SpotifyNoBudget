@@ -72,8 +72,11 @@ body {
   background-size: cover;
   background-blend-mode: luminosity;
   opacity: 0;
-  animation: scale-in 500ms linear forwards;
   transform-origin: center center;
+}
+
+.lyricImgAnimation {
+  animation: scale-in 500ms linear forwards;
 }
 
 @keyframes scale-in {
