@@ -1,4 +1,6 @@
 <?php
+require_once "Core/config.php";
+
 // Process URL from browser
 require_once "Core/App.php";
 

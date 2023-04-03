@@ -1,8 +1,8 @@
 <?php
 
-return array(
+$config["db"] = [
     'dbLocation' => 'db',
     'dbUsername' => 'php',
     'dbPassword' => 'gg',
     'dbDatabaseName' => 'SPOTIFY'
-);
+];
