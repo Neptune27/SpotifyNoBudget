@@ -7,6 +7,29 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js"></script>
+    <script defer>
+        interact('#sidebar').resizable({
+            // resize from all edges and corners
+            edges: { left: false, right: true, bottom: false, top: false },
+            listeners: {
+                move (event) {
+                    const target = event.target;
+                    let x = (parseFloat(target.getAttribute('data-x')) || 0);
+                    let y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+                    // update the element's style
+                    target.style.width = event.rect.width + 'px'
+                    target.style.height = event.rect.height + 'px'
+
+                    // translate when resizing from top or left edges
+                    x += event.deltaRect.left
+                    y += event.deltaRect.top
+
+                }
+            },
+        });
+    </script>
     <style>
         :root {
             --font-color: white;
