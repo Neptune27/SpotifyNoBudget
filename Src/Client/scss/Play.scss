@@ -1,0 +1,11 @@
+.otherPane {
+  display: block;
+}
+
+main {
+  &[data-pane="QUEUE"], &[data-pane="LYRIC"] {
+    .otherPane {
+      display: none;
+    }
+  }
+}

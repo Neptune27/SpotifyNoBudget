@@ -1,0 +1,42 @@
+
+
+#sidebar {
+  position: sticky;
+  top: 0;
+  left: 0;
+
+  width: 280px;
+  background: var(--background-color);
+  height: 100vh;
+  padding: 20px;
+  z-index: 1;
+
+  ul {
+    list-style-type: none;
+    padding-top: 40px;
+  }
+
+  li {
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 20px;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--font-color);
+    }
+
+    span {
+      padding-left: 20px;
+    }
+  }
+
+  .not-clicked {
+    color: var(--font-color-fade);
+  }
+
+  .clicked {
+    color: var(--font-color);
+  }
+}
+

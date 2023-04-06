@@ -117,7 +117,7 @@ primary key (ID_RECEIPT)
 /*==============================================================*/
 create table SING (
 SIN_USE_ID_USER integer not null,
-MUS_ID_MUSIC integer not null,
+MUS_ID_MUSIC json not null,
 primary key (SIN_USE_ID_USER, MUS_ID_MUSIC)
 );
 

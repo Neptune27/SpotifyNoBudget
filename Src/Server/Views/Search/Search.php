@@ -7,8 +7,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Src/Client/css/GlobalStyle.css">
     <link rel="stylesheet" href="/Src/Client/css/Search/search.css">
-    <script src="/Src/Client/js/Search/search.js" defer></script>
+    <script src="/Src/Client/js/Search/search.js" type="module" defer></script>
 </head>
 <body>
     <main>

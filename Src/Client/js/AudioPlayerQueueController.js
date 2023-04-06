@@ -205,6 +205,12 @@ const testMusics = [{
         ]
     }];
 class AudioPlayerQueueController {
+    static getInstance() {
+        if (this.instance === undefined) {
+            this.instance = new AudioPlayerQueueController();
+        }
+        return this.instance;
+    }
     constructor() {
         this.setSong = (queueIndex) => {
             this.audioPlayer.skipForwardTo(queueIndex);
@@ -237,5 +243,6 @@ class AudioPlayerQueueController {
         });
     }
 }
-const controller = new AudioPlayerQueueController();
+const controller = AudioPlayerQueueController.getInstance();
+export { controller, AudioPlayerQueueController };
 //# sourceMappingURL=AudioPlayerQueueController.js.map

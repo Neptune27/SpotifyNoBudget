@@ -212,7 +212,15 @@ const testMusics: IMusic[] = [{
 class AudioPlayerQueueController {
     private audioPlayer: AudioPlayer;
     private readonly queue: Queue;
-    constructor() {
+
+    public static instance: AudioPlayerQueueController;
+    public static getInstance() {
+        if (this.instance === undefined) {
+            this.instance = new AudioPlayerQueueController()
+        }
+        return this.instance
+    }
+    private constructor() {
 
 
         this.queue = new Queue({
@@ -251,4 +259,6 @@ class AudioPlayerQueueController {
     }
 }
 
-const controller = new AudioPlayerQueueController()
+const controller = AudioPlayerQueueController.getInstance();
+
+export {controller, AudioPlayerQueueController}

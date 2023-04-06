@@ -1,12 +1,4 @@
-:root {
-    --font-color: white;
-    --font-color-fade: #ffffffa3;
-    --background-color: black;
-    --background-search-color: #171717;
-    --background-dark-color: #1d1d1d;
-    --background-light-color: #282828;
-    --spotify-green: #0eb367;
-}
+
 
 .header-name {
     font-size: 20px;
