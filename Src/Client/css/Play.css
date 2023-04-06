@@ -1,0 +1,9 @@
+.otherPane {
+  display: block;
+}
+
+main[data-pane=QUEUE] .otherPane, main[data-pane=LYRIC] .otherPane {
+  display: none;
+}
+
+/*# sourceMappingURL=Play.css.map */
