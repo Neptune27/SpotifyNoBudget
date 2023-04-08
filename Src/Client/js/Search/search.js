@@ -134,7 +134,8 @@ document.getElementById("artist-wrapper").addEventListener("click", function (e)
     let artistExist = this.querySelector("div");
     if (artistExist) {
         let data = `artistId=${artistExist.getAttribute("id")}`;
-        window.location.href = "../Artist/artist_homepage?" + data;
+    //     TO DO FETCH API
+        this.closest('main').setAttribute('data-sidebar','Artist');
     }
 });
 

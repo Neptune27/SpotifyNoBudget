@@ -1,10 +1,11 @@
-:root {
-    --font-color: white;
-    --background-color: black;
-    --background-playlist-color: #171717;
-    --spotify-green: #0eb367;
-}
-main {
+/*:root {*/
+/*    --font-color: white;*/
+/*    --background-color: black;*/
+/*    --background-playlist-color: #171717;*/
+/*    --spotify-green: #0eb367;*/
+/*}*/
+.artistPane {
+    display: none;
     background: var(--background-color);
     color: var(--font-color);
     padding-left: 30px;
@@ -178,6 +179,10 @@ td {
 .play-icon > i {
     color: #122741;
     font-size: 20px;
+}
+
+main[data-sidebar=Artist] .artistPane {
+    display: block;
 }
 
 /*top: 95px;*/
