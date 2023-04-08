@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/Src/Client/css/Play.css">
 <link rel="stylesheet" href="/Src/Client/css/Sidebar.css">
 <link rel="stylesheet" href="/Src/Client/css/Search.css">
-<link rel="stylesheet" href="/Src/Client/css/Artist/artist_homepage.css">
+<link rel="stylesheet" href="/Src/Client/css/Artist_homepage.css">
 
 <script type="module" src="/Src/Client/js/AudioPlayerQueueController.js" defer></script>
 <script type="module" src="/Src/Client/js/Sidebar.js" defer></script>

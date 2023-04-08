@@ -27,29 +27,47 @@ class Album {
     }
 }
 
-let songs = [
-    new Song("S01", "One more night", "Maroon 5", "4:25", "/Src/Client/img/Artist/sample.jpg"),
-    new Song("S02", "Apologize", "Justin", "4:10", "/Src/Client/img/Artist/sample.jpg"),
-    new Song("S03", "Bocchi", "Maria Ana", "3:25", "/Src/Client/img/Artist/sample.jpg"),
-    new Song("S04", "Hello World", "Chicken", "3:15", "/Src/Client/img/Artist/sample.jpg"),
-    new Song("S05", "We are one", "Deroid", "3:20", "/Src/Client/img/Artist/sample.jpg"),
-];
+// let songs = [
+//     new Song("S01", "One more night", "Maroon 5", "4:25", "/Src/Client/img/Artist/sample.jpg"),
+//     new Song("S02", "Apologize", "Justin", "4:10", "/Src/Client/img/Artist/sample.jpg"),
+//     new Song("S03", "Bocchi", "Maria Ana", "3:25", "/Src/Client/img/Artist/sample.jpg"),
+//     new Song("S04", "Hello World", "Chicken", "3:15", "/Src/Client/img/Artist/sample.jpg"),
+//     new Song("S05", "We are one", "Deroid", "3:20", "/Src/Client/img/Artist/sample.jpg"),
+// ];
+//
+// let albums = [
+//     new Album("Ab01", "This is the end", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
+//     new Album("Ab02", "Morning Sunshine", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
+//     new Album("Ab03", "An afternoon", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
+//     new Album("Ab04", "Beep boo", "2022 album", "/Src/Client/img/Artist/sample.jpg"),
+//     new Album("Ab05", "Customer", "2023 album", "/Src/Client/img/Artist/sample.jpg"),
+// ];
+//
+// let artists = [
+//     new Artist("A01", "Adele", "/Src/Client/img/Artist/sample.jpg"),
+//     new Artist("A02", "Aurora", "/Src/Client/img/Artist/sample.jpg"),
+//     new Artist("A03", "Eminem", "/Src/Client/img/Artist/sample.jpg"),
+//     new Artist("A04", "Maroon 5", "/Src/Client/img/Artist/sample.jpg"),
+//     new Artist("A05", "John Cena", "/Src/Client/img/Artist/sample.jpg"),
+// ];
 
-let albums = [
-    new Album("Ab01", "This is the end", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
-    new Album("Ab02", "Morning Sunshine", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
-    new Album("Ab03", "An afternoon", "2021 album", "/Src/Client/img/Artist/sample.jpg"),
-    new Album("Ab04", "Beep boo", "2022 album", "/Src/Client/img/Artist/sample.jpg"),
-    new Album("Ab05", "Customer", "2023 album", "/Src/Client/img/Artist/sample.jpg"),
-];
+let songs = [];
+let artists = [];
+let albums = [];
 
-let artists = [
-    new Artist("A01", "Adele", "/Src/Client/img/Artist/sample.jpg"),
-    new Artist("A02", "Aurora", "/Src/Client/img/Artist/sample.jpg"),
-    new Artist("A03", "Eminem", "/Src/Client/img/Artist/sample.jpg"),
-    new Artist("A04", "Maroon 5", "/Src/Client/img/Artist/sample.jpg"),
-    new Artist("A05", "John Cena", "/Src/Client/img/Artist/sample.jpg"),
-];
+// Fetch data for search
+fetch("/Search/getDataForSearch")
+    .then(res => res.json())
+    .then(data => {
+        songs = data.songs;
+        artists = data.artists;
+        albums = data.albums;
+
+        songs = songs.map(element => new Song(element.ID_MUSIC, element.MUSIC_NAME, element.NAME, element.TIME, element.MUSIC_IMG));
+        artists = artists.map(element => new Artist(element.ID_USER, element.NAME, element.avatar));
+        albums = albums.map(element => new Album(element.ID_ALBUM, element.ALBUM_NAME, element.DESCRIPTIONS, element.ALBUM_IMG));
+        loadDataIntoSearchResult(document.getElementById("search-result"), document.getElementById("input-search"));
+    });
 // =============================================================================================
 document.getElementById("input-search").addEventListener("input", function (e) {
     e.stopPropagation();
@@ -112,8 +130,8 @@ function addClickEventForArtist(artistRow = document.querySelectorAll('#artist-d
         element.addEventListener('click', function (e) {
             e.stopPropagation();
             // TODO ADD FETCH AND SETUP LISTENER
-            // let data = `artistId=${element.getAttribute("id")}`;
-            // window.location.href = "../Artist/artist_homepage?" + data;
+            let data = `artistId=${element.getAttribute("id")}`;
+            this.closest('main').setAttribute('data-sidebar','Artist');
         });
     });
 }
@@ -145,9 +163,9 @@ function loadDataIntoSearchResult(search_result, input_search) {
     let song_wrapper = search_result.querySelector('#song-wrapper');
     let artist_row_display = search_result.querySelector('#artist-display');
     let album_row_display = search_result.querySelector('#album-display');
+    console.log(input_search.value);
 
 //    This is for top result
-//     TODO ADD FETCH FROM MODEL FOR THIS
     let firstMatchArtist = artists.find(element => {
         return element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase();
     });
@@ -204,30 +222,38 @@ function loadDataIntoSearchResult(search_result, input_search) {
     addClickEventForSong(Array.from(song_wrapper.children));
 
 //     This is for artist result
-
-    let artist_result = artists.map(element => {
-        if (element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
-            return `<div id="${element.id}" class="card rounded">
-                        <div class="circle"
-                            style="background-image: url('${element.avatar}');
-                                   background-position: center center;">
-                            <div class='play-icon'>
-                                <i class='fa-solid fa-play'></i>
-                            </div>
-                        </div>
-                        <h1 class="name-light pt-2">${element.name}</h1>
-                        <h1 class="sub-name">Artist</h1>
-                   </div>`;
+    let artist_result = '';
+    for (let [index, element] of artists.entries()) {
+        if (index === 7) {
+            break;
         }
-    });
-    artist_row_display.innerHTML = artist_result.join('');
+        if (element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
+            artist_result += `<div id="${element.id}" class="card rounded">
+                                    <div class="circle"
+                                        style="background-image: url('${element.avatar}');
+                                               background-position: center center;">
+                                        <div class='play-icon'>
+                                            <i class='fa-solid fa-play'></i>
+                                        </div>
+                                    </div>
+                                    <h1 class="name-light pt-2">${element.name}</h1>
+                                    <h1 class="sub-name">Artist</h1>
+                               </div>`;
+        }
+    }
+
+    artist_row_display.innerHTML = artist_result;
     // add event click for artist display row
     addClickEventForArtist(Array.from(artist_row_display.children));
 
 //     This is for album result
-    let album_result = albums.map(element => {
+    let album_result = '';
+    for (let [index, element] of albums.entries()) {
+        if (index === 7) {
+            break;
+        }
         if (element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
-            return `<div id="${element.id}" class="card rounded">
+            album_result += `<div id="${element.id}" class="card rounded">
                                 <div class="square rounded"
                                     style="background-image: url('${element.albumImg}');
                                            background-position: center center;">
@@ -239,13 +265,12 @@ function loadDataIntoSearchResult(search_result, input_search) {
                                 <h1 class="sub-name">${element.description}</h1>
                             </div>`;
         }
-    });
-    album_row_display.innerHTML = album_result.join('');
+    }
+
+    album_row_display.innerHTML = album_result;
     // add event click for album display row
     addClickEventForAlbum(Array.from(album_row_display.children));
 }
-
-loadDataIntoSearchResult(document.getElementById("search-result"), document.getElementById("input-search"));
 
 // Add input listener
 document.getElementById("input-search").addEventListener("input", e => {
