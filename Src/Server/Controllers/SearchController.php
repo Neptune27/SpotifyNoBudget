@@ -14,7 +14,7 @@ class SearchController extends Controller
         $song_query = "SELECT MUSIC.ID_MUSIC, MUSIC_NAME, USER.NAME, MUSIC.TIME, MUSIC_IMG ".
                         "FROM MUSIC, SING_BY ,USER ".
                         "WHERE MUSIC.ID_MUSIC = SING_BY.ID_MUSIC AND SING_BY.ID_SINGER = USER.ID_USER;";
-        $artist_query = "SELECT ID_USER, NAME, avatar FROM USER";
+        $artist_query = "SELECT ID_USER, NAME, avatar FROM USER WHERE TYPE = 2 OR TYPE = 3 OR TYPE = 4";
 
         $res = [
             'albums' => $model->getData($album_query),
