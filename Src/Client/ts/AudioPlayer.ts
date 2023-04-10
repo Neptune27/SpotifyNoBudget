@@ -386,6 +386,11 @@ class AudioPlayer {
         this.audioElem.pause()
     }
 
+    forcePlayAudio = () => {
+        this.audioElem.play()
+        this.mediaControlElem.setAttribute("data-played", "TRUE")
+    }
+
     playAudioEvent = (event: Event) => {
         this.audioElem.play()
         this.mediaControlElem.setAttribute("data-played", "TRUE")
@@ -437,6 +442,7 @@ class AudioPlayer {
         this.setupAudioImg(imageUrl)
         this.coverImgElem.setAttribute("src", imageUrl)
         this.titleElem.innerHTML = songName
+        console.log(artist)
         this.artistElem.innerHTML = artist
 
 
@@ -545,4 +551,4 @@ class AudioPlayer {
     }
 }
 
-export {AudioPlayer}
+export {AudioPlayer, timeConverter}

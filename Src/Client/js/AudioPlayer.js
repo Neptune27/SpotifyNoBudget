@@ -257,6 +257,10 @@ class AudioPlayer {
             this.mediaControlElem.setAttribute("data-played", "FALSE");
             this.audioElem.pause();
         };
+        this.forcePlayAudio = () => {
+            this.audioElem.play();
+            this.mediaControlElem.setAttribute("data-played", "TRUE");
+        };
         this.playAudioEvent = (event) => {
             this.audioElem.play();
             this.mediaControlElem.setAttribute("data-played", "TRUE");
@@ -278,7 +282,6 @@ class AudioPlayer {
                     if (t !== null) {
                         this.lyricImg.innerHTML = t.innerHTML;
                     }
-                    console.log(event);
                 });
             }
         };
@@ -302,6 +305,7 @@ class AudioPlayer {
             this.setupAudioImg(imageUrl);
             this.coverImgElem.setAttribute("src", imageUrl);
             this.titleElem.innerHTML = songName;
+            console.log(artist);
             this.artistElem.innerHTML = artist;
             this.audioElem.load();
             this.updateLyrics(lyric);
@@ -420,5 +424,5 @@ class AudioPlayer {
         this.updateStartEnd();
     }
 }
-export { AudioPlayer };
+export { AudioPlayer, timeConverter };
 //# sourceMappingURL=AudioPlayer.js.map

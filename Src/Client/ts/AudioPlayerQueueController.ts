@@ -1,6 +1,7 @@
 import {IMusic} from "./IMusic";
 import {AudioPlayer} from "./AudioPlayer.js";
 import {Queue} from "./Queue.js";
+import {ISong} from "./DatabaseInterface";
 
 
 let lyrics = [
@@ -214,7 +215,7 @@ class AudioPlayerQueueController {
     private readonly queue: Queue;
 
     public static instance: AudioPlayerQueueController;
-    public static getInstance() {
+    public static getInstance() : AudioPlayerQueueController {
         if (this.instance === undefined) {
             this.instance = new AudioPlayerQueueController()
         }
@@ -250,11 +251,37 @@ class AudioPlayerQueueController {
         });
     }
 
-    setSong = (queueIndex: number) => {
+    public playFromPopularPlaylist = async (artistID: number) => {
+        const fetchHandler = await fetch(`/Artist/getDataArtist/${artistID}`)
+        const jsonContent: {
+            songs: ISong[]
+        } = await fetchHandler.json();
+        console.log(jsonContent)
+        const newSong : IMusic[] = jsonContent.songs.map(value => {
+            return {
+                songUrl: value.SONG_LOCATION,
+                imageUrl: value.SONG_IMG,
+                songName: value.SONG_NAME,
+                artist: value.ARTIST,
+                lyric: JSON.parse(value.LYRICS)
+            }
+        })
+        console.log(newSong)
+
+        this.setQueue(newSong[0], newSong.slice(1))
+        this.resetSong(newSong[0])
+        this.audioPlayer.forcePlayAudio()
+    }
+
+
+    private resetSong = (song : IMusic) => {
+        this.audioPlayer.setupAudio(song);
+    }
+    private setSong = (queueIndex: number) => {
         this.audioPlayer.skipForwardTo(queueIndex)
     }
 
-    setQueue = (currentlyPlaying: IMusic, nextQueue: IMusic[]) => {
+    private setQueue = (currentlyPlaying: IMusic, nextQueue: IMusic[]) => {
         this.queue.setupQueue(currentlyPlaying, nextQueue)
     }
 }

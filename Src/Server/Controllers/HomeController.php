@@ -40,7 +40,7 @@ class HomeController extends Controller
 
 
         $model = $this->model("TestModel");
-        $res = $model->getData("SELECT * FROM USER WHERE PASSWORD='{$password}' AND USERNAME='{$username}'");
+        $res = $model->getData("SELECT * FROM USER WHERE PASSWORD='{$password}' AND EMAIL='{$username}'");
 
         if (!isset($res[0])) {
             header('X-PHP-Response-Code: 403', true, 403);

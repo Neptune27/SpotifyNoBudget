@@ -212,6 +212,27 @@ class AudioPlayerQueueController {
         return this.instance;
     }
     constructor() {
+        this.playFromPopularPlaylist = async (artistID) => {
+            const fetchHandler = await fetch(`/Artist/getDataArtist/${artistID}`);
+            const jsonContent = await fetchHandler.json();
+            console.log(jsonContent);
+            const newSong = jsonContent.songs.map(value => {
+                return {
+                    songUrl: value.SONG_LOCATION,
+                    imageUrl: value.SONG_IMG,
+                    songName: value.SONG_NAME,
+                    artist: value.ARTIST,
+                    lyric: JSON.parse(value.LYRICS)
+                };
+            });
+            console.log(newSong);
+            this.setQueue(newSong[0], newSong.slice(1));
+            this.resetSong(newSong[0]);
+            this.audioPlayer.forcePlayAudio();
+        };
+        this.resetSong = (song) => {
+            this.audioPlayer.setupAudio(song);
+        };
         this.setSong = (queueIndex) => {
             this.audioPlayer.skipForwardTo(queueIndex);
         };
