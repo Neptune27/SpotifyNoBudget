@@ -1,8 +1,8 @@
 <?php
 
-$config = [
+$config["db"] = [
     'dbLocation' => 'db',
     'dbUsername' => 'root',
     'dbPassword' => 'gg',
-    'dbDatabaseName' => 'spotify'
+    'dbDatabaseName' => 'SPOTIFY'
 ];

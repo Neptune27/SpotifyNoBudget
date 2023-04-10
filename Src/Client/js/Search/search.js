@@ -87,11 +87,6 @@ fetch("/Search/getDataForSearch")
     });
 // =============================================================================================
 
-// This is array for artist homepage
-let songsArtist = [];
-let artist;
-let albumsArtist = [];
-// ==============================================================
 
 document.getElementById("input-search").addEventListener("input", function (e) {
     e.stopPropagation();
@@ -355,7 +350,6 @@ document.getElementById("input-search").addEventListener("input", e => {
 
 // This is section for artist homepage====================================================================
 function artist_homepageInit() {
-
     let artistPane = document.querySelector('.artistPane');
     // Verify for artist
     if (artist.verify === "0") {
@@ -368,170 +362,8 @@ function artist_homepageInit() {
     // Show artist background image
     artistPane.querySelector("#artist-title")
         .setAttribute('style', `background-image: url(${artist.avatar});` +
-                                                'background-position: center top;' +
-                                                'background-repeat: no-repeat;');
-
-    // Show artist's name and listeners
-    artistPane.querySelector("#artist-title > h1").innerText = artist.name;
-    artistPane.querySelector("#artist-title > span").innerText = artist.listeners + " listeners";
-
-    // Render popular playlist only 7 popular song
-    songsArtist.sort((a, b) => b.listeners - a.listeners).slice(0, 8);
-    let result = '', stt;
-    for (let [index, songsArtistElement] of songsArtist.entries()) {
-        stt = index + 1;
-        result += `<tr id='${songsArtistElement.id}'>
-                        <td class="No">
-                            <span>${stt}</span>
-                            <i class="fa-solid fa-play play-for-song"></i>
-                        </td>
-                        <td class="song-name-and-img">
-                            <div class="d-flex align-items-center">
-                                <div class="song-img">
-                                    <img src="${songsArtistElement.songImg}" alt="Song img">
-                                </div>
-                                <span class="name-song">${songsArtistElement.name}</span>
-                            </div>
-                        </td>
-                        <td class="listeners">${songsArtistElement.listeners} listeners</td>
-                        <td class="song-length">
-                            <div class="song-length-wrapper">
-                                <div class="favorite-icon">
-                                    <i class="fa-regular fa-heart clicked"></i>
-                                    <i class="fa-solid fa-heart not-click"></i>
-                                </div>
-                                <span>${songsArtistElement.duration}</span>
-                            </div>
-                        </td>
-                    </tr>`
-    }
-    artistPane.querySelector('#popular-playlist tbody').innerHTML = result;
-
-    // This is a section for popular releases
-    let popularReleases = [...songsArtist, ...albumsArtist];
-    popularReleases.sort((a, b) => b.listeners - a.listeners).slice(0, 8);
-    artistPane.querySelector('#popular-releases > .song-display')
-        .innerHTML = popularReleases.map(element => {
-            if (element instanceof Song) {
-                return `<div class='song-wrapper' id='${element.id}'>
-                            <div class='song-img'>
-                                <img src='${element.songImg}' alt=''>
-                            </div>
-                            <div class='song-detail'>
-                                <p class='mb-0 name-song'>${element.name}</p>
-                                <p class='mb-0 album-name'>${element.albumName}</p>
-                            </div>
-                            <div class='play-icon'>
-                                <i class='fa-solid fa-play'></i>
-                            </div>
-                        </div>`;
-            }
-            else {
-                return `<div class='song-wrapper' id='${element.id}'>
-                            <div class='song-img'>
-                                <img src='${element.albumImg}' alt=''>
-                            </div>
-                            <div class='song-detail'>
-                                <p class='mb-0 name-song'>${element.name}</p>
-                                <p class='mb-0 album-name'>${element.description}</p>
-                            </div>
-                            <div class='play-icon'>
-                                <i class='fa-solid fa-play'></i>
-                            </div>
-                    </div>`;
-            }
-    }).join('');
-
-    // This is a section for album
-    artistPane.querySelector("#album > .song-display")
-        .innerHTML = albumsArtist.sort((a, b) => b.listeners - a.listeners).map(element => {
-            return `<div class='song-wrapper' id='${element.id}'>
-                    <div class='song-img'>
-                        <img src='${element.albumImg}' alt=''>
-                    </div>
-                    <div class='song-detail'>
-                        <p class='mb-0 name-song'>${element.name}</p>
-                        <p class='mb-0 album-name'>${element.description}</p>
-                    </div>
-                    <div class='play-icon'>
-                        <i class='fa-solid fa-play'></i>
-                    </div>
-                </div>`;
-    }).join('');
-
-    // add click listener for favorite icon
-    let fav_icons = document.querySelectorAll('.artistPane .favorite-icon');
-
-    fav_icons.forEach(element => {
-        element.addEventListener('click', (e) => {
-            e.stopPropagation();
-
-            // Traverse all element's children
-            for (let i = 0; i < element.children.length; i++) {
-                let child = element.children[i];
-                if (child.classList.contains('clicked')) {
-                    child.classList.remove('clicked');
-                    child.classList.add('not-click');
-                    // if icon favorite is not clicked show that song id
-                    if (child.classList.contains("fa-solid")) {
-                        console.log("Remove: " + child.closest("tr").getAttribute("id"));
-                    }
-                }
-                else if (child.classList.contains('not-click')) {
-                    child.classList.remove('not-click');
-                    child.classList.add('clicked');
-                    // if icon favorite is click show that song id
-                    if (child.classList.contains("fa-solid")) {
-                        console.log("Add: " + child.closest("tr").getAttribute("id"));
-                    }
-                }
-            }
-        });
-    });
-
-// When click a song it will return a song id
-    let songRows = document.querySelectorAll("#popular-playlist tr");
-    songRows.forEach(element => {
-        element.addEventListener('click', function (e) {
-            e.stopPropagation();
-            console.log(element.getAttribute('id'));
-        });
-    });
-
-    let popularRows = document.querySelectorAll("#popular-releases .song-wrapper");
-    popularRows.forEach(element => {
-        element.addEventListener('click', function (e) {
-            e.stopPropagation();
-            console.log(element.getAttribute('id'));
-        });
-    });
-
-    let albumRows = document.querySelectorAll("#album .song-wrapper");
-    albumRows.forEach(element => {
-        element.addEventListener('click', function (e) {
-            e.stopPropagation();
-            console.log(element.getAttribute('id'));
-        });
-    });
-}
-//End section for artist homepage=====================================================================
-
-// This is section for artist homepage====================================================================
-function artist_homepageInit() {
-    let artistPane = document.querySelector('.artistPane');
-    // Verify for artist
-    if (artist.verify === "0") {
-        artistPane.querySelector('#verified-tick').setAttribute('style', 'opacity : 0');
-    }
-    else {
-        artistPane.querySelector('#verified-tick').setAttribute('style', '');
-    }
-
-    // Show artist background image
-    artistPane.querySelector("#artist-title")
-        .setAttribute('style', `background-image: url(${artist.avatar});` +
-                                                'background-position: center top;' +
-                                                'background-repeat: no-repeat;');
+            'background-position: center top;' +
+            'background-repeat: no-repeat;');
 
     // Show artist's name and listeners
     artistPane.querySelector("#artist-title > h1").innerText = artist.name;
@@ -575,8 +407,8 @@ function artist_homepageInit() {
     popularReleases.sort((a, b) => b.listeners - a.listeners).slice(0, 8);
     artistPane.querySelector('#popular-releases > .song-display')
         .innerHTML = popularReleases.map(element => {
-            if (element instanceof Song) {
-                return `<div class='song-wrapper' id='${element.id}'>
+        if (element instanceof Song) {
+            return `<div class='song-wrapper' id='${element.id}'>
                             <div class='song-img'>
                                 <img src='${element.songImg}' alt=''>
                             </div>
@@ -588,9 +420,9 @@ function artist_homepageInit() {
                                 <i class='fa-solid fa-play'></i>
                             </div>
                         </div>`;
-            }
-            else {
-                return `<div class='song-wrapper' id='${element.id}'>
+        }
+        else {
+            return `<div class='song-wrapper' id='${element.id}'>
                             <div class='song-img'>
                                 <img src='${element.albumImg}' alt=''>
                             </div>
@@ -602,13 +434,13 @@ function artist_homepageInit() {
                                 <i class='fa-solid fa-play'></i>
                             </div>
                     </div>`;
-            }
+        }
     }).join('');
 
     // This is a section for album
     artistPane.querySelector("#album > .song-display")
         .innerHTML = albumsArtist.sort((a, b) => b.listeners - a.listeners).map(element => {
-            return `<div class='song-wrapper' id='${element.id}'>
+        return `<div class='song-wrapper' id='${element.id}'>
                     <div class='song-img'>
                         <img src='${element.albumImg}' alt=''>
                     </div>
