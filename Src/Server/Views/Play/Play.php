@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="/Src/Client/css/Sidebar.css">
 <link rel="stylesheet" href="/Src/Client/css/Search.css">
 <link rel="stylesheet" href="/Src/Client/css/HomePane.css">
+<link rel="stylesheet" href="/Src/Client/css/Artist_homepage.css">
 
 <script type="module" src="/Src/Client/js/AudioPlayerQueueController.js" defer></script>
 <script type="module" src="/Src/Client/js/Sidebar.js" defer></script>
@@ -184,6 +185,106 @@
                 <!--        End search result -->
             </div>
             <div class="artistPane">
+                <!--This is section for artist name, background, monthly listeners-->
+                <div id="artist-title" style="background-image: url('/Src/Client/img/Artist/sample.jpg');
+                        background-position: center top;
+                        background-repeat: no-repeat;
+                        ">
+                    <div id="verified-tick">
+                        <i class="fa-solid fa-circle-check" style="color: cornflowerblue"></i>
+                        <span>Verified Artist</span>
+                    </div>
+
+                    <h1 class="fw-bolder pb-3" style="font-size: 70px; margin-top: -10px;">Artist's name</h1>
+
+                    <span>30000 listeners</span>
+                </div>
+                <!--End artist title-->
+
+                <div id="play-follow" class="d-flex align-items-center">
+                    <span style="padding-left: 0">
+                        <i class="fa-solid fa-play" style="font-size: 30px;"></i>
+                    </span>
+                    <span style="font-size: 11px;
+                        font-weight: bold;">FOLLOW</span>
+                    <span><i class="fa-solid fa-ellipsis"></i></span>
+                </div>
+
+                <!--        This is a section for Popular playlist-->
+                <h3 class="pt-3 pb-2">Popular</h3>
+                <div id="popular-playlist">
+                    <table class="table table-condensed" style="margin-bottom: 0">
+                        <tbody>
+                            <tr id='S01'>
+                                <td class="No">
+                                    <span>01</span>
+                                    <i class="fa-solid fa-play play-for-song"></i>
+                                </td>
+                                <td class="song-name-and-img">
+                                    <div class="d-flex align-items-center">
+                                        <div class="song-img">
+                                            <img src="/Src/Client/img/Artist/sample.jpg" alt="Song img">
+                                        </div>
+                                        <span class="name-song">Song's name</span>
+                                    </div>
+                                </td>
+                                <td class="listeners">3000 listeners</td>
+                                <td class="song-length">
+                                    <div class="song-length-wrapper">
+                                        <div class="favorite-icon">
+                                            <i class="fa-regular fa-heart clicked"></i>
+                                            <i class="fa-solid fa-heart not-click"></i>
+                                        </div>
+                                        <span>3:14</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--        End popular playlist-->
+
+                <!--        This is a section for Popular Releases-->
+                <div id="popular-releases">
+                    <h3 class="pt-5 pb-2">Popular releases</h3>
+
+                    <div class="song-display">
+                        <div class='song-wrapper' id='S01'>
+                            <div class='song-img'>
+                                <img src='/Src/Client/img/Artist/sample.jpg' alt=''>
+                            </div>
+                            <div class='song-detail'>
+                                <p class='mb-0 name-song'>Song's name</p>
+                                <p class='mb-0 album-name'>Song's album name</p>
+                            </div>
+                            <div class='play-icon'>
+                                <i class='fa-solid fa-play'></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--        End popular releases-->
+
+                <!--        This is a section for album-->
+                <div id="album">
+                    <h3 class="pt-5 pb-2">Albums</h3>
+
+                    <div class="song-display">
+                        <div class='song-wrapper' id='A01'>
+                            <div class='song-img'>
+                                <img src='/Src/Client/img/Artist/sample.jpg' alt=''>
+                            </div>
+                            <div class='song-detail'>
+                                <p class='mb-0 name-song'>Album's name</p>
+                                <p class='mb-0 album-name'>Album's des</p>
+                            </div>
+                            <div class='play-icon'>
+                                <i class='fa-solid fa-play'></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--        End album-->
 
             </div>
         </div>

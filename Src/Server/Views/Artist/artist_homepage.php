@@ -224,64 +224,6 @@
     <script src="/Src/Client/js/Artist/artist_homepage.js" defer></script>
 </head>
 <body>
-    <main>
-        <!--This is section for artist name, background, monthly listeners-->
-        <div id="artist-title" style="background-image: url(<?php echo "{$artist->avatar}" ?>);
-                                  background-position: center top;
-                                  background-repeat: no-repeat;
-">
-            <div id="verified-tick" <?php echo ($artist->verify) ?  "" : 'class="opacity-0"'?>>
-                <i class="fa-solid fa-circle-check" style="color: cornflowerblue"></i>
-                <span>Verified Artist</span>
-            </div>
-
-            <h1 class="fw-bolder pb-3" style="font-size: 70px; margin-top: -10px;"><?php echo $artist->name ?></h1>
-
-            <span><?php echo $artist->listeners ?> listeners</span>
-        </div>
-        <!--End artist title-->
-
-        <div id="play-follow" class="d-flex align-items-center">
-            <span style="padding-left: 0">
-                <i class="fa-solid fa-play" style="font-size: 30px;"></i>
-            </span>
-            <span style="font-size: 11px;
-                        font-weight: bold;">
-                FOLLOW
-            </span>
-            <span><i class="fa-solid fa-ellipsis"></i></span>
-        </div>
-
-<!--        This is a section for Popular playlist-->
-        <h3 class="pt-3 pb-2">Popular</h3>
-        <div id="popular-playlist">
-            <table class="table table-condensed" style="margin-bottom: 0">
-                <tbody>
-                    <?php echo displayPopularSong($songs) ?>
-                </tbody>
-            </table>
-        </div>
-<!--        End popular playlist-->
-
-<!--        This is a section for Popular Releases-->
-        <div id="popular-releases">
-            <h3 class="pt-5 pb-2">Popular releases</h3>
-
-            <div class="song-display">
-                <?php echo displayPopularRelease($albums, $songs) ?>
-            </div>
-        </div>
-<!--        End popular releases-->
-
-<!--        This is a section for album-->
-        <div id="album">
-            <h3 class="pt-5 pb-2">Albums</h3>
-
-            <div class="song-display">
-                <?php echo displayAlbum($albums) ?>
-            </div>
-        </div>
-<!--        End album-->
-    </main>
+    <main></main>
 </body>
 </html>
