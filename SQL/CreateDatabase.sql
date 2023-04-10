@@ -1,346 +1,350 @@
-drop database if exists spotify;
-create database spotify;
-use spotify;
+DROP DATABASE IF EXISTS SPOTIFY;
+CREATE DATABASE SPOTIFY;
+USE SPOTIFY;
 
-drop table if exists  ALBUM;
+DROP TABLE IF EXISTS ALBUM;
 
-drop table if exists AUTHOR_MUSIC;
+DROP TABLE IF EXISTS AUTHOR_MUSIC;
 
-drop table if exists ALBUM_CREATED_BY;
+DROP TABLE IF EXISTS ALBUM_CREATED_BY;
 
-drop table if exists FOLLOW;
+DROP TABLE IF EXISTS FOLLOW;
 
-drop table if exists HISTORY;
+DROP TABLE IF EXISTS HISTORY;
 
-drop table if exists MUSIC;
+DROP TABLE IF EXISTS SONG;
 
-drop table if exists MUSIC_ALBUM;
+DROP TABLE IF EXISTS SONG_ALBUM;
 
-drop table if exists RECEIPT;
+DROP TABLE IF EXISTS RECEIPT;
 
-drop table if exists SING_BY;
+DROP TABLE IF EXISTS SING_BY;
 
 
-drop table if exists USER;
+DROP TABLE IF EXISTS USER;
 
 /*==============================================================*/
-/* Table: ALBUM                                                 */
+/* TABLE: ALBUM                                                 */
 /*==============================================================*/
-create table ALBUM (
-                       ID_ALBUM integer not null,
-                       NUMBER_SONG integer,
-                       LISTENERS integer,
-                       ALBUM_NAME nvarchar(255) NOT NULL,
-                       ALBUM_IMG nvarchar(255) NOT NULL,
-                       DESCRIPTIONS nvarchar(255) NOT NULL,
-                       TIME time,
-                       DATE date,
-                       primary key (ID_ALBUM)
+CREATE TABLE ALBUM (
+   ALBUM_ID INTEGER NOT NULL,
+   NUMBER_OF_SONG INTEGER,
+   TOTAL_LISTENER INTEGER,
+   ALBUM_NAME NVARCHAR(255) NOT NULL,
+   ALBUM_IMG NVARCHAR(255) NOT NULL,
+   DESCRIPTIONS NVARCHAR(255) NOT NULL,
+   TIME TIME,
+   DATE DATE,
+   PRIMARY KEY (ALBUM_ID)
 );
 
 
 /*==============================================================*/
-/* Table: AUTHOR_MUSIC                                          */
+/* TABLE: AUTHOR_MUSIC                                          */
 /*==============================================================*/
-create table AUTHOR_MUSIC (
-                              ID_AUT integer not null,
-                              ID_MUSIC integer not null,
-                              primary key (ID_AUT, ID_MUSIC)
+# CREATE TABLE AUTHOR_MUSIC (
+#   AUTHOR_ID INTEGER NOT NULL,
+#   MUSIC_ID INTEGER NOT NULL,
+#   PRIMARY KEY (AUTHOR_ID, MUSIC_ID)
+# );
+
+/*==============================================================*/
+/* TABLE: CREAT                                                 */
+/*==============================================================*/
+CREATE TABLE ALBUM_CREATED_BY (
+  USER_ID INTEGER NOT NULL,
+  ALBUM_ID INTEGER NOT NULL,
+  PRIMARY KEY (USER_ID, ALBUM_ID)
 );
 
 /*==============================================================*/
-/* Table: CREAT                                                 */
+/* TABLE: FOLLOW                                                */
 /*==============================================================*/
-create table ALBUM_CREATED_BY (
-                                  ID_USER integer not null,
-                                  ID_ALBUM integer not null,
-                                  primary key (ID_USER, ID_ALBUM)
+CREATE TABLE FOLLOW (
+    USER_ID INTEGER NOT NULL,
+    USER_FOLLOW_BY_ID INTEGER NOT NULL,
+    PRIMARY KEY (USER_ID, USER_FOLLOW_BY_ID)
 );
 
 /*==============================================================*/
-/* Table: FOLLOW                                                */
+/* TABLE: HISTORY                                               */
 /*==============================================================*/
-create table FOLLOW (
-                        ID_USER integer not null,
-                        ID_USER2 integer not null,
-                        primary key (ID_USER, ID_USER2)
+CREATE TABLE HISTORY (
+    LISTEN_DATE DATETIME NOT NULL,
+    USER_ID INTEGER NOT NULL,
+    MUSIC_ID INTEGER NOT NULL,
+    PRIMARY KEY (LISTEN_DATE, USER_ID, MUSIC_ID)
 );
 
 /*==============================================================*/
-/* Table: HISTORY                                               */
+/* TABLE: MUSIC                                                 */
 /*==============================================================*/
-create table HISTORY (
-                         NUMBER_ORDER INTEGER auto_increment,
-                         ID_ALBUM integer not null,
-                         ID_USER integer not null,
-                         ID_MUSIC integer not null,
-                         primary key (NUMBER_ORDER)
+CREATE TABLE SONG (
+    SONG_ID INTEGER NOT NULL,
+    SONG_NAME NVARCHAR(255),
+    SONG_IMG NVARCHAR(255) NOT NULL,
+    TOTAL_VIEW INTEGER,
+    DURATION INTEGER,
+    SONG_LOCATION NVARCHAR(255),
+    LYRICS JSON,
+    ADDED_DATE DATETIME,
+    PRIMARY KEY (SONG_ID)
 );
 
 /*==============================================================*/
-/* Table: MUSIC                                                 */
+/* TABLE: MUSIC_ALBUM                                           */
 /*==============================================================*/
-create table MUSIC (
-                       ID_MUSIC integer not null,
-                       MUSIC_NAME nvarchar(255),
-                       MUSIC_IMG nvarchar(255) NOT NULL,
-                       VIEW integer,
-                       TIME time,
-                       SONG_LOCATION nvarchar(255),
-                       LYRICS json,
-                       primary key (ID_MUSIC)
+CREATE TABLE SONG_ALBUM (
+     SONG_ID INTEGER NOT NULL,
+     ALBUM_ID INTEGER NOT NULL,
+     PRIMARY KEY (SONG_ID, ALBUM_ID)
 );
 
 /*==============================================================*/
-/* Table: MUSIC_ALBUM                                           */
+/* TABLE: RECEIPT                                               */
 /*==============================================================*/
-create table MUSIC_ALBUM (
-                             ID_MUSIC integer not null,
-                             ID_ALBUM integer not null,
-                             primary key (ID_MUSIC, ID_ALBUM)
+CREATE TABLE RECEIPT (
+    ID_RECEIPT NVARCHAR(255) NOT NULL,
+    ID_USER INTEGER NOT NULL,
+    DATE_BUY DATE,
+    TOTAL_PRICE INTEGER,
+    PAYMENT NVARCHAR(255),
+    RETAILER NVARCHAR(255),
+    ADDRESS NVARCHAR(255),
+    VAT_NUMBER INTEGER,
+    PRODUCT NVARCHAR(255),
+    TOTAL_TAX INTEGER,
+    TAX INTEGER,
+    PRICE INTEGER,
+    PRIMARY KEY (ID_RECEIPT)
 );
 
 /*==============================================================*/
-/* Table: RECEIPT                                               */
+/* TABLE: SING_BY                                                  */
 /*==============================================================*/
-create table RECEIPT (
-                         ID_RECEIPT nvarchar(255) not null,
-                         ID_USER integer not null,
-                         DATE_BUY date,
-                         TOTAL_PRICE integer,
-                         PAYMENT nvarchar(255),
-                         RETAILER nvarchar(255),
-                         ADDRESS nvarchar(255),
-                         VAT_NUMBER integer,
-                         PRODUCT nvarchar(255),
-                         TOTAL_TAX integer,
-                         TAX integer,
-                         PRICE integer,
-                         primary key (ID_RECEIPT)
-);
-
-/*==============================================================*/
-/* Table: SING_BY                                                  */
-/*==============================================================*/
-create table SING_BY (
-                         ID_SINGER integer not null,
-                         ID_MUSIC integer not null,
-                         primary key (ID_SINGER, ID_MUSIC)
+CREATE TABLE SING_BY (
+     AUTHOR_ID INTEGER NOT NULL,
+     MUSIC_ID INTEGER NOT NULL,
+     PRIMARY KEY (AUTHOR_ID, MUSIC_ID)
 );
 
 
 /*==============================================================*/
-/* Table: USER                                                */
+/* TABLE: USER                                                */
 /*==============================================================*/
-create table USER (
-                      ID_USER integer not null,
-                      NAME nvarchar(255),
-                      avatar nvarchar(255),
-                      PASSWORD nvarchar(255),
-                      GENDER boolean,
-                      BIRTH date,
-                      verify boolean,
-                      COUNTRY nvarchar(255),
-                      EMAIL nvarchar(255),
-                      HAVE_PRIMIUM boolean,
-                      TYPE integer,
-                      MONTHLY_LISTENER integer,
-                      primary key (ID_USER)
+CREATE TABLE USER (
+      USER_ID INTEGER NOT NULL,
+      NAME NVARCHAR(255),
+      PASSWORD NVARCHAR(255),
+      GENDER BOOLEAN,
+      BIRTH DATE,
+      VERIFY BOOLEAN,
+      COUNTRY NVARCHAR(255),
+      EMAIL NVARCHAR(255),
+      HAVE_PREMIUM BOOLEAN,
+      TYPE INTEGER,
+      MONTHLY_LISTENER INTEGER,
+      PRIMARY KEY (USER_ID)
 );
 
+#
+# ALTER TABLE AUTHOR_MUSIC
+#     ADD FOREIGN KEY FK_AUTH_AUTH_AUTH (AUTHOR_ID)
+#         REFERENCES USER (USER_ID)
+#         ON DELETE RESTRICT;
+#
+# ALTER TABLE AUTHOR_MUSIC
+#     ADD FOREIGN KEY FK_AUTH_AUTH_MUSI (MUSIC_ID)
+#         REFERENCES SONG (SONG_ID)
+#         ON DELETE RESTRICT;
 
-alter table AUTHOR_MUSIC
-    add foreign key FK_AUTH_AUTH_AUTH (ID_AUT)
-        references USER (ID_USER)
-        on delete restrict;
+ALTER TABLE ALBUM_CREATED_BY
+    ADD FOREIGN KEY FK_CREA_CREA_USER (USER_ID)
+        REFERENCES USER (USER_ID)
+        ON DELETE RESTRICT;
 
-alter table AUTHOR_MUSIC
-    add foreign key FK_AUTH_AUTH_MUSI (ID_MUSIC)
-        references MUSIC (ID_MUSIC)
-        on delete restrict;
+ALTER TABLE ALBUM_CREATED_BY
+    ADD FOREIGN KEY FK_CREA_CREA_ALBU (ALBUM_ID)
+        REFERENCES ALBUM (ALBUM_ID)
+        ON DELETE RESTRICT;
 
-alter table ALBUM_CREATED_BY
-    add foreign key FK_CREA_CREA_USER (ID_USER)
-        references USER (ID_USER)
-        on delete restrict;
+ALTER TABLE FOLLOW
+    ADD FOREIGN KEY FK_FOLL_FOLL_USER (USER_ID)
+        REFERENCES USER (USER_ID)
+        ON DELETE RESTRICT;
 
-alter table ALBUM_CREATED_BY
-    add foreign key FK_CREA_CREA_ALBU (ID_ALBUM)
-        references ALBUM (ID_ALBUM)
-        on delete restrict;
+ALTER TABLE FOLLOW
+    ADD FOREIGN KEY FK_FOLL_FOLL_USER (USER_FOLLOW_BY_ID)
+        REFERENCES USER (USER_ID)
+        ON DELETE RESTRICT;
 
-alter table FOLLOW
-    add foreign key FK_FOLL_FOLL_USER (ID_USER)
-        references USER (ID_USER)
-        on delete restrict;
+ALTER TABLE HISTORY
+    ADD FOREIGN KEY FK_HIST_HIS__MUSI (MUSIC_ID)
+        REFERENCES SONG (SONG_ID)
+        ON DELETE RESTRICT;
 
-alter table FOLLOW
-    add foreign key FK_FOLL_FOLL_USER (ID_USER2)
-        references USER (ID_USER)
-        on delete restrict;
+ALTER TABLE HISTORY
+    ADD FOREIGN KEY FK_HIST_USER_USER (USER_ID)
+        REFERENCES USER (USER_ID)
+        ON DELETE RESTRICT;
 
-alter table HISTORY
-    add foreign key FK_HIST_HIS__ALBU (ID_ALBUM)
-        references ALBUM (ID_ALBUM)
-        on delete restrict;
+ALTER TABLE SONG_ALBUM
+    ADD FOREIGN KEY FK_MUSI_MUSI_MUSI (SONG_ID)
+        REFERENCES SONG (SONG_ID)
+        ON DELETE RESTRICT;
 
-alter table HISTORY
-    add foreign key FK_HIST_HIS__MUSI (ID_MUSIC)
-        references MUSIC (ID_MUSIC)
-        on delete restrict;
+ALTER TABLE SONG_ALBUM
+    ADD FOREIGN KEY FK_MUSI_MUSI_ALBU (ALBUM_ID)
+        REFERENCES ALBUM (ALBUM_ID)
+        ON DELETE RESTRICT;
 
-alter table HISTORY
-    add foreign key FK_HIST_USER_USER (ID_USER)
-        references USER (ID_USER)
-        on delete restrict;
+ALTER TABLE RECEIPT
+    ADD FOREIGN KEY FK_RECE_BUY_USER (ID_USER)
+        REFERENCES USER (USER_ID)
+        ON DELETE RESTRICT;
 
-alter table MUSIC_ALBUM
-    add foreign key FK_MUSI_MUSI_MUSI (ID_MUSIC)
-        references MUSIC (ID_MUSIC)
-        on delete restrict;
+ALTER TABLE SING_BY
+    ADD FOREIGN KEY FK_SING_BY_SING_BY_SING_BY (AUTHOR_ID)
+        REFERENCES USER (USER_ID)
+        ON DELETE RESTRICT;
 
-alter table MUSIC_ALBUM
-    add foreign key FK_MUSI_MUSI_ALBU (ID_ALBUM)
-        references ALBUM (ID_ALBUM)
-        on delete restrict;
+ALTER TABLE SING_BY
+    ADD FOREIGN KEY FK_SING_BY_SING_BY_MUSI (MUSIC_ID)
+        REFERENCES SONG (SONG_ID)
+        ON DELETE RESTRICT;
 
-alter table RECEIPT
-    add foreign key FK_RECE_BUY_USER (ID_USER)
-        references USER (ID_USER)
-        on delete restrict;
 
-alter table SING_BY
-    add foreign key FK_SING_BY_SING_BY_SING_BY (ID_SINGER)
-        references USER (ID_USER)
-        on delete restrict;
 
-alter table SING_BY
-    add foreign key FK_SING_BY_SING_BY_MUSI (ID_MUSIC)
-        references MUSIC (ID_MUSIC)
-        on delete restrict;
+INSERT INTO SONG(SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, SONG_LOCATION, LYRICS, ADDED_DATE) VALUE (
+    1, N'Akuma no Ko', '/Src/Client/img/Album/AkumaNoKo.jpg',0, 224, '/Src/Client/mp3/AkumaNoKo.mp3',
+    '[[1,"鉄の弾が 正義の証明"],[4,"貫けば 英雄に近づいた"],[6,"その目を閉じて 触れてみれば"],[9,"同じ形 同じ体温の悪魔"],[15,"僕はダメで あいつはいいの？"],[17,"そこに壁があっただけなのに"],[19,"生まれてしまった 運命嘆くな"],[22,"僕らはみんな 自由なんだから"],[26,"鳥のように 羽があれば"],[31,"どこへだって行けるけど"],[37,"帰る場所が なければ"],[41,"きっとどこへも行けない"],[46,"ただただ生きるのは嫌だ"],[52,"世界は残酷だ それでも君を愛すよ"],[62,"なにを犠牲にしても それでも君を守るよ"],[72,"間違いだとしても 疑ったりしない"],[78,"正しさとは 自分のこと 強く信じることだ"],[93,"鉄の雨が 降り散る情景"],[96,"テレビの中 映画に見えたんだ"],[98,"戦争なんて 愚かな凶暴"],[102,"関係ない 知らない国の話"],[104,"それならなんで あいつ憎んで"],[106,"黒い気持ち 隠しきれない理由"],[109,"説明だって できやしないんだ"],[111,"僕らはなんて 矛盾ばっかなんだ"],[137,"この言葉も 訳されれば"],[143,"本当の意味は伝わらない"],[148,"信じるのは その目を開いて"],[153,"触れた世界だけ"],[157,"ただただ生きるのは嫌だ"],[166,"世界は残酷だ それでも君を愛すよ"],[176,"なにを犠牲にしても それでも君を守るよ"],[186,"選んだ人の影 捨てたものの屍"],[191,"気づいたんだ 自分の中 育つのは悪魔の子"],[197,"正義の裏 犠牲の中 心には悪魔の子"]]',
+    CURRENT_TIMESTAMP
+    )
 
--- data test linh tinh
--- thêm vào bản album-- --       
-INSERT INTO `spotify`.`album` (`ID_ALBUM`, `NUMBER_SONG`, `LISTENERS`, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`) VALUES ('1', '3', '0', 's1', '...', 'mô tả', '1:00', '2023-4-4');
-INSERT INTO `spotify`.`album` (`ID_ALBUM`, `NUMBER_SONG`, `LISTENERS`, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`) VALUES ('2', '2', '0', 's2', '...', 'mô tả', '1:00', '2023-4-4');
-INSERT INTO `spotify`.`album` (`ID_ALBUM`, `NUMBER_SONG`, `LISTENERS`, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`) VALUES ('3', '1', '0', 's3', '...', 'mô tả', '1:00', '2023-4-4');
-INSERT INTO `spotify`.`album` (`ID_ALBUM`, `NUMBER_SONG`, `LISTENERS`, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`) VALUES ('4', '3', '0', 's4', '...', 'mô tả', '1:00', '2023-4-4');
-INSERT INTO `spotify`.`album` (`ID_ALBUM`, `NUMBER_SONG`, `LISTENERS`, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`) VALUES ('5', '1', '0', 's5', '...', 'mô tả', '1:00', '2023-4-4');
---  thêm vào bài hát music
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('1', 'music1', '...', '0', '00:01:00', '...', '0');
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('2', 'music2', '...', '9', '00:01:00', '...', '0');
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('3', 'music3', '...', '8', '00:01:00', '...', '0');
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('4', 'music4', '...', '7', '00:01:00', '...', '0');
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('5', 'music5', '...', '6', '00:01:00', '...', '0');
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('6', 'music6', '...', '5', '00:01:00', '...', '0');
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('7', 'music7', '...', '4', '00:01:00', '...', '0');
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('8', 'music8', '...', '3', '00:01:00', '...', '0');
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('9', 'music9', '...', '2', '00:01:00', '...', '0');
-INSERT INTO `spotify`.`music` (`ID_MUSIC`, `MUSIC_NAME`, `MUSIC_IMG`, `VIEW`, `TIME`, `SONG_LOCATION`, `LYRICS`) VALUES ('10', 'music10', '...', '1', '00:01:00', '...', '0');
--- thêm user
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('1', 'user1', '...', '123123', '1', '1', 'VN', '1', '2');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('2', 'user2', '...', '123123', '1', '0', 'VN', '0', '3');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('3', 'user3', '...', '123123', '1', '1', 'VN', '0', '3');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('4', 'user4', '...', '123123', '1', '1', 'VN', '0', '3');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('5', 'user5', '...', '123123', '0', '1', 'VN', '0', '3');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('6', 'user6', '...', '123123', '0', '0', 'VN', '0', '3');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('7', 'user7', '...', '123123', '0', '0', 'VN', '1', '2');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('8', 'user8', '...', '123123', '0', '0', 'VN', '1', '3');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('9', 'user9', '...', '123123', '1', '0', 'VN', '1', '2');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('10', 'user10', '...', '123123', '1', '0', 'VN', '1', '3');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('11', 'user11', '...', '123123', '1', '0', 'VN', '1', '2');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('12', 'user12', '...', '123123', '0', '1', 'VN', '1', '1');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('13', 'user13', '...', '123123', '0', '0', 'VN', '1', '1');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('14', 'user14', '...', '123123', '0', '0', 'VN', '1', '1');
-INSERT INTO `spotify`.`user` (`ID_USER`, `NAME`, `avatar`, `PASSWORD`, `GENDER`, `verify`, `COUNTRY`, `HAVE_PRIMIUM`, `TYPE`) VALUES ('15', 'user15', '...', '123123', '1', '0', 'VN', '1', '1');
--- thêm phiếu mua primium
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('1', '5');
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('2', '4');
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('3', '3');
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('4', '2');
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('5', '3');
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('6', '5');
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('7', '4');
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('8', '3');
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('9', '2');
-INSERT INTO `spotify`.`receipt` (`ID_RECEIPT`, `ID_USER`) VALUES ('10', '1');
--- thêm tác giả của bài hát
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('2', '1');
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('2', '2');
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('3', '3');
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('4', '4');
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('5', '5');
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('4', '6');
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('4', '7');
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('3', '8');
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('2', '9');
-INSERT INTO `spotify`.`author_music` (`ID_AUT`, `ID_MUSIC`) VALUES ('2', '10');
--- người tạo ra album
-INSERT INTO `spotify`.`ALBUM_CREATED_BY` (`ID_USER`, `ID_ALBUM`) VALUES ('1', '1');
-INSERT INTO `spotify`.`ALBUM_CREATED_BY` (`ID_USER`, `ID_ALBUM`) VALUES ('2', '2');
-INSERT INTO `spotify`.`ALBUM_CREATED_BY` (`ID_USER`, `ID_ALBUM`) VALUES ('5', '3');
-INSERT INTO `spotify`.`ALBUM_CREATED_BY` (`ID_USER`, `ID_ALBUM`) VALUES ('6', '4');
-INSERT INTO `spotify`.`ALBUM_CREATED_BY` (`ID_USER`, `ID_ALBUM`) VALUES ('7', '5');
--- f0llow
-INSERT INTO `spotify`.`follow` (`ID_USER`, `ID_USER2`) VALUES ('1', '4');
-INSERT INTO `spotify`.`follow` (`ID_USER`, `ID_USER2`) VALUES ('2', '3');
-INSERT INTO `spotify`.`follow` (`ID_USER`, `ID_USER2`) VALUES ('3', '2');
-INSERT INTO `spotify`.`follow` (`ID_USER`, `ID_USER2`) VALUES ('4', '2');
-INSERT INTO `spotify`.`follow` (`ID_USER`, `ID_USER2`) VALUES ('5', '1');
--- nhạc của album nào
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('1', '2');
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('2', '3');
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('3', '4');
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('4', '5');
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('5', '5');
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('6', '4');
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('7', '3');
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('8', '2');
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('9', '1');
-INSERT INTO `spotify`.`music_album` (`ID_MUSIC`, `ID_ALBUM`) VALUES ('10', '1');
--- thêm ca sĩ hát bài hát nào
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('1', '1');
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('2', '1');
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('3', '1');
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('4', '1');
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('5', '9');
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('6', '9');
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('7', '9');
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('8', '7');
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('9', '7');
-INSERT INTO `spotify`.`SING_BY` (`ID_SINGER`, `ID_MUSIC`) VALUES ('10', '7');
+-- DATA TEST LINH TINH
+-- THÊM VÀO BẢN ALBUM-- --
+# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('1', '3', '0', 'S1', '...', 'MÔ TẢ', '1:00', '2023-4-4');
+# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('2', '2', '0', 'S2', '...', 'MÔ TẢ', '1:00', '2023-4-4');
+# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('3', '1', '0', 'S3', '...', 'MÔ TẢ', '1:00', '2023-4-4');
+# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('4', '3', '0', 'S4', '...', 'MÔ TẢ', '1:00', '2023-4-4');
+# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('5', '1', '0', 'S5', '...', 'MÔ TẢ', '1:00', '2023-4-4');
+# --  THÊM VÀO BÀI HÁT MUSIC
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('1', 'MUSIC1', '...', '0', 70, '...', '0');
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('2', 'MUSIC2', '...', '9', 70, '...', '0');
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('3', 'MUSIC3', '...', '8', 70, '...', '0');
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('4', 'MUSIC4', '...', '7', 70, '...', '0');
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('5', 'MUSIC5', '...', '6', 70, '...', '0');
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('6', 'MUSIC6', '...', '5', 70, '...', '0');
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('7', 'MUSIC7', '...', '4', 70, '...', '0');
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('8', 'MUSIC8', '...', '3', 70, '...', '0');
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('9', 'MUSIC9', '...', '2', 70, '...', '0');
+# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('10', 'MUSIC10', '...', '1', 70, '...', '0');
+# -- THÊM USER
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`) VALUES ('1', 'USER1', '123123', '1', '1', 'VN', '1', '2');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('2', 'USER2', '123123', '1', '0', 'VN', '0', '3');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('3', 'USER3', '123123', '1', '1', 'VN', '0', '3');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('4', 'USER4', '123123', '1', '1', 'VN', '0', '3');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('5', 'USER5', '123123', '0', '1', 'VN', '0', '3');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('6', 'USER6', '123123', '0', '0', 'VN', '0', '3');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('7', 'USER7', '123123', '0', '0', 'VN', '1', '2');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('8', 'USER8', '123123', '0', '0', 'VN', '1', '3');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('9', 'USER9', '123123', '1', '0', 'VN', '1', '2');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('10', 'USER10', '123123', '1', '0', 'VN', '1', '3');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('11', 'USER11', '123123', '1', '0', 'VN', '1', '2');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('12', 'USER12', '123123', '0', '1', 'VN', '1', '1');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('13', 'USER13', '123123', '0', '0', 'VN', '1', '1');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('14', 'USER14', '123123', '0', '0', 'VN', '1', '1');
+# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('15', 'USER15', '123123', '1', '0', 'VN', '1', '1');
+# -- THÊM PHIẾU MUA PRIMIUM
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('1', '5');
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('2', '4');
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('3', '3');
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('4', '2');
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('5', '3');
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('6', '5');
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('7', '4');
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('8', '3');
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('9', '2');
+# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('10', '1');
+# -- THÊM TÁC GIẢ CỦA BÀI HÁT
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '1');
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '2');
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('3', '3');
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('4', '4');
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('5', '5');
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('4', '6');
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('4', '7');
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('3', '8');
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '9');
+# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '10');
+# -- NGƯỜI TẠO RA ALBUM
+# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('1', '1');
+# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('2', '2');
+# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('5', '3');
+# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('6', '4');
+# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('7', '5');
+# -- F0LLOW
+# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('1', '4');
+# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('2', '3');
+# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('3', '2');
+# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('4', '2');
+# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('5', '1');
+# -- NHẠC CỦA ALBUM NÀO
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('1', '2');
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('2', '3');
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('3', '4');
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('4', '5');
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('5', '5');
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('6', '4');
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('7', '3');
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('8', '2');
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('9', '1');
+# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('10', '1');
+# -- THÊM CA SĨ HÁT BÀI HÁT NÀO
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('1', '1');
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '1');
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('3', '1');
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('4', '1');
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('5', '9');
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('6', '9');
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('7', '9');
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('8', '7');
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('9', '7');
+# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('10', '7');
 
--- TRUY SUẤT THÔNG TIN ALBUM
-select ID_ALBUM,ALBUM_NAME,ALBUM_IMG,DESCRIPTIONS,LISTENERS
-from ALBUM;
--- WHERE  ID_ALBUM = 1 ; /* ĐIỀN THÔNG TIN ID ALBUM MÚN TÌM VÔ ĐÂY NẾU CẦN */
-
--- TRUY XUẤT NGƯỜI LÀ CA SĨ
-select ID_USER,NAME,MONTHLY_LISTENER,verify,avatar
-from USER
-WHERE /* ID_USER = 1 AND */ /* TÌM AI THÌ ĐIỀN THÔNG TIN NÓ VÔ ĐÂY */ TYPE = "2" OR TYPE = "4"; --  ƯỚC LƯỢNG 1 LÀ DÂN THƯỜNG 2 LÀ CA SĨ 3 LÀ TÁC GIẢ 4 LÀ CA SĨ TÁC GIẢ
-
--- TRUY XUẤT BÀI THÔNG TIN BÀI HÁT
-SELECT MUSIC.ID_MUSIC,MUSIC_NAME,MUSIC_IMG,VIEW,MUSIC.TIME,ALBUM_NAME
-FROM MUSIC,ALBUM,MUSIC_ALBUM
-WHERE  MUSIC.ID_MUSIC = MUSIC_ALBUM.ID_MUSIC AND MUSIC_ALBUM.ID_ALBUM = ALBUM.ID_ALBUM; /*AND MUSIC.ID_MUSIC = "1";*/-- TÌM BÀI NÀO THÌ CHO ID VÔ CHỖ NÀY
-
--- TRUY XUẤT CA SĨ CỦA BÀI HÁT
-SELECT ID_USER,MUSIC_NAME,NAME,MONTHLY_LISTENER,verify,avatar /* CẦN CÁI NÀO THÌ LẤY */
-FROM MUSIC, SING_BY, USER
-WHERE ID_USER = ID_SINGER AND MUSIC.ID_MUSIC = SING_BY.ID_MUSIC; /*AND MUSIC_ID =*/ /* TÌM ID BÀI NÀO CHỖ NÀY NẾU TÌM HẾT THÌ BỎ */
-
--- TRUY XUẤT TÁC GIẢ BÀI HÁt
-SELECT ID_USER,MUSIC_NAME,NAME,MONTHLY_LISTENER,verify,avatar
-FROM MUSIC, AUTHOR_MUSIC, USER
-WHERE MUSIC.ID_MUSIC = AUTHOR_MUSIC.ID_MUSIC AND ID_AUT = ID_USER /* AND USER_ID= */;
-
--- TRUY XUẤT PHIẾU MUA CỦA AI
-SELECT * -- CẦN LẤY THÔNG TIN J THÊM VÔ CHỖ NÀY
-FROM USER , RECEIPT
-WHERE USER.ID_USER = RECEIPT.ID_USER /* AND ID_USER =  */ ;
-
--- TRUY SUẤT LỊCH SỬ XEM
-SELECT * -- HMMM CẦN LẤY THÔNG TIN NÀO THÊM VÔ NHA :( CHƯA CÓ THÊM DATA VÀO LỊCH SỬ
-FROM USER,HISTORY,ALBUM,MUSIC
-WHERE USER.ID_USER = HISTORY.ID_USER AND ALBUM.ID_ALBUM = HISTORY.ID_ALBUM AND HISTORY.ID_MUSIC = MUSIC.ID_MUSIC /* AND ID_USER =  */
+# -- TRUY SUẤT THÔNG TIN ALBUM
+# SELECT ALBUM_ID,ALBUM_NAME,ALBUM_IMG,DESCRIPTIONS, TOTAL_LISTENER
+# FROM ALBUM;
+# -- WHERE  ALBUM_ID = 1 ; /* ĐIỀN THÔNG TIN ID ALBUM MÚN TÌM VÔ ĐÂY NẾU CẦN */
+#
+# -- TRUY XUẤT NGƯỜI LÀ CA SĨ
+# # SELECT ID_USER,NAME,MONTHLY_LISTENER,VERIFY,AVATAR
+# # FROM USER
+# # WHERE /* ID_USER = 1 AND */ /* TÌM AI THÌ ĐIỀN THÔNG TIN NÓ VÔ ĐÂY */ TYPE = "2" OR TYPE = "4"; --  ƯỚC LƯỢNG 1 LÀ DÂN THƯỜNG 2 LÀ CA SĨ 3 LÀ TÁC GIẢ 4 LÀ CA SĨ TÁC GIẢ
+#
+# -- TRUY XUẤT BÀI THÔNG TIN BÀI HÁT
+# SELECT SONG.SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, SONG.DURATION, ALBUM_NAME
+# FROM SONG,ALBUM,
+#      SONG_ALBUM
+# WHERE  SONG.SONG_ID = SONG_ALBUM.SONG_ID AND SONG_ALBUM.ALBUM_ID = ALBUM.ALBUM_ID; /*AND MUSIC.ID_MUSIC = "1";*/-- TÌM BÀI NÀO THÌ CHO ID VÔ CHỖ NÀY
+#
+# -- TRUY XUẤT CA SĨ CỦA BÀI HÁT
+# SELECT USER_ID, SONG_NAME, NAME, MONTHLY_LISTENER, VERIFY /* CẦN CÁI NÀO THÌ LẤY */
+# FROM SONG,SING_BY,USER
+# WHERE USER_ID = AUTHOR_ID AND SONG.SONG_ID = SING_BY.MUSIC_ID; /*AND MUSIC_ID =*/ /* TÌM ID BÀI NÀO CHỖ NÀY NẾU TÌM HẾT THÌ BỎ */
+#
+# -- TRUY XUẤT TÁC GIẢ BÀI HÁT
+# SELECT USER_ID, SONG_NAME,NAME,MONTHLY_LISTENER,VERIFY
+# FROM SONG,AUTHOR_MUSIC,USER
+# WHERE SONG.SONG_ID = AUTHOR_MUSIC.MUSIC_ID AND AUTHOR_ID = USER_ID /* AND USER_ID= */;
+#
+# -- TRUY XUẤT PHIẾU MUA CỦA AI
+# SELECT * -- CẦN LẤY THÔNG TIN J THÊM VÔ CHỖ NÀY
+# FROM USER , RECEIPT
+# WHERE USER.USER_ID = RECEIPT.ID_USER /* AND ID_USER =  */ ;
+#
+# # -- TRUY SUẤT LỊCH SỬ XEM
+# SELECT * -- HMMM CẦN LẤY THÔNG TIN NÀO THÊM VÔ NHA :( CHƯA CÓ THÊM DATA VÀO LỊCH SỬ
+# FROM USER,HISTORY,ALBUM,
+#      SONG
+# WHERE USER.USER_ID = HISTORY.ID_USER AND ALBUM.ALBUM_ID = HISTORY.ID_ALBUM AND HISTORY.MUSIC_ID = SONG.SONG_ID /* AND ID_USER =  */

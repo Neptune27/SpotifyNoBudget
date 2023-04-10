@@ -1,0 +1,78 @@
+.homeContainer {
+  width: 100%;
+  background: #222229;
+  border-radius: 2px;
+  padding: 1.5rem 1rem;
+  border: 1px #3c3c3c solid;
+
+  .homeItem {
+    padding: 0.25rem 1rem;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .homeId {
+      min-width: 5%;
+      max-width: 5%;
+
+      i {
+        display: none;
+      }
+    }
+
+    .homeMain {
+      min-width: 50%;
+      display: flex;
+      gap: 0.5rem;
+      max-width: 50%;
+      height: 50px;
+
+      > img {
+        height: 100%;
+        border-radius: 10%;
+      }
+    }
+
+    .homeTitle {
+      width: 30%;
+    }
+
+    .homeOther {
+      width: 15%;
+
+      i {
+        margin-left: 1rem;
+        cursor: pointer;
+        display: none;
+
+      }
+    }
+
+    &:hover, &:focus {
+      background: #2c2c35;
+      i {
+        display: initial;
+      }
+
+      .homeId {
+        span {
+          display: none;
+        }
+      }
+    }
+
+  }
+}
+
+.homePane {
+  display: none;
+  color: white;
+  padding: 1rem;
+}
+
+main[data-sidebar="Home"] {
+  .homePane {
+    display: block;
+  }
+}

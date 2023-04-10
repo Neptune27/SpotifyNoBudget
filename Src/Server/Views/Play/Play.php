@@ -11,31 +11,16 @@
 <link rel="stylesheet" href="/Src/Client/css/Play.css">
 <link rel="stylesheet" href="/Src/Client/css/Sidebar.css">
 <link rel="stylesheet" href="/Src/Client/css/Search.css">
+<link rel="stylesheet" href="/Src/Client/css/HomePane.css">
 
 <script type="module" src="/Src/Client/js/AudioPlayerQueueController.js" defer></script>
 <script type="module" src="/Src/Client/js/Sidebar.js" defer></script>
 <script type="module" src="/Src/Client/js/Search/search.js" defer></script>
 
-<script>
-    function executeScriptElements(containerElement) {
-        const scriptElements = containerElement.querySelectorAll("script");
-
-        Array.from(scriptElements).forEach((scriptElement) => {
-            const clonedElement = document.createElement("script");
-
-            Array.from(scriptElement.attributes).forEach((attribute) => {
-                clonedElement.setAttribute(attribute.name, attribute.value);
-            });
-
-            clonedElement.text = scriptElement.text;
-
-            scriptElement.parentNode.replaceChild(clonedElement, scriptElement);
-        });
-    }
-</script>
 
 
-<main style="display: flex; background-color: var(--background-color)">
+
+<main style="display: flex; background-color: var(--background-color)" data-sidebar="Home">
 
 
     <div id="sidebar">
@@ -83,6 +68,12 @@
         </div>
 
         <div id="otherPane" class="otherPane" style="position: relative;">
+
+            <div class="homePane" style="">
+                <h1>Recently Added:</h1>
+                <div class="homeContainer" id="homeContainer"></div>
+            </div>
+
             <div class="searchPane">
                 <nav style="position: sticky; top: 0; z-index: 1">
                     <div id="search-wrapper" class="d-flex align-items-center container justify-content-center">
@@ -191,6 +182,9 @@
                     </div>
                 </div>
                 <!--        End search result -->
+            </div>
+            <div class="artistPane">
+
             </div>
         </div>
     </div>

@@ -20,13 +20,14 @@ class Model
     }
 
     function __construct(){
-        $dbConf = include("config.php");
+        global $config;
+        include("config.php");
         [
             'dbLocation' => $this->dbLocation,
             'dbUsername' => $this->username,
             'dbPassword' => $this->password,
             'dbDatabaseName' => $this->dbName
-        ] = $dbConf;
+        ] = $config["db"];
         $this->con = mysqli_connect($this->dbLocation, $this->username, $this->password);
 
         mysqli_select_db($this->con, $this->dbName);

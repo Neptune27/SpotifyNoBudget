@@ -278,6 +278,7 @@ class AudioPlayer {
                     if (t !== null) {
                         this.lyricImg.innerHTML = t.innerHTML;
                     }
+                    console.log(event);
                 });
             }
         };

@@ -32,12 +32,16 @@ class TestController extends Controller
     }
 
     function Woa($params) {
+        echo "Params: ";
         print_r($params);
-
-        $model = $this->model("TestModel");
-        $res = $model->getData("SELECT * FROM TEST WHERE ID > 0");
-//        header('X-PHP-Response-Code: 404', true, 404);
-        echo json_encode($res);
+        echo "<br>";
+        echo "GET: ";
+        print_r($_GET);
+//
+//        $model = $this->model("TestModel");
+//        $res = $model->getData("SELECT * FROM TEST WHERE ID > 0");
+////        header('X-PHP-Response-Code: 404', true, 404);
+//        echo json_encode($res);
     }
 
 }
