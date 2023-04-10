@@ -62,12 +62,6 @@ let artists = [];
 let albums = [];
 // ============================================================
 
-// This is array for artist homepage
-let songsArtist = [];
-let artist;
-let albumsArtist = [];
-// ==============================================================
-
 // Fetch data for search
 fetch("/Search/getDataForSearch")
     .then(res => res.json())
@@ -82,6 +76,13 @@ fetch("/Search/getDataForSearch")
         loadDataIntoSearchResult(document.getElementById("search-result"), document.getElementById("input-search"));
     });
 // =============================================================================================
+
+// This is array for artist homepage
+let songsArtist = [];
+let artist;
+let albumsArtist = [];
+// ==============================================================
+
 document.getElementById("input-search").addEventListener("input", function (e) {
     e.stopPropagation();
     if (e.target.value !== '') {
@@ -209,7 +210,7 @@ function loadDataIntoSearchResult(search_result, input_search) {
 
 //    This is for top result
     let firstMatchArtist = artists.find(element => {
-        return element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase();
+        return element.name.toLowerCase().includes(input_search.value.toLowerCase());
     });
     if (!firstMatchArtist) {
         artist_wrapper.innerHTML = '';
@@ -318,7 +319,21 @@ function loadDataIntoSearchResult(search_result, input_search) {
 document.getElementById("input-search").addEventListener("input", e => {
     e.stopPropagation();
     let search_result = e.target.closest("main").querySelector('#search-result');
-    loadDataIntoSearchResult(search_result, e.target);
+
+    // Fetch data for search
+    fetch(`/Search/getDataForSearch/${e.target.value}`)
+        .then(res => res.json())
+        .then(data => {
+            songs = data.songs;
+            artists = data.artists;
+            albums = data.albums;
+
+            songs = songs.map(element => new Song(element.ID_MUSIC, element.MUSIC_NAME, element.NAME, element.TIME, element.MUSIC_IMG, null, null));
+            artists = artists.map(element => new Artist(element.ID_USER, element.NAME, element.avatar, null, null));
+            albums = albums.map(element => new Album(element.ID_ALBUM, element.ALBUM_NAME, element.DESCRIPTIONS, element.ALBUM_IMG, null));
+            loadDataIntoSearchResult(search_result, e.target);
+        });
+// =============================================================================================
 });
 
 // This is section for artist homepage====================================================================
