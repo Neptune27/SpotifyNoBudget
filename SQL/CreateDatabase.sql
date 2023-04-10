@@ -1,350 +1,322 @@
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
+--
+-- Host: localhost    Database: SPOTIFY
+-- ------------------------------------------------------
+-- Server version       8.0.32
+
+DROP DATABASE IF EXISTS spotify;
 DROP DATABASE IF EXISTS SPOTIFY;
 CREATE DATABASE SPOTIFY;
 USE SPOTIFY;
 
-DROP TABLE IF EXISTS ALBUM;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-DROP TABLE IF EXISTS AUTHOR_MUSIC;
+--
+-- Table structure for table `ALBUM`
+--
 
-DROP TABLE IF EXISTS ALBUM_CREATED_BY;
+DROP TABLE IF EXISTS `ALBUM`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ALBUM` (
+                         `ALBUM_ID` int NOT NULL,
+                         `NUMBER_OF_SONG` int DEFAULT NULL,
+                         `TOTAL_LISTENER` int DEFAULT NULL,
+                         `ALBUM_NAME` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+                         `ALBUM_IMG` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+                         `DESCRIPTIONS` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+                         `TIME` time DEFAULT NULL,
+                         `DATE` date DEFAULT NULL,
+                         PRIMARY KEY (`ALBUM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS FOLLOW;
+--
+-- Dumping data for table `ALBUM`
+--
 
-DROP TABLE IF EXISTS HISTORY;
+LOCK TABLES `ALBUM` WRITE;
+/*!40000 ALTER TABLE `ALBUM` DISABLE KEYS */;
+INSERT INTO `ALBUM` VALUES (1,1,10,'Akuma no Ko','/Src/Client/img/Album/AkumaNoKo.jpg','','00:02:47','2022-10-01');
+/*!40000 ALTER TABLE `ALBUM` ENABLE KEYS */;
+UNLOCK TABLES;
 
-DROP TABLE IF EXISTS SONG;
+--
+-- Table structure for table `ALBUM_CREATED_BY`
+--
 
-DROP TABLE IF EXISTS SONG_ALBUM;
+DROP TABLE IF EXISTS `ALBUM_CREATED_BY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ALBUM_CREATED_BY` (
+                                    `USER_ID` int NOT NULL,
+                                    `ALBUM_ID` int NOT NULL,
+                                    PRIMARY KEY (`USER_ID`,`ALBUM_ID`),
+                                    KEY `FK_CREA_CREA_ALBU` (`ALBUM_ID`),
+                                    CONSTRAINT `ALBUM_CREATED_BY_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `USER` (`USER_ID`) ON DELETE RESTRICT,
+                                    CONSTRAINT `ALBUM_CREATED_BY_ibfk_2` FOREIGN KEY (`ALBUM_ID`) REFERENCES `ALBUM` (`ALBUM_ID`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS RECEIPT;
+--
+-- Dumping data for table `ALBUM_CREATED_BY`
+--
 
-DROP TABLE IF EXISTS SING_BY;
+LOCK TABLES `ALBUM_CREATED_BY` WRITE;
+/*!40000 ALTER TABLE `ALBUM_CREATED_BY` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ALBUM_CREATED_BY` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `AUTHOR_SONG`
+--
 
-DROP TABLE IF EXISTS USER;
+DROP TABLE IF EXISTS `AUTHOR_SONG`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `AUTHOR_SONG` (
+                               `SONG_ID` int NOT NULL,
+                               `AUTHOR_ID` int NOT NULL,
+                               PRIMARY KEY (`SONG_ID`,`AUTHOR_ID`),
+                               KEY `AUTHOR_ID` (`AUTHOR_ID`),
+                               CONSTRAINT `AUTHOR_SONG_ibfk_1` FOREIGN KEY (`SONG_ID`) REFERENCES `SONG` (`SONG_ID`),
+                               CONSTRAINT `AUTHOR_SONG_ibfk_2` FOREIGN KEY (`AUTHOR_ID`) REFERENCES `USER` (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*==============================================================*/
-/* TABLE: ALBUM                                                 */
-/*==============================================================*/
-CREATE TABLE ALBUM (
-   ALBUM_ID INTEGER NOT NULL,
-   NUMBER_OF_SONG INTEGER,
-   TOTAL_LISTENER INTEGER,
-   ALBUM_NAME NVARCHAR(255) NOT NULL,
-   ALBUM_IMG NVARCHAR(255) NOT NULL,
-   DESCRIPTIONS NVARCHAR(255) NOT NULL,
-   TIME TIME,
-   DATE DATE,
-   PRIMARY KEY (ALBUM_ID)
-);
+--
+-- Dumping data for table `AUTHOR_SONG`
+--
 
+LOCK TABLES `AUTHOR_SONG` WRITE;
+/*!40000 ALTER TABLE `AUTHOR_SONG` DISABLE KEYS */;
+INSERT INTO `AUTHOR_SONG` VALUES (1,1);
+/*!40000 ALTER TABLE `AUTHOR_SONG` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/*==============================================================*/
-/* TABLE: AUTHOR_MUSIC                                          */
-/*==============================================================*/
-# CREATE TABLE AUTHOR_MUSIC (
-#   AUTHOR_ID INTEGER NOT NULL,
-#   MUSIC_ID INTEGER NOT NULL,
-#   PRIMARY KEY (AUTHOR_ID, MUSIC_ID)
-# );
+--
+-- Table structure for table `FOLLOW`
+--
 
-/*==============================================================*/
-/* TABLE: CREAT                                                 */
-/*==============================================================*/
-CREATE TABLE ALBUM_CREATED_BY (
-  USER_ID INTEGER NOT NULL,
-  ALBUM_ID INTEGER NOT NULL,
-  PRIMARY KEY (USER_ID, ALBUM_ID)
-);
+DROP TABLE IF EXISTS `FOLLOW`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `FOLLOW` (
+                          `USER_ID` int NOT NULL,
+                          `USER_FOLLOW_BY_ID` int NOT NULL,
+                          PRIMARY KEY (`USER_ID`,`USER_FOLLOW_BY_ID`),
+                          KEY `FK_FOLL_FOLL_USER` (`USER_FOLLOW_BY_ID`),
+                          CONSTRAINT `FOLLOW_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `USER` (`USER_ID`) ON DELETE RESTRICT,
+                          CONSTRAINT `FOLLOW_ibfk_2` FOREIGN KEY (`USER_FOLLOW_BY_ID`) REFERENCES `USER` (`USER_ID`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*==============================================================*/
-/* TABLE: FOLLOW                                                */
-/*==============================================================*/
-CREATE TABLE FOLLOW (
-    USER_ID INTEGER NOT NULL,
-    USER_FOLLOW_BY_ID INTEGER NOT NULL,
-    PRIMARY KEY (USER_ID, USER_FOLLOW_BY_ID)
-);
+--
+-- Dumping data for table `FOLLOW`
+--
 
-/*==============================================================*/
-/* TABLE: HISTORY                                               */
-/*==============================================================*/
-CREATE TABLE HISTORY (
-    LISTEN_DATE DATETIME NOT NULL,
-    USER_ID INTEGER NOT NULL,
-    MUSIC_ID INTEGER NOT NULL,
-    PRIMARY KEY (LISTEN_DATE, USER_ID, MUSIC_ID)
-);
+LOCK TABLES `FOLLOW` WRITE;
+/*!40000 ALTER TABLE `FOLLOW` DISABLE KEYS */;
+/*!40000 ALTER TABLE `FOLLOW` ENABLE KEYS */;
+UNLOCK TABLES;
 
-/*==============================================================*/
-/* TABLE: MUSIC                                                 */
-/*==============================================================*/
-CREATE TABLE SONG (
-    SONG_ID INTEGER NOT NULL,
-    SONG_NAME NVARCHAR(255),
-    SONG_IMG NVARCHAR(255) NOT NULL,
-    TOTAL_VIEW INTEGER,
-    DURATION INTEGER,
-    SONG_LOCATION NVARCHAR(255),
-    LYRICS JSON,
-    ADDED_DATE DATETIME,
-    PRIMARY KEY (SONG_ID)
-);
+--
+-- Table structure for table `HISTORY`
+--
 
-/*==============================================================*/
-/* TABLE: MUSIC_ALBUM                                           */
-/*==============================================================*/
-CREATE TABLE SONG_ALBUM (
-     SONG_ID INTEGER NOT NULL,
-     ALBUM_ID INTEGER NOT NULL,
-     PRIMARY KEY (SONG_ID, ALBUM_ID)
-);
+DROP TABLE IF EXISTS `HISTORY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `HISTORY` (
+                           `LISTEN_DATE` datetime NOT NULL,
+                           `USER_ID` int NOT NULL,
+                           `MUSIC_ID` int NOT NULL,
+                           PRIMARY KEY (`LISTEN_DATE`,`USER_ID`,`MUSIC_ID`),
+                           KEY `FK_HIST_HIS__MUSI` (`MUSIC_ID`),
+                           KEY `FK_HIST_USER_USER` (`USER_ID`),
+                           CONSTRAINT `HISTORY_ibfk_1` FOREIGN KEY (`MUSIC_ID`) REFERENCES `SONG` (`SONG_ID`) ON DELETE RESTRICT,
+                           CONSTRAINT `HISTORY_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `USER` (`USER_ID`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-/*==============================================================*/
-/* TABLE: RECEIPT                                               */
-/*==============================================================*/
-CREATE TABLE RECEIPT (
-    ID_RECEIPT NVARCHAR(255) NOT NULL,
-    ID_USER INTEGER NOT NULL,
-    DATE_BUY DATE,
-    TOTAL_PRICE INTEGER,
-    PAYMENT NVARCHAR(255),
-    RETAILER NVARCHAR(255),
-    ADDRESS NVARCHAR(255),
-    VAT_NUMBER INTEGER,
-    PRODUCT NVARCHAR(255),
-    TOTAL_TAX INTEGER,
-    TAX INTEGER,
-    PRICE INTEGER,
-    PRIMARY KEY (ID_RECEIPT)
-);
+--
+-- Dumping data for table `HISTORY`
+--
 
-/*==============================================================*/
-/* TABLE: SING_BY                                                  */
-/*==============================================================*/
-CREATE TABLE SING_BY (
-     AUTHOR_ID INTEGER NOT NULL,
-     MUSIC_ID INTEGER NOT NULL,
-     PRIMARY KEY (AUTHOR_ID, MUSIC_ID)
-);
+LOCK TABLES `HISTORY` WRITE;
+/*!40000 ALTER TABLE `HISTORY` DISABLE KEYS */;
+/*!40000 ALTER TABLE `HISTORY` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `RECEIPT`
+--
 
-/*==============================================================*/
-/* TABLE: USER                                                */
-/*==============================================================*/
-CREATE TABLE USER (
-      USER_ID INTEGER NOT NULL,
-      NAME NVARCHAR(255),
-      PASSWORD NVARCHAR(255),
-      GENDER BOOLEAN,
-      BIRTH DATE,
-      VERIFY BOOLEAN,
-      COUNTRY NVARCHAR(255),
-      EMAIL NVARCHAR(255),
-      HAVE_PREMIUM BOOLEAN,
-      TYPE INTEGER,
-      MONTHLY_LISTENER INTEGER,
-      PRIMARY KEY (USER_ID)
-);
+DROP TABLE IF EXISTS `RECEIPT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `RECEIPT` (
+                           `ID_RECEIPT` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+                           `ID_USER` int NOT NULL,
+                           `DATE_BUY` date DEFAULT NULL,
+                           `TOTAL_PRICE` int DEFAULT NULL,
+                           `PAYMENT` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                           `RETAILER` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                           `ADDRESS` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                           `VAT_NUMBER` int DEFAULT NULL,
+                           `PRODUCT` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                           `TOTAL_TAX` int DEFAULT NULL,
+                           `TAX` int DEFAULT NULL,
+                           `PRICE` int DEFAULT NULL,
+                           PRIMARY KEY (`ID_RECEIPT`),
+                           KEY `FK_RECE_BUY_USER` (`ID_USER`),
+                           CONSTRAINT `RECEIPT_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `USER` (`USER_ID`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-#
-# ALTER TABLE AUTHOR_MUSIC
-#     ADD FOREIGN KEY FK_AUTH_AUTH_AUTH (AUTHOR_ID)
-#         REFERENCES USER (USER_ID)
-#         ON DELETE RESTRICT;
-#
-# ALTER TABLE AUTHOR_MUSIC
-#     ADD FOREIGN KEY FK_AUTH_AUTH_MUSI (MUSIC_ID)
-#         REFERENCES SONG (SONG_ID)
-#         ON DELETE RESTRICT;
+--
+-- Dumping data for table `RECEIPT`
+--
 
-ALTER TABLE ALBUM_CREATED_BY
-    ADD FOREIGN KEY FK_CREA_CREA_USER (USER_ID)
-        REFERENCES USER (USER_ID)
-        ON DELETE RESTRICT;
+LOCK TABLES `RECEIPT` WRITE;
+/*!40000 ALTER TABLE `RECEIPT` DISABLE KEYS */;
+/*!40000 ALTER TABLE `RECEIPT` ENABLE KEYS */;
+UNLOCK TABLES;
 
-ALTER TABLE ALBUM_CREATED_BY
-    ADD FOREIGN KEY FK_CREA_CREA_ALBU (ALBUM_ID)
-        REFERENCES ALBUM (ALBUM_ID)
-        ON DELETE RESTRICT;
+--
+-- Table structure for table `SING_BY`
+--
 
-ALTER TABLE FOLLOW
-    ADD FOREIGN KEY FK_FOLL_FOLL_USER (USER_ID)
-        REFERENCES USER (USER_ID)
-        ON DELETE RESTRICT;
+DROP TABLE IF EXISTS `SING_BY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `SING_BY` (
+                           `AUTHOR_ID` int NOT NULL,
+                           `MUSIC_ID` int NOT NULL,
+                           PRIMARY KEY (`AUTHOR_ID`,`MUSIC_ID`),
+                           KEY `FK_SING_BY_SING_BY_MUSI` (`MUSIC_ID`),
+                           CONSTRAINT `SING_BY_ibfk_1` FOREIGN KEY (`AUTHOR_ID`) REFERENCES `USER` (`USER_ID`) ON DELETE RESTRICT,
+                           CONSTRAINT `SING_BY_ibfk_2` FOREIGN KEY (`MUSIC_ID`) REFERENCES `SONG` (`SONG_ID`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-ALTER TABLE FOLLOW
-    ADD FOREIGN KEY FK_FOLL_FOLL_USER (USER_FOLLOW_BY_ID)
-        REFERENCES USER (USER_ID)
-        ON DELETE RESTRICT;
+--
+-- Dumping data for table `SING_BY`
+--
 
-ALTER TABLE HISTORY
-    ADD FOREIGN KEY FK_HIST_HIS__MUSI (MUSIC_ID)
-        REFERENCES SONG (SONG_ID)
-        ON DELETE RESTRICT;
+LOCK TABLES `SING_BY` WRITE;
+/*!40000 ALTER TABLE `SING_BY` DISABLE KEYS */;
+INSERT INTO `SING_BY` VALUES (1,1);
+/*!40000 ALTER TABLE `SING_BY` ENABLE KEYS */;
+UNLOCK TABLES;
 
-ALTER TABLE HISTORY
-    ADD FOREIGN KEY FK_HIST_USER_USER (USER_ID)
-        REFERENCES USER (USER_ID)
-        ON DELETE RESTRICT;
+--
+-- Table structure for table `SONG`
+--
 
-ALTER TABLE SONG_ALBUM
-    ADD FOREIGN KEY FK_MUSI_MUSI_MUSI (SONG_ID)
-        REFERENCES SONG (SONG_ID)
-        ON DELETE RESTRICT;
+DROP TABLE IF EXISTS `SONG`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `SONG` (
+                        `SONG_ID` int NOT NULL,
+                        `SONG_NAME` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                        `SONG_IMG` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+                        `TOTAL_VIEW` int DEFAULT NULL,
+                        `DURATION` int DEFAULT NULL,
+                        `SONG_LOCATION` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                        `LYRICS` json DEFAULT NULL,
+                        `ADDED_DATE` datetime DEFAULT NULL,
+                        PRIMARY KEY (`SONG_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-ALTER TABLE SONG_ALBUM
-    ADD FOREIGN KEY FK_MUSI_MUSI_ALBU (ALBUM_ID)
-        REFERENCES ALBUM (ALBUM_ID)
-        ON DELETE RESTRICT;
+--
+-- Dumping data for table `SONG`
+--
 
-ALTER TABLE RECEIPT
-    ADD FOREIGN KEY FK_RECE_BUY_USER (ID_USER)
-        REFERENCES USER (USER_ID)
-        ON DELETE RESTRICT;
+LOCK TABLES `SONG` WRITE;
+/*!40000 ALTER TABLE `SONG` DISABLE KEYS */;
+INSERT INTO `SONG` VALUES (1,'Akuma no Ko','/Src/Client/img/Album/AkumaNoKo.jpg',0,224,'/Src/Client/mp3/AkumaNoKo.mp3','[[1, \"鉄の弾が 正義の証明\"], [4, \"貫けば 英雄に近づいた\"], [6, \"その目を閉じて 触れてみれば\"], [9, \"同じ形 同じ体温の悪魔\"], [15, \"僕はダメで あいつはいいの？\"], [17, \"そこに壁があっただけなのに\"], [19, \"生まれてしまった 運命嘆くな\"], [22, \"僕らはみんな 自由なんだから\"], [26, \"鳥のように 羽があれば\"], [31, \"どこへだって行けるけど\"], [37, \"帰る場所が なければ\"], [41, \"きっとどこへも行けない\"], [46, \"ただただ生きるのは嫌だ\"], [52, \"世界は残酷だ それでも君を愛すよ\"], [62, \"なにを犠牲にしても それでも君を守るよ\"], [72, \"間違いだとしても 疑ったりしない\"], [78, \"正しさとは 自分のこと 強く信じることだ\"], [93, \"鉄の雨が 降り散る情景\"], [96, \"テレビの中 映画に見えたんだ\"], [98, \"戦争なんて 愚かな凶暴\"], [102, \"関係ない 知らない国の話\"], [104, \"それならなんで あいつ憎んで\"], [106, \"黒い気持ち 隠しきれない理由\"], [109, \"説明だって できやしないんだ\"], [111, \"僕らはなんて 矛盾ばっかなんだ\"], [137, \"この言葉も 訳されれば\"], [143, \"本当の意味は伝わらない\"], [148, \"信じるのは その目を開いて\"], [153, \"触れた世界だけ\"], [157, \"ただただ生きるのは嫌だ\"], [166, \"世界は残酷だ それでも君を愛すよ\"], [176, \"なにを犠牲にしても それでも君を守るよ\"], [186, \"選んだ人の影 捨てたものの屍\"], [191, \"気づいたんだ 自分の中 育つのは悪魔の子\"], [197, \"正義の裏 犠牲の中 心には悪魔の子\"]]','2023-04-07 01:35:49');
+/*!40000 ALTER TABLE `SONG` ENABLE KEYS */;
+UNLOCK TABLES;
 
-ALTER TABLE SING_BY
-    ADD FOREIGN KEY FK_SING_BY_SING_BY_SING_BY (AUTHOR_ID)
-        REFERENCES USER (USER_ID)
-        ON DELETE RESTRICT;
+--
+-- Table structure for table `SONG_ALBUM`
+--
 
-ALTER TABLE SING_BY
-    ADD FOREIGN KEY FK_SING_BY_SING_BY_MUSI (MUSIC_ID)
-        REFERENCES SONG (SONG_ID)
-        ON DELETE RESTRICT;
+DROP TABLE IF EXISTS `SONG_ALBUM`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `SONG_ALBUM` (
+                              `SONG_ID` int NOT NULL,
+                              `ALBUM_ID` int NOT NULL,
+                              PRIMARY KEY (`SONG_ID`,`ALBUM_ID`),
+                              KEY `FK_MUSI_MUSI_ALBU` (`ALBUM_ID`),
+                              CONSTRAINT `SONG_ALBUM_ibfk_1` FOREIGN KEY (`SONG_ID`) REFERENCES `SONG` (`SONG_ID`) ON DELETE RESTRICT,
+                              CONSTRAINT `SONG_ALBUM_ibfk_2` FOREIGN KEY (`ALBUM_ID`) REFERENCES `ALBUM` (`ALBUM_ID`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `SONG_ALBUM`
+--
 
+LOCK TABLES `SONG_ALBUM` WRITE;
+/*!40000 ALTER TABLE `SONG_ALBUM` DISABLE KEYS */;
+INSERT INTO `SONG_ALBUM` VALUES (1,1);
+/*!40000 ALTER TABLE `SONG_ALBUM` ENABLE KEYS */;
+UNLOCK TABLES;
 
-INSERT INTO SONG(SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, SONG_LOCATION, LYRICS, ADDED_DATE) VALUE (
-    1, N'Akuma no Ko', '/Src/Client/img/Album/AkumaNoKo.jpg',0, 224, '/Src/Client/mp3/AkumaNoKo.mp3',
-    '[[1,"鉄の弾が 正義の証明"],[4,"貫けば 英雄に近づいた"],[6,"その目を閉じて 触れてみれば"],[9,"同じ形 同じ体温の悪魔"],[15,"僕はダメで あいつはいいの？"],[17,"そこに壁があっただけなのに"],[19,"生まれてしまった 運命嘆くな"],[22,"僕らはみんな 自由なんだから"],[26,"鳥のように 羽があれば"],[31,"どこへだって行けるけど"],[37,"帰る場所が なければ"],[41,"きっとどこへも行けない"],[46,"ただただ生きるのは嫌だ"],[52,"世界は残酷だ それでも君を愛すよ"],[62,"なにを犠牲にしても それでも君を守るよ"],[72,"間違いだとしても 疑ったりしない"],[78,"正しさとは 自分のこと 強く信じることだ"],[93,"鉄の雨が 降り散る情景"],[96,"テレビの中 映画に見えたんだ"],[98,"戦争なんて 愚かな凶暴"],[102,"関係ない 知らない国の話"],[104,"それならなんで あいつ憎んで"],[106,"黒い気持ち 隠しきれない理由"],[109,"説明だって できやしないんだ"],[111,"僕らはなんて 矛盾ばっかなんだ"],[137,"この言葉も 訳されれば"],[143,"本当の意味は伝わらない"],[148,"信じるのは その目を開いて"],[153,"触れた世界だけ"],[157,"ただただ生きるのは嫌だ"],[166,"世界は残酷だ それでも君を愛すよ"],[176,"なにを犠牲にしても それでも君を守るよ"],[186,"選んだ人の影 捨てたものの屍"],[191,"気づいたんだ 自分の中 育つのは悪魔の子"],[197,"正義の裏 犠牲の中 心には悪魔の子"]]',
-    CURRENT_TIMESTAMP
-    )
+--
+-- Table structure for table `USER`
+--
 
--- DATA TEST LINH TINH
--- THÊM VÀO BẢN ALBUM-- --
-# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('1', '3', '0', 'S1', '...', 'MÔ TẢ', '1:00', '2023-4-4');
-# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('2', '2', '0', 'S2', '...', 'MÔ TẢ', '1:00', '2023-4-4');
-# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('3', '1', '0', 'S3', '...', 'MÔ TẢ', '1:00', '2023-4-4');
-# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('4', '3', '0', 'S4', '...', 'MÔ TẢ', '1:00', '2023-4-4');
-# INSERT INTO `SPOTIFY`.`ALBUM` (ALBUM_ID, NUMBER_OF_SONG, TOTAL_LISTENER, `ALBUM_NAME`, `ALBUM_IMG`, `DESCRIPTIONS`, `TIME`, `DATE`)VALUES ('5', '1', '0', 'S5', '...', 'MÔ TẢ', '1:00', '2023-4-4');
-# --  THÊM VÀO BÀI HÁT MUSIC
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('1', 'MUSIC1', '...', '0', 70, '...', '0');
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('2', 'MUSIC2', '...', '9', 70, '...', '0');
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('3', 'MUSIC3', '...', '8', 70, '...', '0');
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('4', 'MUSIC4', '...', '7', 70, '...', '0');
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('5', 'MUSIC5', '...', '6', 70, '...', '0');
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('6', 'MUSIC6', '...', '5', 70, '...', '0');
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('7', 'MUSIC7', '...', '4', 70, '...', '0');
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('8', 'MUSIC8', '...', '3', 70, '...', '0');
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('9', 'MUSIC9', '...', '2', 70, '...', '0');
-# INSERT INTO `SPOTIFY`.SONG (SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, DURATION, `SONG_LOCATION`, `LYRICS`)VALUES ('10', 'MUSIC10', '...', '1', 70, '...', '0');
-# -- THÊM USER
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`) VALUES ('1', 'USER1', '123123', '1', '1', 'VN', '1', '2');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('2', 'USER2', '123123', '1', '0', 'VN', '0', '3');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('3', 'USER3', '123123', '1', '1', 'VN', '0', '3');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('4', 'USER4', '123123', '1', '1', 'VN', '0', '3');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('5', 'USER5', '123123', '0', '1', 'VN', '0', '3');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('6', 'USER6', '123123', '0', '0', 'VN', '0', '3');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('7', 'USER7', '123123', '0', '0', 'VN', '1', '2');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('8', 'USER8', '123123', '0', '0', 'VN', '1', '3');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('9', 'USER9', '123123', '1', '0', 'VN', '1', '2');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('10', 'USER10', '123123', '1', '0', 'VN', '1', '3');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('11', 'USER11', '123123', '1', '0', 'VN', '1', '2');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('12', 'USER12', '123123', '0', '1', 'VN', '1', '1');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('13', 'USER13', '123123', '0', '0', 'VN', '1', '1');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('14', 'USER14', '123123', '0', '0', 'VN', '1', '1');
-# INSERT INTO `SPOTIFY`.`USER` (USER_ID, `NAME`, `PASSWORD`, `GENDER`, `VERIFY`, `COUNTRY`, HAVE_PREMIUM, `TYPE`)VALUES ('15', 'USER15', '123123', '1', '0', 'VN', '1', '1');
-# -- THÊM PHIẾU MUA PRIMIUM
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('1', '5');
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('2', '4');
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('3', '3');
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('4', '2');
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('5', '3');
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('6', '5');
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('7', '4');
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('8', '3');
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('9', '2');
-# INSERT INTO `SPOTIFY`.`RECEIPT` (`ID_RECEIPT`, `ID_USER`) VALUES ('10', '1');
-# -- THÊM TÁC GIẢ CỦA BÀI HÁT
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '1');
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '2');
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('3', '3');
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('4', '4');
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('5', '5');
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('4', '6');
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('4', '7');
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('3', '8');
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '9');
-# INSERT INTO `SPOTIFY`.`AUTHOR_MUSIC` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '10');
-# -- NGƯỜI TẠO RA ALBUM
-# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('1', '1');
-# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('2', '2');
-# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('5', '3');
-# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('6', '4');
-# INSERT INTO `SPOTIFY`.`ALBUM_CREATED_BY` (USER_ID, ALBUM_ID)VALUES ('7', '5');
-# -- F0LLOW
-# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('1', '4');
-# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('2', '3');
-# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('3', '2');
-# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('4', '2');
-# INSERT INTO `SPOTIFY`.`FOLLOW` (USER_ID, USER_FOLLOW_BY_ID)VALUES ('5', '1');
-# -- NHẠC CỦA ALBUM NÀO
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('1', '2');
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('2', '3');
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('3', '4');
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('4', '5');
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('5', '5');
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('6', '4');
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('7', '3');
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('8', '2');
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('9', '1');
-# INSERT INTO `SPOTIFY`.SONG_ALBUM (SONG_ID, ALBUM_ID)VALUES ('10', '1');
-# -- THÊM CA SĨ HÁT BÀI HÁT NÀO
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('1', '1');
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('2', '1');
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('3', '1');
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('4', '1');
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('5', '9');
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('6', '9');
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('7', '9');
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('8', '7');
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('9', '7');
-# INSERT INTO `SPOTIFY`.`SING_BY` (AUTHOR_ID, MUSIC_ID)VALUES ('10', '7');
+DROP TABLE IF EXISTS `USER`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `USER` (
+                        `USER_ID` int NOT NULL,
+                        `NAME` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                        `PASSWORD` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                        `AVATAR` varchar(100) NOT NULL,
+                        `GENDER` tinyint(1) DEFAULT NULL,
+                        `BIRTH` date DEFAULT NULL,
+                        `VERIFY` tinyint(1) DEFAULT NULL,
+                        `COUNTRY` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                        `EMAIL` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+                        `HAVE_PREMIUM` tinyint(1) DEFAULT NULL,
+                        `TYPE` int DEFAULT NULL,
+                        `MONTHLY_LISTENER` int DEFAULT NULL,
+                        PRIMARY KEY (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-# -- TRUY SUẤT THÔNG TIN ALBUM
-# SELECT ALBUM_ID,ALBUM_NAME,ALBUM_IMG,DESCRIPTIONS, TOTAL_LISTENER
-# FROM ALBUM;
-# -- WHERE  ALBUM_ID = 1 ; /* ĐIỀN THÔNG TIN ID ALBUM MÚN TÌM VÔ ĐÂY NẾU CẦN */
-#
-# -- TRUY XUẤT NGƯỜI LÀ CA SĨ
-# # SELECT ID_USER,NAME,MONTHLY_LISTENER,VERIFY,AVATAR
-# # FROM USER
-# # WHERE /* ID_USER = 1 AND */ /* TÌM AI THÌ ĐIỀN THÔNG TIN NÓ VÔ ĐÂY */ TYPE = "2" OR TYPE = "4"; --  ƯỚC LƯỢNG 1 LÀ DÂN THƯỜNG 2 LÀ CA SĨ 3 LÀ TÁC GIẢ 4 LÀ CA SĨ TÁC GIẢ
-#
-# -- TRUY XUẤT BÀI THÔNG TIN BÀI HÁT
-# SELECT SONG.SONG_ID, SONG_NAME, SONG_IMG, TOTAL_VIEW, SONG.DURATION, ALBUM_NAME
-# FROM SONG,ALBUM,
-#      SONG_ALBUM
-# WHERE  SONG.SONG_ID = SONG_ALBUM.SONG_ID AND SONG_ALBUM.ALBUM_ID = ALBUM.ALBUM_ID; /*AND MUSIC.ID_MUSIC = "1";*/-- TÌM BÀI NÀO THÌ CHO ID VÔ CHỖ NÀY
-#
-# -- TRUY XUẤT CA SĨ CỦA BÀI HÁT
-# SELECT USER_ID, SONG_NAME, NAME, MONTHLY_LISTENER, VERIFY /* CẦN CÁI NÀO THÌ LẤY */
-# FROM SONG,SING_BY,USER
-# WHERE USER_ID = AUTHOR_ID AND SONG.SONG_ID = SING_BY.MUSIC_ID; /*AND MUSIC_ID =*/ /* TÌM ID BÀI NÀO CHỖ NÀY NẾU TÌM HẾT THÌ BỎ */
-#
-# -- TRUY XUẤT TÁC GIẢ BÀI HÁT
-# SELECT USER_ID, SONG_NAME,NAME,MONTHLY_LISTENER,VERIFY
-# FROM SONG,AUTHOR_MUSIC,USER
-# WHERE SONG.SONG_ID = AUTHOR_MUSIC.MUSIC_ID AND AUTHOR_ID = USER_ID /* AND USER_ID= */;
-#
-# -- TRUY XUẤT PHIẾU MUA CỦA AI
-# SELECT * -- CẦN LẤY THÔNG TIN J THÊM VÔ CHỖ NÀY
-# FROM USER , RECEIPT
-# WHERE USER.USER_ID = RECEIPT.ID_USER /* AND ID_USER =  */ ;
-#
-# # -- TRUY SUẤT LỊCH SỬ XEM
-# SELECT * -- HMMM CẦN LẤY THÔNG TIN NÀO THÊM VÔ NHA :( CHƯA CÓ THÊM DATA VÀO LỊCH SỬ
-# FROM USER,HISTORY,ALBUM,
-#      SONG
-# WHERE USER.USER_ID = HISTORY.ID_USER AND ALBUM.ALBUM_ID = HISTORY.ID_ALBUM AND HISTORY.MUSIC_ID = SONG.SONG_ID /* AND ID_USER =  */
+--
+-- Dumping data for table `USER`
+--
+
+LOCK TABLES `USER` WRITE;
+/*!40000 ALTER TABLE `USER` DISABLE KEYS */;
+INSERT INTO `USER` VALUES (1,'Ai Higuchi','','/Src/Client/img/Album/AkumaNoKo.jpg',1,'2003-07-27',1,'Japan','',1,2,100);
+/*!40000 ALTER TABLE `USER` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-04-10 15:37:56
