@@ -218,9 +218,7 @@ async function loadDataIntoSearchResult(search_result, input_search) {
     await fetchData(input_search);
 
 //    This is for top result
-    let firstMatchArtist = artists.find(element => {
-        return element.name.toLowerCase().includes(input_search.toLowerCase());
-    });
+    let firstMatchArtist = artists[0];
     if (!firstMatchArtist) {
         artist_wrapper.innerHTML = '';
     } else {
@@ -236,13 +234,8 @@ async function loadDataIntoSearchResult(search_result, input_search) {
     }
 
 //     This is for song result
-    let song_result = '';
-    for (let [index, song] of songs.entries()) {
-        if (index === 4) {
-            break;
-        }
-        if (song.name.substring(0, input_search.length).toLowerCase() === input_search.toLowerCase()) {
-            song_result += `<div id="${song.id}" class="row align-items-center song-row rounded">
+    song_wrapper.innerHTML = songs
+        .map(song => `<div id="${song.id}" class="row align-items-center song-row rounded">
                                 <div class="col-10">
                                     <div class="d-flex align-items-center">
                                         <div class="square d-flex align-items-center justify-content-center"
@@ -265,47 +258,32 @@ async function loadDataIntoSearchResult(search_result, input_search) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>`
-        }
-    }
-    song_wrapper.innerHTML = song_result;
+                            </div>`)
+        .join('');
     // Add click event for favorite icon and for song rows
     addClickEventForFav_icons(search_result.querySelectorAll('.favorite-icon'));
     addClickEventForSong(Array.from(song_wrapper.children));
 
 //     This is for artist result
-    let artist_result = '';
-    for (let [index, element] of artists.entries()) {
-        if (index === 7) {
-            break;
-        }
-        if (element.name.substring(0, input_search.length).toLowerCase() === input_search.toLowerCase()) {
-            artist_result += `<div id="${element.id}" class="card rounded">
-                                    <div class="circle"
-                                        style="background-image: url('${element.avatar}');
-                                               background-position: center center;">
-                                        <div class='play-icon'>
-                                            <i class='fa-solid fa-play'></i>
-                                        </div>
+    artist_row_display.innerHTML = artists
+        .map(element => `<div id="${element.id}" class="card rounded">
+                                <div class="circle"
+                                    style="background-image: url('${element.avatar}');
+                                           background-position: center center;">
+                                    <div class='play-icon'>
+                                        <i class='fa-solid fa-play'></i>
                                     </div>
-                                    <h1 class="name-light pt-2">${element.name}</h1>
-                                    <h1 class="sub-name">Artist</h1>
-                               </div>`;
-        }
-    }
-
-    artist_row_display.innerHTML = artist_result;
+                                </div>
+                                <h1 class="name-light pt-2">${element.name}</h1>
+                                <h1 class="sub-name">Artist</h1>
+                            </div>`)
+        .join('');
     // add event click for artist display row
     addClickEventForArtist(Array.from(artist_row_display.children));
 
 //     This is for album result
-    let album_result = '';
-    for (let [index, element] of albums.entries()) {
-        if (index === 7) {
-            break;
-        }
-        if (element.name.substring(0, input_search.length).toLowerCase() === input_search.toLowerCase()) {
-            album_result += `<div id="${element.id}" class="card rounded">
+    album_row_display.innerHTML = albums
+        .map(element => `<div id="${element.id}" class="card rounded">
                                 <div class="square rounded"
                                     style="background-image: url('${element.albumImg}');
                                            background-position: center center;">
@@ -315,11 +293,8 @@ async function loadDataIntoSearchResult(search_result, input_search) {
                                 </div>
                                 <h1 class="name-light pt-2">${element.name}</h1>
                                 <h1 class="sub-name">${element.description}</h1>
-                            </div>`;
-        }
-    }
-
-    album_row_display.innerHTML = album_result;
+                            </div>`)
+        .join('');
     // add event click for album display row
     addClickEventForAlbum(Array.from(album_row_display.children));
 }
@@ -337,9 +312,9 @@ document.getElementById("input-search").addEventListener("input", e => {
             artists = data.artists;
             albums = data.albums;
 
-            songs = songs.map(element => new Song(element.ID_MUSIC, element.MUSIC_NAME, element.NAME, element.TIME, element.MUSIC_IMG, null, null));
-            artists = artists.map(element => new Artist(element.ID_USER, element.NAME, element.avatar, null, null));
-            albums = albums.map(element => new Album(element.ID_ALBUM, element.ALBUM_NAME, element.DESCRIPTIONS, element.ALBUM_IMG, null));
+            songs = songs.map(element => new Song(element.SONG_ID, element.SONG_NAME, element.NAME, element.DURATION, element.SONG_IMG, null, null));
+            artists = artists.map(element => new Artist(element.USER_ID, element.NAME, element.AVATAR, null, null));
+            albums = albums.map(element => new Album(element.ALBUM_ID, element.ALBUM_NAME, element.DESCRIPTIONS, element.ALBUM_IMG, null));
             loadDataIntoSearchResult(search_result, e.target.value);
         });
 // =============================================================================================
