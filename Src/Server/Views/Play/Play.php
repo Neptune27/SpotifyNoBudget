@@ -18,9 +18,6 @@
 <script type="module" src="/Src/Client/js/Sidebar.js" defer></script>
 <script type="module" src="/Src/Client/js/Search/search.js" defer></script>
 
-
-
-
 <main style="display: flex; background-color: var(--background-color)" data-sidebar="Home">
 
 

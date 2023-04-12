@@ -15,9 +15,12 @@ const getRecentlyAdded = async () => {
         TOTAL_VIEW : string
     }[] = await fetchHandle.json();
 
-    for (const datum of data) {
-        
-    }
+    return data;
+
+}
+
+const createHomePaneContent = async () => {
+    const data = await getRecentlyAdded();
 
 }
 

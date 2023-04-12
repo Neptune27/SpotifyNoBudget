@@ -65,7 +65,7 @@ declare class AudioPlayer {
     setupAudioImg: (imgUrl: string) => void;
     setupAudio: (music: IMusic) => void;
     private updateSliderDuration;
-    private setupQueue;
+    setupQueue: (playlist: IMusic[]) => void;
     private playAudio;
     private backwardAudio;
     private forwardAudio;

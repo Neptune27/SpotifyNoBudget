@@ -73,18 +73,23 @@ const audioPlayerQueue = AudioPlayerQueueController.getInstance()
 // ==============================================================
 
 // Fetch data for search
-fetch("/Search/getDataForSearch")
-    .then(res => res.json())
-    .then(data => {
-        songs = data.songs;
-        artists = data.artists;
-        albums = data.albums;
+const fetchData = async (cont = "") => {
+    let fetchUrl = "/Search/getDataForSearch"
+    if (cont !== "") {
+        fetchUrl = `/Search/getDataForSearch/${cont}`
+    }
+    const res = await fetch(fetchUrl)
+    const data = await res.json();
+    songs = data.songs;
+    artists = data.artists;
+    albums = data.albums;
 
-        songs = songs.map(element => new Song(element.SONG_ID, element.SONG_NAME, element.NAME, element.DURATION, element.SONG_IMG, null, null));
-        artists = artists.map(element => new Artist(element.USER_ID, element.NAME, element.AVATAR, null, null));
-        albums = albums.map(element => new Album(element.ALBUM_ID, element.ALBUM_NAME, element.DESCRIPTIONS, element.ALBUM_IMG, null));
-        loadDataIntoSearchResult(document.getElementById("search-result"), document.getElementById("input-search"));
-    });
+    songs = songs.map(element => new Song(element.SONG_ID, element.SONG_NAME, element.NAME, element.DURATION, element.SONG_IMG, null, null));
+    artists = artists.map(element => new Artist(element.USER_ID, element.NAME, element.AVATAR, null, null));
+    albums = albums.map(element => new Album(element.ALBUM_ID, element.ALBUM_NAME, element.DESCRIPTIONS, element.ALBUM_IMG, null));
+}
+await fetchData()
+loadDataIntoSearchResult(document.getElementById("search-result"), document.getElementById("input-search").value);
 // =============================================================================================
 
 
@@ -150,23 +155,28 @@ function addClickEventForArtist(artistRow = document.querySelectorAll('#artist-d
             e.stopPropagation();
             let artistId = element.getAttribute("id");
 
-            // Fetch API and render
-            fetch(`/Artist/getDataArtist/${artistId}`)
-                .then(res => res.json())
-                .then(data => {
-                    let temp = data.artist[0];
-                    artist = new Artist(temp.USER_ID, temp.NAME, temp.AVATAR, temp.MONTHLY_LISTENER, temp.VERIFY);
-                    albumsArtist = data.albums.map(element => new Album(element.ALBUM_ID, element.ALBUM_NAME,
-                                                element.DESCRIPTIONS, element.ALBUM_IMG, element.TOTAL_LISTENER));
+            createArtistPage(artistId)
 
-                    songsArtist = data.songs.map(element => new Song(element.SONG_ID, element.SONG_NAME, element.ARTIST, element.DURATION,
-                                                    element.SONG_IMG, element.TOTAL_VIEW, element.ALBUM_NAME));
-                    artist_homepageInit();
-
-                    this.closest('main').setAttribute('data-sidebar','Artist');
-                });
         });
     });
+}
+
+const createArtistPage = (artistId) => {
+    // Fetch API and render
+    fetch(`/Artist/getDataArtist/${artistId}`)
+        .then(res => res.json())
+        .then(data => {
+            let temp = data.artist[0];
+            artist = new Artist(temp.USER_ID, temp.NAME, temp.AVATAR, temp.MONTHLY_LISTENER, temp.VERIFY);
+            albumsArtist = data.albums.map(element => new Album(element.ALBUM_ID, element.ALBUM_NAME,
+                element.DESCRIPTIONS, element.ALBUM_IMG, element.TOTAL_LISTENER));
+
+            songsArtist = data.songs.map(element => new Song(element.SONG_ID, element.SONG_NAME, element.ARTIST, element.DURATION,
+                element.SONG_IMG, element.TOTAL_VIEW, element.ALBUM_NAME));
+            artist_homepageInit();
+
+            document.querySelector("main").setAttribute('data-sidebar','Artist');
+        });
 }
 
 // Add click event for album display row to show album id
@@ -187,22 +197,7 @@ const addArtistListener = () => {
         if (artistExist) {
             let artistId = artistExist.getAttribute("id");
 
-            // Fetch API and render
-            fetch(`/Artist/getDataArtist/${artistId}`)
-                .then(res => res.json())
-                .then(data => {
-                    let temp = data.artist[0];
-                    artist = new Artist(temp.USER_ID, temp.NAME, temp.AVATAR, temp.MONTHLY_LISTENER, temp.VERIFY);
-
-                    albumsArtist = data.albums.map(element => new Album(element.ALBUM_ID, element.ALBUM_NAME,
-                        element.DESCRIPTIONS, element.ALBUM_IMG, element.LISTENERS));
-                    songsArtist = data.songs.map(element => new Song(element.SONG_ID, element.SONG_NAME, element.ARTIST, element.DURATION,
-                        element.SONG_IMG, element.TOTAL_VIEW, element.ALBUM_NAME));
-
-                    artist_homepageInit();
-
-                    this.closest('main').setAttribute('data-sidebar','Artist');
-                });
+            createArtistPage(artistId)
         }
     });
 }
@@ -214,15 +209,17 @@ addArtistListener()
   Tìm kiếm phải lấy CSDL đem về để xử lý chứ.
   Còn vụ cái firstMatchArtist nữa, match dạng include chứ đừng dạng chữ đầu tiên.
 */
-function loadDataIntoSearchResult(search_result, input_search) {
+async function loadDataIntoSearchResult(search_result, input_search) {
     let artist_wrapper = search_result.querySelector('#artist-wrapper');
     let song_wrapper = search_result.querySelector('#song-wrapper');
     let artist_row_display = search_result.querySelector('#artist-display');
     let album_row_display = search_result.querySelector('#album-display');
 
+    await fetchData(input_search);
+
 //    This is for top result
     let firstMatchArtist = artists.find(element => {
-        return element.name.toLowerCase().includes(input_search.value.toLowerCase());
+        return element.name.toLowerCase().includes(input_search.toLowerCase());
     });
     if (!firstMatchArtist) {
         artist_wrapper.innerHTML = '';
@@ -244,7 +241,7 @@ function loadDataIntoSearchResult(search_result, input_search) {
         if (index === 4) {
             break;
         }
-        if (song.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
+        if (song.name.substring(0, input_search.length).toLowerCase() === input_search.toLowerCase()) {
             song_result += `<div id="${song.id}" class="row align-items-center song-row rounded">
                                 <div class="col-10">
                                     <div class="d-flex align-items-center">
@@ -282,7 +279,7 @@ function loadDataIntoSearchResult(search_result, input_search) {
         if (index === 7) {
             break;
         }
-        if (element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
+        if (element.name.substring(0, input_search.length).toLowerCase() === input_search.toLowerCase()) {
             artist_result += `<div id="${element.id}" class="card rounded">
                                     <div class="circle"
                                         style="background-image: url('${element.avatar}');
@@ -307,7 +304,7 @@ function loadDataIntoSearchResult(search_result, input_search) {
         if (index === 7) {
             break;
         }
-        if (element.name.substring(0, input_search.value.length).toLowerCase() === input_search.value.toLowerCase()) {
+        if (element.name.substring(0, input_search.length).toLowerCase() === input_search.toLowerCase()) {
             album_result += `<div id="${element.id}" class="card rounded">
                                 <div class="square rounded"
                                     style="background-image: url('${element.albumImg}');
@@ -343,7 +340,7 @@ document.getElementById("input-search").addEventListener("input", e => {
             songs = songs.map(element => new Song(element.ID_MUSIC, element.MUSIC_NAME, element.NAME, element.TIME, element.MUSIC_IMG, null, null));
             artists = artists.map(element => new Artist(element.ID_USER, element.NAME, element.avatar, null, null));
             albums = albums.map(element => new Album(element.ID_ALBUM, element.ALBUM_NAME, element.DESCRIPTIONS, element.ALBUM_IMG, null));
-            loadDataIntoSearchResult(search_result, e.target);
+            loadDataIntoSearchResult(search_result, e.target.value);
         });
 // =============================================================================================
 });
@@ -513,4 +510,4 @@ function artist_homepageInit() {
 }
 //End section for artist homepage=====================================================================
 
-export {addClickEventForFav_icons, loadDataIntoSearchResult, addClickEventForAlbum, addClickEventForArtist, addClickEventForSong}
+export {createArtistPage,addClickEventForFav_icons, loadDataIntoSearchResult, addClickEventForAlbum, addClickEventForArtist, addClickEventForSong}

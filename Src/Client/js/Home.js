@@ -5,8 +5,10 @@ const getRecentlyAdded = async () => {
     }
     const fetchHandle = await fetch("/Song/RecentlyAdded/10");
     const data = await fetchHandle.json();
-    for (const datum of data) {
-    }
+    return data;
+};
+const createHomePaneContent = async () => {
+    const data = await getRecentlyAdded();
 };
 export { getRecentlyAdded };
 //# sourceMappingURL=Home.js.map

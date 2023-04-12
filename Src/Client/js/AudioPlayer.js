@@ -282,6 +282,7 @@ class AudioPlayer {
                     if (t !== null) {
                         this.lyricImg.innerHTML = t.innerHTML;
                     }
+                    console.log(event);
                 });
             }
         };
@@ -322,6 +323,7 @@ class AudioPlayer {
         };
         this.setupQueue = (playlist) => {
             this.queue = [...playlist];
+            this.playlist = [...this.queue];
         };
         this.playAudio = () => {
             if (this.mediaControlElem.getAttribute("data-played") === "TRUE") {

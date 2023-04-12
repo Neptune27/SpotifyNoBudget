@@ -1,6 +1,7 @@
 import 'https://cdn.interactjs.io/v1.9.20/actions/resize/index.js';
 // @ts-ignore
 import interact from 'https://cdn.interactjs.io/v1.9.20/interactjs/index.js';
+import {getRecentlyAdded} from "./Home.js";
 interact('#sidebar').resizable({
     // resize from all edges and corners
     edges: { left: false, right: true, bottom: false, top: false },
@@ -34,7 +35,12 @@ document.querySelectorAll("#sidebar li").forEach(element => {
         e.stopPropagation();
         // Turn clicked li to not-clicked
         mainElem.setAttribute("data-sidebar", element.id)
-    
+
+        switch (element.id) {
+            case "Home":
+                getRecentlyAdded();
+                break;
+        }
 
         if (element.classList.contains('not-clicked')) {
             let clicked = element.closest("ul").querySelector('.clicked');

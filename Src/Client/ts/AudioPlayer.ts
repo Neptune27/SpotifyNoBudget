@@ -461,9 +461,13 @@ class AudioPlayer {
         }, 100)
     }
 
-    private setupQueue = (playlist: IMusic[]) => {
+    public setupQueue = (playlist: IMusic[]) => {
         this.queue = [...playlist]
+        this.playlist = [...this.queue]
+
     }
+
+
 
     private playAudio = () => {
         if (this.mediaControlElem.getAttribute("data-played") === "TRUE") {

@@ -7,6 +7,7 @@ declare class AudioPlayerQueueController {
     playFromPopularPlaylist: (artistID: number) => Promise<void>;
     private resetSong;
     private setSong;
+    private resetQueue;
     private setQueue;
 }
 declare const controller: AudioPlayerQueueController;

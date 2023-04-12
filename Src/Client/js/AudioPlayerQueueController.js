@@ -226,8 +226,9 @@ class AudioPlayerQueueController {
                 };
             });
             console.log(newSong);
-            this.setQueue(newSong[0], newSong.slice(1));
             this.resetSong(newSong[0]);
+            this.resetQueue(newSong.slice(1));
+            this.setQueue(newSong[0], newSong.slice(1));
             this.audioPlayer.forcePlayAudio();
         };
         this.resetSong = (song) => {
@@ -235,6 +236,9 @@ class AudioPlayerQueueController {
         };
         this.setSong = (queueIndex) => {
             this.audioPlayer.skipForwardTo(queueIndex);
+        };
+        this.resetQueue = (queue) => {
+            this.audioPlayer.setupQueue(queue);
         };
         this.setQueue = (currentlyPlaying, nextQueue) => {
             this.queue.setupQueue(currentlyPlaying, nextQueue);
