@@ -136,6 +136,10 @@
   cursor: pointer;
 }
 
+.searchPane #song-wrapper .sub-name:hover {
+  text-decoration: underline;
+}
+
 .searchPane .song-row {
   padding: 5px;
 }
