@@ -19,7 +19,7 @@ class SearchController extends Controller
         $model = $this->model("SearchModel");
         $album_query = "select ALBUM_ID, ALBUM_NAME, DESCRIPTIONS, ALBUM_IMG from ALBUM WHERE ALBUM_NAME LIKE '%{$params[0]}%' LIMIT 7;";
         $song_query = <<<WUT
-                        SELECT SONG.SONG_ID, SONG_NAME, USER.NAME, SONG.DURATION, SONG_IMG 
+                        SELECT SONG.SONG_ID, SONG_NAME, USER.NAME, SONG.DURATION, SONG_IMG, USER_ID 
                         FROM SONG, SING_BY ,USER 
                         WHERE SONG.SONG_ID = SING_BY.MUSIC_ID AND SING_BY.AUTHOR_ID = USER.USER_ID
                         AND SONG.SONG_NAME LIKE '{$params[0]}%' LIMIT 4;
