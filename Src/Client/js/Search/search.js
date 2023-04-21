@@ -2,6 +2,7 @@
 
 import {timeConverter} from "../AudioPlayer.js";
 import {AudioPlayerQueueController} from "../AudioPlayerQueueController.js";
+import {createAlbum} from "../Albums.js";
 
 class Artist {
     constructor(id, name, avatar, listeners, verify) {
@@ -65,7 +66,6 @@ class Album {
 
 // This is array for artist homepage
 
-const audioPlayerQueue = AudioPlayerQueueController.getInstance()
 // ==============================================================
 
 // Fetch data for search
@@ -83,22 +83,26 @@ function fetchForSearch(fetchFrom, search_result = document.getElementById("sear
             loadDataIntoSearchResult(search_result, artists, songs, albums);
         });
 }
-function fetchForArtistHomePage(fetchFrom, mainHTML) {
-    fetch(fetchFrom)
-        .then(res => res.json())
-        .then(data => {
-            let temp = data.artist[0];
-            let artist = new Artist(temp.USER_ID, temp.NAME, temp.AVATAR, temp.MONTHLY_LISTENER, temp.VERIFY);
-            let albumsArtist = data.albums.map(element => new Album(element.ALBUM_ID, element.ALBUM_NAME,
-                element.DESCRIPTIONS, element.ALBUM_IMG, element.TOTAL_LISTENER));
+async function fetchForArtistHomePage(fetchFrom, mainHTML) {
+    const res = await fetch(fetchFrom);
+    const data = await res.json();
+    let temp = data.artist[0];
 
-            let songsArtist = data.songs.map(element => new Song(element.SONG_ID, element.SONG_NAME, element.ARTIST, element.DURATION,
-                element.SONG_IMG, element.TOTAL_VIEW, element.ALBUM_NAME));
-            artist_homepageInit(artist, songsArtist, albumsArtist);
+    let artist = new Artist(temp.USER_ID, temp.NAME, temp.AVATAR, temp.MONTHLY_LISTENER, temp.VERIFY);
+    let albumsArtist = data.albums.map(element => new Album(element.ALBUM_ID, element.ALBUM_NAME,
+        element.DESCRIPTIONS, element.ALBUM_IMG, element.TOTAL_LISTENER));
 
-            mainHTML.setAttribute('data-sidebar','Artist');
-        });
+    let songsArtist = data.songs.map(element => new Song(element.SONG_ID, element.SONG_NAME, element.ARTIST, element.DURATION,
+        element.SONG_IMG, element.TOTAL_VIEW, element.ALBUM_NAME));
+    artist_homepageInit(artist, songsArtist, albumsArtist);
+
+    mainHTML.setAttribute('data-sidebar','Artist');
 }
+
+const fetchArtistByID = async (id) => {
+    await fetchForArtistHomePage(`/Artist/getDataArtist/${id}`, document.querySelector("main"))
+}
+
 fetchForSearch("/Search/getDataForSearch")
 // =============================================================================================
 
@@ -187,7 +191,8 @@ function addClickEventForAlbum(albumRow = document.querySelectorAll('#album-disp
     albumRow.forEach(element => {
         element.addEventListener('click', function (e) {
             e.stopPropagation();
-            console.log(element.getAttribute('id'));
+            const id = element.getAttribute('id');
+            createAlbum(id)
         });
     });
 }
@@ -449,6 +454,8 @@ function artist_homepageInit(artist, songsArtist, albumsArtist) {
     });
 
 // When click a song it will return a song id
+    const audioPlayerQueue = AudioPlayerQueueController.getInstance()
+
     let songRows = document.querySelectorAll("#popular-playlist tr");
     songRows.forEach(element => {
         element.addEventListener('click', function (e) {
@@ -463,7 +470,8 @@ function artist_homepageInit(artist, songsArtist, albumsArtist) {
     popularRows.forEach(element => {
         element.addEventListener('click', function (e) {
             e.stopPropagation();
-            console.log(element.getAttribute('id'));
+            const id = element.getAttribute('id');
+            createAlbum(id)
         });
     });
 
@@ -477,4 +485,4 @@ function artist_homepageInit(artist, songsArtist, albumsArtist) {
 }
 //End section for artist homepage=====================================================================
 
-export {fetchForArtistHomePage, addClickEventForFav_icons, loadDataIntoSearchResult, addClickEventForAlbum, addClickEventForArtist, addClickEventForSong}
+export {fetchArtistByID,fetchForArtistHomePage, addClickEventForFav_icons, loadDataIntoSearchResult, addClickEventForAlbum, addClickEventForArtist, addClickEventForSong}

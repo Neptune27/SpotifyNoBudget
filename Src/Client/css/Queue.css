@@ -18,6 +18,7 @@
 }
 .queueContainer .queueItem .queueId i {
   display: none;
+  font-size: 30px;
 }
 .queueContainer .queueItem .queueMain {
   min-width: 50%;
@@ -31,11 +32,17 @@
   border-radius: 10%;
 }
 .queueContainer .queueItem .queueTitle {
+  cursor: pointer;
   width: 30%;
 }
 .queueContainer .queueItem .queueOther {
   width: 15%;
   position: relative;
+}
+.queueContainer .queueItem .queueOther i {
+  margin-left: 1rem;
+  cursor: pointer;
+  display: none;
 }
 .queueContainer .queueItem .queueOther > .option {
   display: none;
@@ -46,25 +53,20 @@
   list-style: none;
   width: 145px;
   background: #14141a;
-  box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75);
-  -webkit-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px -1px 20px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px -1px 20px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px -1px 20px 0px rgba(0, 0, 0, 0.75);
   padding: 0;
 }
-.queueContainer .queueItem .queueOther > .option.showOption {
-  display: block;
-}
-.queueContainer .queueItem .queueOther > .option > li {
+.queueContainer .queueItem .queueOther > .option li {
   padding: 10px;
 }
-.queueContainer .queueItem .queueOther > .option > li:hover {
+.queueContainer .queueItem .queueOther > .option li:hover {
   background: #2c2c35;
   cursor: pointer;
 }
-.queueContainer .queueItem .queueOther i {
-  margin-left: 1rem;
-  cursor: pointer;
-  display: none;
+.queueContainer .queueItem .queueOther .showOption {
+  display: block;
 }
 .queueContainer .queueItem:hover, .queueContainer .queueItem:focus {
   background: #2c2c35;

@@ -13,11 +13,12 @@
 <link rel="stylesheet" href="/Src/Client/css/Search.css">
 <link rel="stylesheet" href="/Src/Client/css/HomePane.css">
 <link rel="stylesheet" href="/Src/Client/css/Artist_homepage.css">
+<link rel="stylesheet" href="/Src/Client/css/AlbumContainer.css">
 
 <script type="module" src="/Src/Client/js/AudioPlayerQueueController.js" defer></script>
 <script type="module" src="/Src/Client/js/Sidebar.js" defer></script>
 <script type="module" src="/Src/Client/js/Search/search.js" defer></script>
-
+<script type="module" src="/Src/Client/js/Home.js" defer></script>
 <main style="display: flex; background-color: var(--background-color)" data-sidebar="Home">
 
 
@@ -69,7 +70,7 @@
 
             <div class="homePane" style="">
                 <h1>Recently Added:</h1>
-                <div class="homeContainer" id="homeContainer"></div>
+                <div class="queueContainer" id="homeContainer"></div>
             </div>
 
             <div class="searchPane">
@@ -283,6 +284,35 @@
                 </div>
                 <!--        End album-->
 
+            </div>
+
+            <div id="albumContainer" class="albumContainer">
+
+                <div style="padding: 1rem 2rem; color: white" class="d-flex flex-column gap-2">
+                    <div class="d-flex gap-4" style="min-height: 10rem; max-height: 10rem;">
+                        <div>
+                            <img src="/Src/Client/img/Album/WCTTI.png" style="aspect-ratio: 1/1; height: 10rem; border-radius: 1rem" alt="albumCover">
+                        </div>
+                        <div class="d-flex flex-column" style="justify-content: space-evenly">
+                            <div>Album</div>
+                            <div>
+                                <h2 style="font-size: 4rem">Title</h2>
+                            </div>
+                            <div class="d-flex">
+                                <img src="/Src/Client/img/Artist/sample.jpg" style="border-radius: 100%; height: 2rem; padding-right: 1rem">
+                                <h3>Artist</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="font-size: 3rem">
+                        <i class="fa-solid fa-circle-play"></i>
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+                    <div class="queueContainer">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

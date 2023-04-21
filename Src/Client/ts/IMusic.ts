@@ -3,7 +3,12 @@ export interface IMusic {
     imageUrl : string,
     songName: string,
     artist : string,
-    lyric: (string|number)[][]
+    lyric: (string|number)[][],
+    songID: string,
+    albumID: string,
+    artistID: string
+    albumName: string,
+    duration: number
 }
 //
 //

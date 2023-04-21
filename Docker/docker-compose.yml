@@ -12,7 +12,7 @@ services:
     environment:
       XDEBUG_CONFIG: remote_host=host.docker.internal
 
-  db:
+  dbcas:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: gg

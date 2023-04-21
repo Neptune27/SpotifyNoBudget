@@ -12,7 +12,8 @@ class ArtistController extends Controller
         $model = $this->model("ArtistModel");
         $artist_query = "select USER_ID, NAME, AVATAR, MONTHLY_LISTENER, VERIFY from USER WHERE USER_ID = {$params[0]}";
         $song_query = <<<END
-                        SELECT SA.SONG_ID, SONG_LOCATION, LYRICS, SONG_NAME, SONG_IMG, U.NAME AS ARTIST, TOTAL_VIEW, DURATION, ALBUM_NAME
+                        SELECT SA.SONG_ID, SONG_LOCATION, LYRICS, SONG_NAME, SONG_IMG, U.NAME AS ARTIST, 
+                               U.USER_ID AS ARTIST_ID, TOTAL_VIEW, DURATION, ALBUM_NAME, SA.ALBUM_ID, U.AVATAR AS ARTIST_IMG
                         FROM SONG
                             LEFT JOIN SONG_ALBUM SA on SONG.SONG_ID = SA.SONG_ID
                             LEFT JOIN ALBUM A on A.ALBUM_ID = SA.ALBUM_ID

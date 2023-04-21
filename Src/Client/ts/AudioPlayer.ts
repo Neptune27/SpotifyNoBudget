@@ -1,4 +1,4 @@
-import {IMusic} from "./IMusic.js";
+import {IMusic} from "./IMusic";
 
 
 const timeConverter = (timestamp: number) => {
@@ -44,7 +44,7 @@ class AudioPlayer {
     private previousPlaylist: IMusic[] = []
 
     private currentlyPlaying: IMusic = {
-        artist: "", lyric: [], songUrl: "", imageUrl: "", songName: ""
+        artist: "", lyric: [], songUrl: "", imageUrl: "", songName: "", songID:"", artistID:"", albumName:"", albumID: "",duration:0
     }
 
     private queue: IMusic[] = []
@@ -461,6 +461,11 @@ class AudioPlayer {
         }, 100)
     }
 
+
+    public resetPlaylist = (playlist: IMusic[]) => {
+        this.playlist = [...playlist]
+        this.setupQueue(this.playlist)
+    }
     public setupQueue = (playlist: IMusic[]) => {
         this.queue = [...playlist]
         this.playlist = [...this.queue]

@@ -19,6 +19,8 @@
 
       i {
         display: none;
+        font-size: 30px;
+
       }
     }
 
@@ -36,18 +38,50 @@
     }
 
     .queueTitle {
+      cursor: pointer;
       width: 30%;
     }
 
     .queueOther {
       width: 15%;
+      position: relative;
 
       i {
         margin-left: 1rem;
         cursor: pointer;
         display: none;
+      }
+
+      > .option {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        top: 31px;
+        left: -111px;
+        list-style: none;
+        width: 145px;
+        background: #14141a;
+        box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75);
+        padding: 0;
+
+
+        li {
+          padding: 10px;
+        }
+
+        li:hover {
+          background: #2c2c35;
+          cursor: pointer;
+        }
+
 
       }
+      .showOption {
+        display: block;
+      }
+
     }
 
     &:hover, &:focus {

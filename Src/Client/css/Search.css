@@ -1,4 +1,4 @@
-.searchPane .header-name {
+.header-name {
   font-size: 20px;
   font-weight: bold;
   color: var(--font-color);
@@ -6,34 +6,34 @@
   padding-top: 10px;
 }
 
-.searchPane .name-light {
+.name-light {
   font-size: 16px;
   color: var(--font-color);
 }
 
-.searchPane .sub-name {
+.sub-name {
   font-size: 13px;
   color: var(--font-color-fade);
 }
 
-.searchPane .top-result-name {
+.top-result-name {
   font-size: 22px;
   font-weight: bold;
   color: var(--font-color);
 }
 
-.searchPane .square {
+.square {
   width: 35px;
   height: 35px;
   background-color: red;
 }
 
-.searchPane  nav {
+nav {
   background: var(--background-color);
   padding: 10px 30px;
 }
 
-.searchPane #search-icon {
+#search-icon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -41,7 +41,7 @@
   font-size: 23px;
 }
 
-.searchPane #clear-search {
+#clear-search {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -51,7 +51,7 @@
   display: none;
 }
 
-.searchPane #input-search {
+#input-search {
   width: 415px;
   height: 40px;
   border-radius: 20px;
@@ -59,23 +59,16 @@
   padding-left: 51px;
 }
 
-.searchPane #search-result {
+#search-result {
   background: var(--background-search-color);
   padding-top: 60px;
   min-height: 100vh;
 }
-
-.searchPane #search-result > .container > div {
+#search-result > .container > div {
   padding-bottom: 30px;
 }
 
-.searchPane #artist-wrapper {
-  background: var(--background-dark-color);
-  padding: 20px;
-  position: relative;
-}
-
-.searchPane .play-icon {
+.play-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,103 +79,88 @@
   position: absolute;
   opacity: 0;
 }
+.play-icon:hover {
+  scale: 1.1;
+}
 
-.searchPane #artist-wrapper > .play-icon {
+#artist-wrapper {
+  background: var(--background-dark-color);
+  padding: 20px;
+  position: relative;
+}
+#artist-wrapper > .play-icon {
   bottom: 0;
   right: 26px;
   transition: opacity 0.5s, bottom 0.5s;
 }
 
-.searchPane .play-icon:hover {
-  scale: 1.1;
-}
-
-.searchPane .play-for-song {
+.play-for-song {
   color: var(--font-color);
   display: none;
 }
 
-.searchPane .favorite-icon > .fa-regular {
+.favorite-icon > .fa-regular {
   color: var(--font-color-fade);
   display: none;
 }
-
-.searchPane .favorite-icon > .fa-solid {
+.favorite-icon > .fa-solid {
   color: var(--spotify-green);
   display: none;
 }
 
-.searchPane #artist-wrapper:hover {
+#artist-wrapper:hover {
   background: var(--background-light-color);
 }
-
-.searchPane #artist-wrapper:hover > .play-icon {
+#artist-wrapper:hover > .play-icon {
   opacity: 1;
   bottom: 30px;
 }
-
-.searchPane #artist-wrapper > .circle {
+#artist-wrapper > .circle {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   background-color: red;
 }
 
-.searchPane #song-wrapper {
+#song-wrapper {
   padding: 10px 20px 20px;
 }
 
-.searchPane #song-wrapper > .row:hover {
-  cursor: pointer;
-}
-
-.searchPane #song-wrapper .sub-name:hover {
-  text-decoration: underline;
-}
-
-.searchPane .song-row {
+.song-row {
   padding: 5px;
 }
-
-.searchPane .song-row:hover {
+.song-row:hover {
   background: var(--background-light-color);
 }
-
-.searchPane .song-row:hover .play-for-song,
-.searchPane .song-row:hover .favorite-icon > .clicked {
+.song-row:hover .play-for-song, .song-row:hover .favorite-icon > .clicked {
   display: block;
 }
 
-.searchPane .card {
+.card {
   background: var(--background-dark-color);
   padding: 20px;
   margin-right: 20px;
 }
-
-.searchPane .card:hover {
-  background: var(--background-light-color);
-}
-
-.searchPane .card .play-icon {
+.card .play-icon {
   bottom: -20px;
   right: 10px;
   transition: opacity 0.5s, bottom 0.5s;
 }
-
-.searchPane .card:hover .play-icon {
+.card:hover {
+  background: var(--background-light-color);
+}
+.card:hover .play-icon {
   bottom: 10px;
   opacity: 1;
 }
-
-.searchPane .card > .circle {
+.card > .circle {
   width: 150px;
   height: 150px;
   border-radius: 50%;
   background-color: red;
   position: relative;
 }
-
-.searchPane .card > .square {
+.card > .square {
   width: 150px;
   height: 150px;
   position: relative;

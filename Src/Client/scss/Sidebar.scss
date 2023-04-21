@@ -28,6 +28,9 @@
 
     span {
       padding-left: 20px;
+      @container (width < 100px) {
+        display: none;
+      }
     }
   }
 

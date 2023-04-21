@@ -13,6 +13,10 @@ class TestController extends Controller
         $this->view("blank", []);
     }
 
+    function Playlist() {
+        $this->view("blank", []);
+    }
+
     function index(): void
     {
         header("Location: /Test/LyricTest");

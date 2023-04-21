@@ -24,7 +24,7 @@ class AudioPlayer {
         this.repeatType = 0 /* ERepeat.NONE */;
         this.previousPlaylist = [];
         this.currentlyPlaying = {
-            artist: "", lyric: [], songUrl: "", imageUrl: "", songName: ""
+            artist: "", lyric: [], songUrl: "", imageUrl: "", songName: "", songID: "", artistID: "", albumName: "", albumID: "", duration: 0
         };
         this.queue = [];
         this.shufflePlaylist = [];
@@ -320,6 +320,10 @@ class AudioPlayer {
                     clearInterval(id);
                 }
             }, 100);
+        };
+        this.resetPlaylist = (playlist) => {
+            this.playlist = [...playlist];
+            this.setupQueue(this.playlist);
         };
         this.setupQueue = (playlist) => {
             this.queue = [...playlist];
