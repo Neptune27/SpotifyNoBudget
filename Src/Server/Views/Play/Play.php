@@ -365,8 +365,3 @@
     <audio id="audioFile">
     </audio>
 </div>
-
-<script defer>
-
-</script>
-
