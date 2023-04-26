@@ -176,12 +176,20 @@ function addClickEventForArtistName(artistNames = document.querySelectorAll('.se
 // Add click event for artist row display and redirect it to artist_homepage.php
 function addClickEventForArtist(artistRow = document.querySelectorAll('#artist-display > div')) {
     artistRow.forEach(element => {
+        let artistId = element.getAttribute("id");
+        // This is click event change to artist homepage
         element.addEventListener('click', function (e) {
             e.stopPropagation();
-            let artistId = element.getAttribute("id");
 
             // Fetch API and render
             fetchForArtistHomePage(`/Artist/getDataArtist/${artistId}`, this.closest('main'));
+        });
+
+    //     This is click event for play icon
+        let playIcon = element.querySelector(".play-icon");
+        playIcon.addEventListener('click', function (e) {
+            e.stopPropagation();
+            AudioPlayerQueueController.getInstance().playFromPopularPlaylist(artistId);
         });
     });
 }
@@ -238,6 +246,16 @@ function loadDataIntoSearchResult(search_result, artists, songs, albums) {
                                     <div class='play-icon'>
                                         <i class='fa-solid fa-play'></i>
                                     </div>`;
+    }
+
+//     Add click event for play icon
+    let playIcon = artist_wrapper.querySelector(".play-icon");
+    if (playIcon) {
+        playIcon.addEventListener('click', function(e) {
+           e.stopPropagation();
+           let artistId = artist_wrapper.querySelector("div").getAttribute("id");
+            AudioPlayerQueueController.getInstance().playFromPopularPlaylist(artistId);
+        });
     }
 
 //     This is for song result
