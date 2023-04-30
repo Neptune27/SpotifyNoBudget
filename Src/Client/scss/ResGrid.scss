@@ -1,0 +1,37 @@
+.resGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  > div {
+    height: fit-content;
+  }
+}
+
+.cardItem {
+  background-image:
+          linear-gradient(
+                          to right,
+                          rgba(100, 200, 200, 1),
+                          rgba(100, 200, 200, 1)
+          ),
+          linear-gradient(
+                          to right,
+                          rgba(255, 0, 0, 1),
+                          rgba(255, 0, 180, 1),
+                          rgba(0, 100, 200, 1)
+          );
+  background-size: 100% 3px, 0 3px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+
+  transition: all 400ms;
+  transition-property: box-shadow, background-size;
+  cursor: pointer;
+  
+  &:hover {
+    background-size: 0 3px, 100% 3px;
+    box-shadow: 0 0.5rem 1rem rgba(var(--bs-body-color-rgb),.4)!important;
+
+  }
+}

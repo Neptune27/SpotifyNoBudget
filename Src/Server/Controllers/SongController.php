@@ -14,6 +14,13 @@ class SongController extends Controller
         $data = $this->songModel->getRecentlyAdded($params[0]);
         echo json_encode($data);
     }
+
+    function getLyrics($params)
+    {
+        $data = $this->songModel->getLyric($params[0])[0];
+        echo json_encode($data);
+    }
+
     function index(): void
     {
         // TODO: Implement index() method.

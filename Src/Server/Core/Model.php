@@ -19,6 +19,10 @@ class Model
         return $result;
     }
 
+    function update(string $query) {
+        return mysqli_query($this->con,$query);
+    }
+
     function __construct(){
         global $config;
         include("config.php");

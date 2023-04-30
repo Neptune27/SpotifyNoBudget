@@ -1,0 +1,24 @@
+.resGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.resGrid > div {
+  height: fit-content;
+}
+
+.cardItem {
+  background-image: linear-gradient(to right, rgb(100, 200, 200), rgb(100, 200, 200)), linear-gradient(to right, rgb(255, 0, 0), rgb(255, 0, 180), rgb(0, 100, 200));
+  background-size: 100% 3px, 0 3px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: all 400ms;
+  transition-property: box-shadow, background-size;
+  cursor: pointer;
+}
+.cardItem:hover {
+  background-size: 0 3px, 100% 3px;
+  box-shadow: 0 0.5rem 1rem rgba(var(--bs-body-color-rgb), 0.4) !important;
+}
+
+/*# sourceMappingURL=ResGrid.css.map */

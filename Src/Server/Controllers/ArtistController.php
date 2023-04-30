@@ -2,6 +2,7 @@
 
 class ArtistController extends Controller
 {
+    private ArtistModel $model;
     function index() : void
     {
 
@@ -9,8 +10,7 @@ class ArtistController extends Controller
     }
 
     function getDataArtist($params) {
-        $model = $this->model("ArtistModel");
-        $artist_query = "select USER_ID, NAME, AVATAR, MONTHLY_LISTENER, VERIFY from USER WHERE USER_ID = {$params[0]}";
+        $this->model= $this->model("ArtistModel");
         $song_query = <<<END
                         SELECT SA.SONG_ID, SONG_LOCATION, LYRICS, SONG_NAME, SONG_IMG, U.NAME AS ARTIST, 
                                U.USER_ID AS ARTIST_ID, TOTAL_VIEW, DURATION, ALBUM_NAME, SA.ALBUM_ID, U.AVATAR AS ARTIST_IMG
@@ -28,9 +28,9 @@ class ArtistController extends Controller
                         WUT;
 
         $res = [
-            'artist' => $model->getData($artist_query),
-            'songs' => $model->getData($song_query),
-            'albums' => $model->getData($album_query)
+            'artist' => $this->model->getArtist($params[0]),
+            'songs' => $this->model->getData($song_query),
+            'albums' => $this->model->getData($album_query)
         ];
 
         echo json_encode($res);

@@ -8,7 +8,7 @@ class AlbumController extends Controller
             return;
         }
 
-        $model = $this->model("ArtistModel");
+        $model = $this->model("AlbumModel");
         $song_query = <<<END
                         SELECT SA.SONG_ID, SONG_LOCATION, LYRICS, SONG_NAME, SONG_IMG, U.NAME AS ARTIST, U.USER_ID AS ARTIST_ID, TOTAL_VIEW, DURATION, ALBUM_NAME, SA.ALBUM_ID, ALBUM_IMG, U.AVATAR AS ARTIST_IMG
                         FROM SONG
