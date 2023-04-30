@@ -1,4 +1,4 @@
-.header-name {
+.searchPane .header-name {
   font-size: 20px;
   font-weight: bold;
   color: var(--font-color);
@@ -6,34 +6,34 @@
   padding-top: 10px;
 }
 
-.name-light {
+.searchPane .name-light {
   font-size: 16px;
   color: var(--font-color);
 }
 
-.sub-name {
+.searchPane .sub-name {
   font-size: 13px;
   color: var(--font-color-fade);
 }
 
-.top-result-name {
+.searchPane .top-result-name {
   font-size: 22px;
   font-weight: bold;
   color: var(--font-color);
 }
 
-.square {
+.searchPane .square {
   width: 35px;
   height: 35px;
   background-color: red;
 }
 
-nav {
+.searchPane  nav {
   background: var(--background-color);
   padding: 10px 30px;
 }
 
-#search-icon {
+.searchPane #search-icon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -41,7 +41,7 @@ nav {
   font-size: 23px;
 }
 
-#clear-search {
+.searchPane #clear-search {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -51,7 +51,7 @@ nav {
   display: none;
 }
 
-#input-search {
+.searchPane #input-search {
   width: 415px;
   height: 40px;
   border-radius: 20px;
@@ -59,16 +59,23 @@ nav {
   padding-left: 51px;
 }
 
-#search-result {
+.searchPane #search-result {
   background: var(--background-search-color);
   padding-top: 60px;
   min-height: 100vh;
 }
-#search-result > .container > div {
+
+.searchPane #search-result > .container > div {
   padding-bottom: 30px;
 }
 
-.play-icon {
+.searchPane #artist-wrapper {
+  background: var(--background-dark-color);
+  padding: 20px;
+  position: relative;
+}
+
+.searchPane .play-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,88 +86,103 @@ nav {
   position: absolute;
   opacity: 0;
 }
-.play-icon:hover {
-  scale: 1.1;
-}
 
-#artist-wrapper {
-  background: var(--background-dark-color);
-  padding: 20px;
-  position: relative;
-}
-#artist-wrapper > .play-icon {
+.searchPane #artist-wrapper > .play-icon {
   bottom: 0;
   right: 26px;
   transition: opacity 0.5s, bottom 0.5s;
 }
 
-.play-for-song {
+.searchPane .play-icon:hover {
+  scale: 1.1;
+}
+
+.searchPane .play-for-song {
   color: var(--font-color);
   display: none;
 }
 
-.favorite-icon > .fa-regular {
+.searchPane .favorite-icon > .fa-regular {
   color: var(--font-color-fade);
   display: none;
 }
-.favorite-icon > .fa-solid {
+
+.searchPane .favorite-icon > .fa-solid {
   color: var(--spotify-green);
   display: none;
 }
 
-#artist-wrapper:hover {
+.searchPane #artist-wrapper:hover {
   background: var(--background-light-color);
 }
-#artist-wrapper:hover > .play-icon {
+
+.searchPane #artist-wrapper:hover > .play-icon {
   opacity: 1;
   bottom: 30px;
 }
-#artist-wrapper > .circle {
+
+.searchPane #artist-wrapper > .circle {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   background-color: red;
 }
 
-#song-wrapper {
+.searchPane #song-wrapper {
   padding: 10px 20px 20px;
 }
 
-.song-row {
+.searchPane #song-wrapper > .row:hover {
+  cursor: pointer;
+}
+
+.searchPane #song-wrapper .sub-name:hover {
+  text-decoration: underline;
+}
+
+.searchPane .song-row {
   padding: 5px;
 }
-.song-row:hover {
+
+.searchPane .song-row:hover {
   background: var(--background-light-color);
 }
-.song-row:hover .play-for-song, .song-row:hover .favorite-icon > .clicked {
+
+.searchPane .song-row:hover .play-for-song,
+.searchPane .song-row:hover .favorite-icon > .clicked {
   display: block;
 }
 
-.card {
+.searchPane .card {
   background: var(--background-dark-color);
   padding: 20px;
   margin-right: 20px;
 }
-.card .play-icon {
+
+.searchPane .card:hover {
+  background: var(--background-light-color);
+}
+
+.searchPane .card .play-icon {
   bottom: -20px;
   right: 10px;
   transition: opacity 0.5s, bottom 0.5s;
 }
-.card:hover {
-  background: var(--background-light-color);
-}
-.card:hover .play-icon {
+
+.searchPane .card:hover .play-icon {
   bottom: 10px;
   opacity: 1;
 }
-.card > .circle {
+
+.searchPane .card > .circle {
   width: 150px;
   height: 150px;
   border-radius: 50%;
   background-color: red;
   position: relative;
 }
-.card > .square {
+
+.searchPane .card > .square {
   width: 150px;
   height: 150px;
   position: relative;
