@@ -6,4 +6,4 @@ require_once "Core/App.php";
 require_once "Core/Controller.php";
 
 //// Connect Database
-//require_once "Core/DB.php";
+require_once "Core/Model.php";

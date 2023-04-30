@@ -1,18 +1,19 @@
-.BXH{
+.BXH {
     position: -webkit-sticky; /* Safari */
-        position: sticky;
-        top: 0;
+    position: sticky;
+    top: 0;
 }
-.STT{
+
+.STT {
     font-size: 20px;
 }
 
 /* nếu đc chọn thì thêm thuộc tính này vào hàng đó */
 
-.choice{
+.choice {
     color: rgb(77, 190, 77);
 }
 
-.hov:hover{
+.hov:hover {
     background-color: rgb(236, 229, 229);
 }

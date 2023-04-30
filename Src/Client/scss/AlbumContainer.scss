@@ -1,0 +1,11 @@
+.albumContainer {
+  display: none;
+}
+
+main {
+  &[data-sidebar="Album"] {
+    .albumContainer {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+#sidebar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 280px;
+  background: var(--background-color);
+  height: 100vh;
+  padding: 20px;
+  z-index: 1;
+}
+#sidebar ul {
+  list-style-type: none;
+  padding-top: 40px;
+}
+#sidebar li {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+#sidebar li:hover {
+  cursor: pointer;
+  color: var(--font-color);
+}
+#sidebar li span {
+  padding-left: 20px;
+}
+@container (width < 100px) {
+  #sidebar li span {
+    display: none;
+  }
+}
+#sidebar .not-clicked {
+  color: var(--font-color-fade);
+}
+#sidebar .clicked {
+  color: var(--font-color);
+}
+
+/*# sourceMappingURL=Sidebar.css.map */
