@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="/Src/Client/css/HomePane.css">
 <link rel="stylesheet" href="/Src/Client/css/Artist_homepage.css">
 <link rel="stylesheet" href="/Src/Client/css/AlbumContainer.css">
+<link rel="stylesheet" href="/Src/Client/css/Library.css">
 
 <script type="module" src="/Src/Client/js/AudioPlayerQueueController.js" defer></script>
 <script type="module" src="/Src/Client/js/Sidebar.js" defer></script>
@@ -284,6 +285,33 @@
                 </div>
                 <!--        End album-->
 
+            </div>
+            <div class="libraryPane">
+                <h1 class="header-name">Your Library</h1>
+                <div class="song-wrapper">
+
+                    <!--                            Row Song -->
+                    <div class="row align-items-center song-row rounded">
+                        <div class="col-10">
+                            <div class="d-flex align-items-center">
+                                <div class="square d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-play play-for-song"></i>
+                                </div>
+                                <div style="padding-left: 20px;">
+                                    <p class="name-light m-0">Song's name</p>
+                                    <p class="sub-name m-0">Artist's name</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex align-items-center flex-row-reverse justify-content-between">
+                                <p class="sub-name m-0">4:25</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--                            End Row Song -->
+
+                </div>
             </div>
 
             <div id="albumContainer" class="albumContainer">

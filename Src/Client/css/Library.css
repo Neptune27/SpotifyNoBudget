@@ -1,0 +1,74 @@
+.libraryPane {
+    padding: 16px;
+}
+
+.libraryPane .header-name {
+    font-weight: bold;
+    color: var(--font-color);
+    padding: 10px 20px 20px;
+}
+
+.libraryPane .name-light {
+    font-size: 16px;
+    color: var(--font-color);
+}
+
+.libraryPane .sub-name {
+    font-size: 13px;
+    color: var(--font-color-fade);
+}
+
+.libraryPane .play-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--spotify-green);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    position: absolute;
+    opacity: 0;
+}
+
+.libraryPane .play-icon:hover {
+    scale: 1.1;
+}
+
+.libraryPane .play-for-song {
+    color: var(--font-color);
+    display: none;
+}
+
+.libraryPane .song-wrapper {
+    padding: 20px;
+    background: #222229;
+}
+
+.libraryPane #song-wrapper > .row:hover {
+    cursor: pointer;
+}
+
+.libraryPane #song-wrapper .sub-name:hover {
+    text-decoration: underline;
+}
+
+.libraryPane .song-row {
+    padding: 5px;
+}
+
+.libraryPane .song-row:hover {
+    background: var(--background-light-color);
+}
+
+.libraryPane .song-row:hover .play-for-song,
+.libraryPane .song-row:hover .favorite-icon > .clicked {
+    display: block;
+}
+
+.libraryPane {
+    display: none;
+}
+
+main[data-sidebar=Library] .libraryPane {
+    display: block;
+}
