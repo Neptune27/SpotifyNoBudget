@@ -217,4 +217,13 @@ class AdminController extends Controller
             $artistModel->deleteArtist($params[0]);
         }
     }
+
+//    Action de lay du lieu nghe si tim kiem theo ten
+    function GetArtistByName() {
+        if (isset($_POST['artistName'])) {
+            $artistModel = $this->model("ArtistModel");
+            $res = ['artists' => $artistModel->getArtistByName($_POST['artistName'])];
+            echo json_encode($res);
+        }
+    }
 }

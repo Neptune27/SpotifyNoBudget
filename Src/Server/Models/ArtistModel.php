@@ -7,6 +7,11 @@ class ArtistModel extends Model
         return $this->getData($artist_query);
     }
 
+    function getArtistByName($name) {
+        $artist_query = "select USER_ID, NAME, AVATAR, MONTHLY_LISTENER, VERIFY from USER WHERE NAME LIKE '%{$name}%' LIMIT 20";
+        return $this->getData($artist_query);
+    }
+
     function getAllArtist() {
         $artist_query = "select USER_ID, NAME, AVATAR, MONTHLY_LISTENER, VERIFY from USER WHERE TYPE=2 OR TYPE=3 OR TYPE=4";
         return $this->getData($artist_query);
