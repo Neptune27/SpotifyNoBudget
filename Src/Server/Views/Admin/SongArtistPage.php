@@ -18,8 +18,15 @@
                         <div class="card-body d-flex flex-column align-items-center justify-content-center">
                             <h5 class="card-title">{$name}</h5>
                             <div>
-                                <button class="btn btn-primary">Sửa</button>
-                                <button class="btn btn-secondary">Xóa</button>
+                                <button class="btn btn-primary" 
+                                onclick="event.preventDefault();
+                                        window.location.href='/Admin/EditArtist/{$userID}'">
+                                    Sửa
+                                </button>
+                                <button class="btn btn-secondary"
+                                onclick="event.preventDefault();
+                                        delArtist({$userID})"
+                                >Xóa</button>
                             </div>
                         </div>
                     </a>
@@ -30,3 +37,13 @@
 
 
 </div>
+
+<script>
+    function delArtist(userID) {
+        let fetchFrom = `/Admin/DeleteArtist/${userID}`;
+        fetch(fetchFrom)
+            .then(data => console.log(data))
+            .then(() => window.location.href = '/Admin/AddSongPage')
+            .catch(err => console.log(err));
+    }
+</script>
