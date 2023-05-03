@@ -3,7 +3,11 @@
         $data=[];
     }
 ?>
-
+<style>
+    #artistPagination > li:hover {
+        cursor: pointer;
+    }
+</style>
 
 <div class="resGrid" style="padding: 1rem">
 <!--    --><?php
@@ -80,10 +84,14 @@
                         <li class="page-item"><a class="page-link">Next</a></li>`;
             }
             else {
-                for (let i=1; i<=maxPage; i++) {
-                    page += `<li class="page-item"><a class="page-link">${currentPage}</a></li>`;
+                if (maxPage === 1) { // neu trang hien tai la 1 ma tat ca trang chi co 1 thi hien thi minh trang do thoi
+                    page += `<li class="page-item"><a class="page-link">1</a></li>`;
+                } else {
+                    for (let i=1; i<=maxPage; i++) {
+                        page += `<li class="page-item"><a class="page-link">${i}</a></li>`;
+                    }
+                    page += '<li class="page-item"><a class="page-link">Next</a></li>';
                 }
-                page += '<li class="page-item"><a class="page-link">Next</a></li>';
             }
         } else if (currentPage === maxPage) { // Neu page hien tai o vi tri cuoi cung
             if (maxPage > 3) {
@@ -96,8 +104,40 @@
             else {
                 page += '<li class="page-item"><a class="page-link">Previous</a></li>';
                 for (let i=1; i<=maxPage; i++) {
-                    page += `<li class="page-item"><a class="page-link">${currentPage}</a></li>`;
+                    page += `<li class="page-item"><a class="page-link">${i}</a></li>`;
                 }
+            }
+        } else if (currentPage === maxPage - 1) { // Neu trang hien tai dang nam o vi tri ke cuoi
+            if (maxPage > 3) {
+                page += `<li class="page-item"><a class="page-link">Previous</a></li>
+                        <li class="page-item"><a class="page-link">...</a></li>
+                        <li class="page-item"><a class="page-link">${currentPage - 1}</a></li>
+                        <li class="page-item"><a class="page-link">${currentPage}</a></li>
+                        <li class="page-item"><a class="page-link">${currentPage + 1}</a></li>
+                        <li class="page-item"><a class="page-link">Next</a></li>`;
+            }
+            else {
+                page += '<li class="page-item"><a class="page-link">Previous</a></li>';
+                for (let i=1; i<=maxPage; i++) {
+                    page += `<li class="page-item"><a class="page-link">${i}</a></li>`;
+                }
+                page += '<li class="page-item"><a class="page-link">Next</a></li>';
+            }
+        } else if (currentPage === 2) { // Neu trang hien tai dang nam o vi tri ke dau
+            if (maxPage > 3) {
+                page += `<li class="page-item"><a class="page-link">Previous</a></li>
+                        <li class="page-item"><a class="page-link">${currentPage - 1}</a></li>
+                        <li class="page-item"><a class="page-link">${currentPage}</a></li>
+                        <li class="page-item"><a class="page-link">${currentPage + 1}</a></li>
+                        <li class="page-item"><a class="page-link">...</a></li>
+                        <li class="page-item"><a class="page-link">Next</a></li>`;
+            }
+            else {
+                page += '<li class="page-item"><a class="page-link">Previous</a></li>';
+                for (let i=1; i<=maxPage; i++) {
+                    page += `<li class="page-item"><a class="page-link">${i}</a></li>`;
+                }
+                page += '<li class="page-item"><a class="page-link">Next</a></li>';
             }
         } else { // Neu trang hien tai dang nam o giua
             if (maxPage > 3) {
@@ -112,7 +152,7 @@
             else {
                 page += '<li class="page-item"><a class="page-link">Previous</a></li>';
                 for (let i=1; i<=maxPage; i++) {
-                    page += `<li class="page-item"><a class="page-link">${currentPage}</a></li>`;
+                    page += `<li class="page-item"><a class="page-link">${i}</a></li>`;
                 }
                 page += '<li class="page-item"><a class="page-link">Next</a></li>';
             }
@@ -129,11 +169,11 @@
             element.onclick = function (e) {
                 e.stopPropagation();
                 let current = element.innerText;
-                let previous, next;
+
                 // Neu current dang la so
                 if (Number(current)) {
-                    youAreHere = current;
-                    loadDataCurrentPage(artists, current, artistPerPage);
+                    youAreHere = Number(current);
+                    loadDataCurrentPage(artists, youAreHere, artistPerPage);
                     createPagination(maxPage, youAreHere, artists);
                 } else if (current === 'Previous' && youAreHere > 1) {
                     youAreHere = youAreHere - 1;
@@ -144,8 +184,6 @@
                     loadDataCurrentPage(artists, youAreHere, artistPerPage);
                     createPagination(maxPage, youAreHere, artists);
                 }
-                // let previous = element.previousElementSibling.innerText;
-                // let next = element.nextElementSibling.innerText;
             };
         });
     }
@@ -168,6 +206,9 @@
 
         let searchResult = '';
         for (let i = from; i < to; i++) {
+            if (!artists[i]) { // kiem tra o vi tro do co ton tai phan tu khong, neu khong co thi thoat khoi vong lap
+                break;
+            }
             searchResult += `<a href="/Admin/AddSongPage/${artists[i].USER_ID}" class="card shadow p-3 bg-white rounded cardItem">
                                 <div>
                                     <img class="card-img-top" src="${artists[i].AVATAR} " alt="Cover" style=" background-position: center; max-height: 100px; object-fit: cover;">
@@ -208,10 +249,8 @@
         })
             .then(res => res.json())
             .then(data => {
-                // Tai du lieu khoi tao cho page
+                // Tai du lieu cho page
                 loadDataSongArtist(data.artists);
-
-
             })
             .catch(data => console.log(data));
     }
