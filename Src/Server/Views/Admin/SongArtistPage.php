@@ -67,9 +67,11 @@
     }
 
     function createPagination(maxPage, currentPage, artists) {
+        let artistPagination = document.getElementById("artistPagination");
         currentPage = Number(currentPage);
         maxPage = Number(maxPage);
         if (currentPage > maxPage) {
+            artistPagination.innerHTML = '';
             return;
         }
         // Tạo ra phân trang
@@ -157,7 +159,7 @@
                 page += '<li class="page-item"><a class="page-link">Next</a></li>';
             }
         }
-        document.getElementById("artistPagination").innerHTML = page;
+        artistPagination.innerHTML = page;
         addClickEventForPagination(maxPage, artists);
     }
 
@@ -249,6 +251,8 @@
         })
             .then(res => res.json())
             .then(data => {
+                // Khi du lieu xong se cho dung o dau trang
+                youAreHere = 1;
                 // Tai du lieu cho page
                 loadDataSongArtist(data.artists);
             })
