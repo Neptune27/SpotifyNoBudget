@@ -22,7 +22,7 @@ if (addArtist) {
 
         // Lấy ra tên file
         let artistAvatar = document.getElementById("artistAvatar").value;
-        if (artistAvatar.trim() === "") {
+        if (!artistAvatar) {
             artistAvatar = "NA";
         } else {
             artistAvatar = `${serverAvatarPath}/${artistID}/${artistAvatar}`;
@@ -97,7 +97,7 @@ if (editArtist) {
 
         // Lấy ra tên file
         let artistAvatar = document.getElementById("artistAvatar").value;
-        if (artistAvatar.trim() === "") {
+        if (!artistAvatar) {
             artistAvatar = "NA";
         } else {
             artistAvatar = `${serverAvatarPath}/${artistID}/${artistAvatar}`;
