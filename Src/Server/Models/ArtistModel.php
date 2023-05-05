@@ -8,7 +8,7 @@ class ArtistModel extends Model
     }
 
     function getArtistByName($name) {
-        $artist_query = "select USER_ID, NAME, AVATAR, MONTHLY_LISTENER, VERIFY from USER WHERE NAME LIKE '%{$name}%' LIMIT 20";
+        $artist_query = "select USER_ID, NAME, AVATAR, MONTHLY_LISTENER, VERIFY from USER WHERE NAME LIKE '%{$name}%' AND TYPE >= 2 LIMIT 20";
         return $this->getData($artist_query);
     }
 
@@ -18,8 +18,7 @@ class ArtistModel extends Model
     }
 
 //    Them nghe si vao database
-    function addArtist($name, $avatar, $gender, $birth, $verify, $country, $email, $type, $listener) {
-        $userID = $this->createUserID();
+    function addArtist($userID, $name, $avatar, $gender, $birth, $verify, $country, $email, $type, $listener) {
         $artist_query = <<<Thien
                             INSERT INTO USER (USER_ID, NAME, AVATAR, GENDER, BIRTH, VERIFY, COUNTRY, EMAIL, TYPE, MONTHLY_LISTENER)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);

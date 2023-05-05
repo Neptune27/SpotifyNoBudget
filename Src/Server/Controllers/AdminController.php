@@ -42,6 +42,37 @@ class AdminController extends Controller
         }
     }
 
+    function AvatarUpload($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            print_r($params);
+            print_r($_GET);
+            print_r($_FILES);
+
+            $target_dir = __DIR__ . "/../../Client/img/Artist/" . $params[0] . "/";
+            $target_file = $target_dir . basename($_FILES["artistAvatar"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            if (!file_exists($target_dir)) {
+                mkdir($target_dir, 0777, true);
+            }
+
+            if (file_exists($target_file)) {
+                unlink($target_file);
+            }
+
+            if (move_uploaded_file($_FILES["artistAvatar"]["tmp_name"], $target_file)) {
+                echo "The file " . htmlspecialchars(basename($_FILES["artistAvatar"]["name"])) . " has been uploaded.";
+            }
+        }
+        if ($_SERVER["REQUEST_METHOD"] === 'DELETE') {
+            print_r($_GET);
+            print_r($params);
+            $a = 2;
+        }
+    }
+
     function AddSongPage($params)
     {
 
@@ -157,6 +188,7 @@ class AdminController extends Controller
 //            Đủ thông tin để insert into
             $artistModel = $this->model("ArtistModel");
 
+            $artistID = $_POST['artistID'];
             $artistName = $_POST['artistName'];
             $artistAvatar = $_POST['artistAvatar'];
             $artistGender = $_POST['artistGender'];
@@ -167,7 +199,7 @@ class AdminController extends Controller
             $artistType = $_POST['artistType'];
             $artistListener = $_POST['artistListener'];
 
-            $artistModel->addArtist($artistName, $artistAvatar, $artistGender,
+            $artistModel->addArtist($artistID, $artistName, $artistAvatar, $artistGender,
                 $artistDOB, $artistVerify, $artistCountry,
                 $artistEmail, $artistType, $artistListener);
 
@@ -175,7 +207,14 @@ class AdminController extends Controller
         }
         $this->view(self::$editTemplate, [
             "Page" => "ArtistAddPage",
+            "id" => $this->CreateUserId(),
         ]);
+    }
+
+//    Lấy địa chỉ Nghệ sĩ id mới
+    function CreateUserId() {
+        $artistModel = $this->model("ArtistModel");
+        return $artistModel->createUserID();
     }
 
 //    Action để sửa nghệ sĩ
