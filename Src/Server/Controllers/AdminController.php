@@ -153,4 +153,79 @@ class AdminController extends Controller
         }
     }
 
+//    Action cho them nghệ sĩ
+    function AddArtist($params) {
+        if (isset($params[0]) && $params[0] == "Add") {
+//            Đủ thông tin để insert into
+            $artistModel = $this->model("ArtistModel");
+
+            $artistName = $_POST['artistName'];
+            $artistAvatar = $_POST['artistAvatar'];
+            $artistGender = $_POST['artistGender'];
+            $artistDOB = $_POST['artistDOB'];
+            $artistVerify = $_POST['artistVerify'];
+            $artistCountry = $_POST['artistCountry'];
+            $artistEmail = $_POST['artistEmail'];
+            $artistType = $_POST['artistType'];
+            $artistListener = $_POST['artistListener'];
+
+            $artistModel->addArtist($artistName, $artistAvatar, $artistGender,
+                $artistDOB, $artistVerify, $artistCountry,
+                $artistEmail, $artistType, $artistListener);
+
+            return;
+        }
+        $this->view(self::$editTemplate, [
+            "Page" => "ArtistAddPage",
+        ]);
+    }
+
+//    Action để sửa nghệ sĩ
+    function EditArtist($params) {
+        $artistModel = $this->model("ArtistModel");
+        if (isset($params[0]) && $params[0] == "Edit") {
+//            Đủ thông tin để update
+            $artistID = $_POST['artistID'];
+            $artistName = $_POST['artistName'];
+            $artistAvatar = $_POST['artistAvatar'];
+            $artistGender = $_POST['artistGender'];
+            $artistDOB = $_POST['artistDOB'];
+            $artistVerify = $_POST['artistVerify'];
+            $artistCountry = $_POST['artistCountry'];
+            $artistEmail = $_POST['artistEmail'];
+            $artistType = $_POST['artistType'];
+            $artistListener = $_POST['artistListener'];
+
+            $artistModel->editArtist($artistID, $artistName, $artistAvatar,
+                $artistGender, $artistDOB, $artistVerify,
+                $artistCountry, $artistEmail, $artistType, $artistListener);
+
+            return;
+        }
+
+        $artistID = $params[0];
+        $artistInfo = $artistModel->getDetailArtistInfo($artistID);
+        $this->view(self::$editTemplate, [
+            "Page" => "ArtistEditPage",
+            "artist" => $artistInfo,
+            "artistID" => $artistID,
+        ]);
+    }
+
+//    Action de xoa nghe si
+    function DeleteArtist($params) {
+        if (isset($params[0])) {
+            $artistModel = $this->model("ArtistModel");
+            $artistModel->deleteArtist($params[0]);
+        }
+    }
+
+//    Action de lay du lieu nghe si tim kiem theo ten
+    function GetArtistByName() {
+        if (isset($_POST['artistName'])) {
+            $artistModel = $this->model("ArtistModel");
+            $res = ['artists' => $artistModel->getArtistByName($_POST['artistName'])];
+            echo json_encode($res);
+        }
+    }
 }
