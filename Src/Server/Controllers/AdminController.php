@@ -59,6 +59,8 @@ class AdminController extends Controller
         $albumModel = $this->model("AlbumModel");
         $albums = $albumModel->GetAllAlbumFrom($params[0]);
         if (!isset($params[1])) {
+//            Thêm phân trang tại đây
+
             $this->view(self::$defaultTemplate, [
                 "Albums" => $albums,
                 "Page" => "SongAlbumPage",

@@ -11,7 +11,9 @@ class SongController extends Controller
 
     function RecentlyAdded($params): void
     {
-
+        if ($params[1] == 0) {
+            return;
+        }
 
         $total = $this->songModel->getTotalSong();
         $isPrev = false;
@@ -20,7 +22,11 @@ class SongController extends Controller
         }
 
         $isNext = true;
-        if (($params[0]+1) * $params[1] > $total[0]["TOTAL_PAGE"]) {
+
+        $total = ceil( $total[0]["TOTAL_PAGE"] / $params[1]);
+
+
+        if (($params[0]+1) > $total) {
             $isNext = false;
         }
         $from = ($params[0]-1)*$params[1];
