@@ -1,0 +1,6 @@
+.homePagination {
+  &[data-disable = "TRUE"] {
+    color: #b2b2b2 !important;
+    cursor: not-allowed;
+  }
+}

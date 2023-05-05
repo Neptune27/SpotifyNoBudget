@@ -15,6 +15,8 @@ class PlayController extends Controller
         $this->view($this->emptyTemplate, []);
     }
 
+
+
     function index(): void
     {
         header("Location: /Play/Play");

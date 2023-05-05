@@ -84,7 +84,7 @@ class AdminController extends Controller
                 }
             }
 
-            $totalSongQR = $songModel->getTotalSong($params[1], $query);
+            $totalSongQR = $songModel->getTotalSongFromAlbum($params[1], $query);
             $totalSong = $totalSongQR[0]["TOTAL_PAGE"];
             if ($totalSong == 0) {
                 $totalSong = 1;

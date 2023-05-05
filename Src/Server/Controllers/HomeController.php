@@ -12,6 +12,9 @@ class HomeController extends Controller
         $this->view($this->homeTemplate, []);
     }
 
+    function BuyPremium() {
+        $this->view($this->signTemplate, []);
+    }
 
     function index() : void
     {
@@ -40,7 +43,7 @@ class HomeController extends Controller
 
 
         $model = $this->model("TestModel");
-        $res = $model->getData("SELECT * FROM USER WHERE PASSWORD='{$password}' AND EMAIL='{$username}'");
+        $res = $model->getData("SELECT * FROM USER WHERE PASSWORD='{$password}' AND USERNAME='{$username}'");
 
         if (!isset($res[0])) {
             header('X-PHP-Response-Code: 403', true, 403);
@@ -50,9 +53,17 @@ class HomeController extends Controller
             return;
         }
 
-        echo json_encode($res[0]);
-        $_SESSION["user"] = $username;
-
+        $isAdmin = false;
+        if ($res[0]['TYPE'] == 1)
+        {
+            $isAdmin = true;
+        }
+        echo json_encode([
+                'success' => true,
+                'isAdmin' => $isAdmin
+            ]
+        );
+        $_SESSION["user"] = $res[0];
     }
 
     function SignUp()

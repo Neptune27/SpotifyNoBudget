@@ -5,6 +5,21 @@ if (!isset($data)) {
 //print_r($data["Albums"]);
 ?>
 
+<script>
+    const deleteItem = async (event, id) => {
+        event.stopPropagation()
+        event.preventDefault()
+        await fetch(`/Song/DeleteSong/${id}`, {
+            method: "DELETE"
+        })
+
+        location.reload()
+
+    }
+
+
+</script>
+
 
 <div class="resGrid" style="padding: 1rem">
     <?php
@@ -21,7 +36,7 @@ if (!isset($data)) {
                             <h5 class="card-title">{$name}</h5>
                             <div>
                                 <button class="btn btn-primary">Sửa</button>
-                                <button class="btn btn-secondary">Xóa</button>
+                                <button class="btn btn-secondary" onclick="deleteItem(event, {$ID})">Xóa</button>
                             </div>
                         </div>
                     </a>
