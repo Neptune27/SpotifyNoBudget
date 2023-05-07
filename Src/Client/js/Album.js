@@ -26,8 +26,15 @@ if (addAlbum) {
         }
 
         let AlbumTime = document.getElementById("AlbumTime").value;
+        if (/[0-9]{2}:[0-9]{2}:[0-9]{2}/.test(AlbumTime)||AlbumTime==="") {
+            alert("thời gian không đúng đinh dạng");
+            return;
+        }
         let AlbumDate = document.getElementById("AlbumDate").value;
-
+        if (/[0-9]{4}:[0-9]{2}:[0-9]{2}/.test(AlbumDate)||AlbumDate==="") {
+            alert("Ngàytaoj không đúng đinh dạng");
+            return;
+        }
         // 2 cái let dưới chưa xong
         let AlbumCreated = document.getElementById("AlbumCreated").value;
         let Album_Song = document.getElementById("Album_Song").value;
