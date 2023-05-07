@@ -37,7 +37,7 @@ if (addAlbum) {
         }
         // 2 cái let dưới chưa xong
         let AlbumCreated = document.getElementById("AlbumCreated").value;
-        let Album_Song = document.getElementById("Album_Song").value;
+        let AlbumSong = document.getElementById("AlbumSong").value;
 
         // còn phần  ca sĩ + người lập
 
@@ -50,7 +50,7 @@ if (addAlbum) {
             AlbumListener: AlbumListener,
             AlbumDate: AlbumDate, 
             AlbumTime: AlbumTime,
-            Album_Song: Album_Song,
+            AlbumSong: AlbumSong,
             AlbumCreated: AlbumCreated
 
         };
@@ -102,9 +102,17 @@ if (editAlbum) {
         let AlbumDate = document.getElementById("AlbumDate").value;
 
         // 2 cái let dưới chưa xong
-        let AlbumCreated = document.getElementById("AlbumCreated").value;
-        let Album_Song = document.getElementById("Album_Song").value;
+        let Created = document.getElementById("AlbumCreated");
+        let AlbumCreated =[];
+        for(const x of Created ){
+            AlbumCreated.push(x.value);
+        }
 
+        let AlSong = document.getElementById("AlbumSong").value;
+        let AlbumSong =[];
+        for(const x of AlSong ){
+            AlbumSong.push(x.value);
+        }
         // còn phần  ca sĩ + người lập
 
         let fetchFrom = "/Admin/AddAlbum/Add";
@@ -117,7 +125,7 @@ if (editAlbum) {
             AlbumListener: AlbumListener,
             AlbumDate: AlbumDate, 
             AlbumTime: AlbumTime,
-            Album_Song: Album_Song,
+            AlbumSong: AlbumSong,
             AlbumCreated: AlbumCreated
 
         };
@@ -134,3 +142,62 @@ if (editAlbum) {
             .catch(data => console.log(data));
     };
 }
+
+function adduserAl(qq=""){
+    const div = document.createElement('div');
+    div.setAttribute("class", "d-flex gap-2");
+    div.innerHTML += `
+        <input list="userAs" class="AlbumCreated form-control value=`+qq+`">
+        <button class="btn btn-outline-danger">Xóa</button>
+    `;
+
+
+    let user = document.getElementById("addAluser");
+    user.appendChild(div);
+
+    for (const SectionElemElement of user.children) {
+        const delBtn = SectionElemElement.querySelector("button");
+        if (delBtn === null) {
+            throw Error("OK???");
+        }
+        delBtn.addEventListener("click", () => {
+            SectionElemElement.remove();
+        });
+    }
+
+}
+
+function addSongAl(qq=""){
+    const div = document.createElement('div');
+    div.setAttribute("class", "d-flex gap-2");
+    div.innerHTML += `
+        <input list="SongAl" class="AlbumSong form-control" value=`+qq+`>
+        <button class="btn btn-outline-danger">Xóa</button>
+    `;
+
+
+    let user = document.getElementById("addAluser");
+    user.appendChild(div);
+
+    for (const SectionElemElement of user.children) {
+        const delBtn = SectionElemElement.querySelector("button");
+        if (delBtn === null) {
+            throw Error("OK???");
+        }
+        delBtn.addEventListener("click", () => {
+            SectionElemElement.remove();
+        });
+    }
+
+}
+
+
+AddUserBtn = document.getElementsByName("AddUserBtn");
+AddUserBtn.addEventListener("click", () => {
+    adduserAl();
+});
+
+AddUserBtn = document.getElementsByName("AddSongBtn");
+AddUserBtn.addEventListener("click", () => {
+    addSongAl();
+});

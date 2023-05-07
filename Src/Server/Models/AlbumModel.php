@@ -76,7 +76,7 @@ class AlbumModel extends Model {
     }
 
     function createAlbumSong($id) {
-        
+        $i=0;
         $result = mysqli_query($this->con, "SELECT count(*) as ID FROM song_album where ALBUM_ID = {$id}  ");
         if (mysqli_num_rows($result) > 0) {
             $row = $result->fetch_assoc();
@@ -87,7 +87,7 @@ class AlbumModel extends Model {
 }
 
     function createAlbumID() {
-        
+        $i=0;
             $result = mysqli_query($this->con, "SELECT count(*) as ID FROM album ");
             if (mysqli_num_rows($result) > 0) {
                 $row = $result->fetch_assoc();
@@ -150,6 +150,23 @@ class AlbumModel extends Model {
                             SELECT a.song_id,SONG_NAME
                             FROM song_album as a,song as s
                             WHERE ALBUM_ID = {$ID} and a.song_id = a.song_id ;
+                        qqq;
+        return $this->getData($Album_query);
+    }
+
+    function getAllIDSong() {
+        $Album_query = <<<qqq
+                            SELECT song_id,SONG_NAME
+                            FROM song;
+                        qqq;
+        return $this->getData($Album_query);
+    }
+
+    function getAllIDUser() {
+        $Album_query = <<<qqq
+                            SELECT USER_ID,NAME
+                            FROM user
+                            where type = 2 or type = 4;
                         qqq;
         return $this->getData($Album_query);
     }
