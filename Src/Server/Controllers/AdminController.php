@@ -3,7 +3,7 @@
 class AdminController extends Controller
 {
 
-    static string $defaultTemplate = "Admin/_default";
+   static string $defaultTemplate = "Admin/_default";
     static string $editTemplate = "Admin/_edit";
 
     function index(): void
@@ -149,6 +149,85 @@ class AdminController extends Controller
             }
 
         }
+    } 
+
+    
+    function AddAlbum($params) {
+        if (isset($params[0]) && $params[0] == "Add") {
+//            Đủ thông tin để insert into
+            $AlbumModel = $this->model("AlbumModel");
+
+            $AlbumName = $_POST['AlbumName'];
+            $AlbumAvatar = $_POST['AlbumAvatar'];
+            $AlbumListener = $_POST['AlbumListener'];
+            $AlbumDescriptions = $_POST['ALbumDescriptions'];
+            $AlbumTime = $_POST['AlbumTime'];
+            $AlbumDate = $_POST['AlbumDate'];
+            $AlbumSong = $_POST['AlbumSong'];
+            $AlbumUser=  $_POST['AlbumUser'];
+
+            $AlbumModel->addAlbum($AlbumName, $AlbumAvatar,$AlbumDescriptions,$AlbumTime,$AlbumDate,$AlbumListener,$AlbumSong, $AlbumUser );
+
+            return;
+        }
+        $this->view(self::$editTemplate, [
+            "Page" => "AlbumAddPage",
+        ]);
+    }
+
+
+    function EditAlbum($params) {
+        $AlbumModel = $this->model("AlbumModel");
+        if (isset($params[0]) && $params[0] == "Edit") {
+//            Đủ thông tin để update
+        $AlbumID = $_POST['AlbumID'];
+        $AlbumName = $_POST['AlbumName'];
+        $AlbumAvatar = $_POST['AlbumAvatar'];
+        $AlbumListener = $_POST['AlbumListener'];
+        $AlbumDescriptions = $_POST['ALbumDescriptions'];
+        $AlbumTime = $_POST['AlbumTime'];
+        $AlbumDate = $_POST['AlbumDate'];
+        $AlbumSong = $_POST['AlbumSong'];
+        $AlbumUser=  $_POST['AlbumUser'];
+
+            $AlbumModel->editAlbum($AlbumID,$AlbumName, $AlbumAvatar,$AlbumDescriptions,$AlbumTime,$AlbumDate,$AlbumListener,$AlbumSong, $AlbumUser );
+
+            return;
+        }
+
+        
+        $AlbumID = $params[0];
+        $AlbumSongs = $AlbumModel->getDetailAlbumSong($AlbumID);
+        $AlbumUsers = $AlbumModel->getDetailAlbum($AlbumID);
+        $AlbumInfo = $AlbumModel->getDetailAlbumCreated($AlbumID);
+        $this->view(self::$editTemplate, [
+            "Page" => "AlbumEditPage",
+            "Album" => $AlbumInfo,
+            "User" => $AlbumUsers,
+            "Song" => $AlbumSongs,
+            "AlbumID" => $AlbumID,
+        ]);
+    }
+
+
+    function DeleteAlbum($params) {
+        if (isset($params[0])) {
+            $AlbumModel = $this->model("AlbumModel");
+            $AlbumModel->deleteAlbum($params[0]);
+        }
+    }
+
+    function GetArtistByName() {
+        if (isset($_POST['AlbumName'])) {
+            $i=1;
+            if (isset($_POST['AlbumNumber'])) {
+                $i=$_POST['AlbumNumber'];
+            }
+            $artistModel = $this->model("AlbumModel");
+            $res = ['artists' => $artistModel->getArtistByName($_POST['AlbumName'],$i)];
+            echo json_encode($res);
+        }
     }
 
 }
+
