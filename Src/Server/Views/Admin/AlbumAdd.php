@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/Src/Client/css/Login/Login.css">
-<script src="/Src/Client/js/ArtistEdit.js" defer></script>
+<script src="/Src/Client/js/Album.js" defer></script>
 
 <div class="loginMain d-flex flex-column align-items-center">
     <div class="loginContent">
@@ -28,13 +28,13 @@
                 <div class="mt-4 has-validation">
                     <label for="AlbumDate" class="h5">Ngày tạo</label>
                     <input type="text" name="AlbumDate" class="form-control flex-fill mb-0"
-                           placeholder="YYYY-MM-DD" id="AlbumDate">
+                           placeholder="định dạng YYYY-MM-DD" id="AlbumDate">
                 </div>
 
                 <div class="mt-4 has-validation">
                     <label for="AlbumTime" class="h5">Thời gian Album</label>
                     <input type="text" name="AlbumTime" class="form-control flex-fill mb-0"
-                           placeholder="00:00:00" id="AlbumTime">
+                           placeholder="định dạng 00:00:00" id="AlbumTime">
                 </div>
 
 
@@ -44,16 +44,29 @@
                            placeholder="Lượt nghe" id="AlbumListener">
                 </div>
 
+                <div class="mt-4">
+                    <label for="AlbumDescriptions" class="h5">Mô tả</label>
+                    <input type="text" name="AlbumDescriptions" class="form-control flex-fill mb-0"
+                           placeholder="mô tả" id="AlbumDescriptions">
+                </div>
+
                 <!-- thêm người lập  -->
-                <div></div>
+                <div class="mt-4 addAluser" id="addAluser">
+
+                <button id="AddUserBtn" class="btn btn-outline-primary mt-4" style="width: 100%">Thêm nhạc sĩ</button>
+                </div>
 
 
                 <!-- thêm bài hát vào album -->
-                <div></div>
+                <div class="mt-4 addAlSong" id="addAlSong">
+
+               
+                <button id="AddSongBtn" class="btn btn-outline-primary mt-4" style="width: 100%">Thêm bài hát</button>
+                </div>
 
 
                 <div class="d-flex justify-content-center gap-1">
-                    <button type="submit" class="btn btn-primary text-break mt-5" style="width: 100%" id="addAlbum">Xác nhận</button>
+                    <button type="submit" class="btn btn-primary text-break mt-5" style="width: 100%" onclick="addAlbum()">Xác nhận</button>
                     <button class="btn btn-secondary text-break mt-5" style="width: 100%">Thoát</button>
                 </div>
             </div>

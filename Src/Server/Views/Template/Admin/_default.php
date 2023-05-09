@@ -130,8 +130,17 @@
 
 
             <div class="d-flex gap-2">
+                
                 <div>
-                    <a href="<?php echo '/' . htmlspecialchars($_GET['url']) . '/0'; ?>" class="btn btn-primary">Thêm
+                    <a href="<?php 
+                    if($data["Title"]=="Albums"){
+                        echo "http://localhost/admin/AddAlbum" ;
+                    } else{
+
+                    echo '/' . htmlspecialchars($_GET['url']) . '/0'; 
+                }
+                    
+                    ?>" class="btn btn-primary">Thêm
                         <?php echo $data["Title"] ?></a>
                 </div>
 

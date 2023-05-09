@@ -1,7 +1,7 @@
-let addAlbum = document.getElementById("addAlbum");
-if (addAlbum) {
-    addAlbum.onclick = function (e) {
-        e.stopPropagation();
+
+function addAlbum() {
+   
+        
         let AlbumName = document.getElementById("AlbumName").value;
         if (AlbumName.trim() === "") {
             alert("Không được bỏ trống tên Album");
@@ -16,7 +16,7 @@ if (addAlbum) {
 
         let AlbumDescriptions = document.getElementById("AlbumDescriptions").value;
         if (AlbumDescriptions.trim() === "") {
-            AlbumAvatar = "không có nhận xét nào";
+            AlbumDescriptions = "không có nhận xét nào";
         }
         
         let AlbumListener = document.getElementById("AlbumListener").value;
@@ -26,18 +26,31 @@ if (addAlbum) {
         }
 
         let AlbumTime = document.getElementById("AlbumTime").value;
-        if (/[0-9]{2}:[0-9]{2}:[0-9]{2}/.test(AlbumTime)||AlbumTime==="") {
+        if (!(/[0-9]{2}:[0-9]{2}:[0-9]{2}/.test(AlbumTime)||AlbumTime==="")) {
             alert("thời gian không đúng đinh dạng");
             return;
         }
         let AlbumDate = document.getElementById("AlbumDate").value;
-        if (/[0-9]{4}:[0-9]{2}:[0-9]{2}/.test(AlbumDate)||AlbumDate==="") {
-            alert("Ngàytaoj không đúng đinh dạng");
+        if (!(/[0-9]{4}:[0-9]{2}:[0-9]{2}/.test(AlbumDate)||AlbumDate==="")) {
+            alert("Ngày tạo không đúng đinh dạng");
             return;
         }
         // 2 cái let dưới chưa xong
-        let AlbumCreated = document.getElementById("AlbumCreated").value;
-        let AlbumSong = document.getElementById("AlbumSong").value;
+        let Created = document.getElementsByClassName("AlbumCreated");
+        let AlbumCreated =[];
+        for(const x of Created ){
+            AlbumCreated.push(x.value);
+        }
+        console.log("ng tạo")
+        console.log(AlbumCreated)
+
+        let AlSong = document.getElementsByClassName("AlbumSong");
+        let AlbumSong =[];
+        for(const x of AlSong ){
+            AlbumSong.push(x.value);
+        }
+        console.log( "song:")
+        console.log( AlbumSong)
 
         // còn phần  ca sĩ + người lập
 
@@ -46,15 +59,15 @@ if (addAlbum) {
         let data = {
             AlbumName: AlbumName,
             AlbumAvatar: AlbumAvatar,
-            AlbumType: AlbumType,
             AlbumListener: AlbumListener,
             AlbumDate: AlbumDate, 
             AlbumTime: AlbumTime,
             AlbumSong: AlbumSong,
-            AlbumCreated: AlbumCreated
+            AlbumCreated: AlbumCreated,
+            AlbumDescriptions: AlbumDescriptions
 
         };
-
+        // console.log(data)
         fetch(fetchFrom, {
             method: 'POST',
             headers: {
@@ -65,14 +78,14 @@ if (addAlbum) {
             .then(data => console.log(data))
             .then(() => alert("Thêm Album thành công"))
             .catch(data => console.log(data));
-    };
+    
 }
 
 // Sự kiện dùng để sửa nghệ sĩ
+function editAlbum() {
 let editAlbum = document.getElementById("editAlbum");
-if (editAlbum) {
-    editAlbum.onclick = function (e) {
-        e.stopPropagation();
+// header("Localhost: http://localhost/admin");
+
         let AlbumID = document.getElementById("AlbumID").innerText.split(" ").pop();
 
         let AlbumName = document.getElementById("AlbumName").value;
@@ -99,34 +112,42 @@ if (editAlbum) {
         }
 
         let AlbumTime = document.getElementById("AlbumTime").value;
+        if (!(/[0-9]{2}:[0-9]{2}:[0-9]{2}/.test(AlbumTime)||AlbumTime==="")) {
+            alert("thời gian không đúng đinh dạng");
+            return;
+        }
         let AlbumDate = document.getElementById("AlbumDate").value;
+        if (!(/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(AlbumDate)||AlbumDate==="")) {
+            alert("Ngày tạo không đúng đinh dạng");
+            return;
+        }
 
         // 2 cái let dưới chưa xong
-        let Created = document.getElementById("AlbumCreated");
+        let Created = document.getElementsByClassName("AlbumCreated");
         let AlbumCreated =[];
         for(const x of Created ){
             AlbumCreated.push(x.value);
         }
 
-        let AlSong = document.getElementById("AlbumSong").value;
+        let AlSong = document.getElementsByClassName("AlbumSong");
         let AlbumSong =[];
         for(const x of AlSong ){
             AlbumSong.push(x.value);
         }
         // còn phần  ca sĩ + người lập
 
-        let fetchFrom = "/Admin/AddAlbum/Add";
+        let fetchFrom = "/Admin/EditAlbum/Edit";
 
         let data = {
             AlbumID: AlbumID,
             AlbumName: AlbumName,
             AlbumAvatar: AlbumAvatar,
-            AlbumType: AlbumType,
             AlbumListener: AlbumListener,
             AlbumDate: AlbumDate, 
             AlbumTime: AlbumTime,
             AlbumSong: AlbumSong,
-            AlbumCreated: AlbumCreated
+            AlbumCreated: AlbumCreated,
+            AlbumDescriptions: AlbumDescriptions
 
         };
 
@@ -136,34 +157,34 @@ if (editAlbum) {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams(data)
-        })
-            .then(data => console.log(data))
-            .then(() => alert("sửa Album thành công"))
+        }).then(() => alert("sửa Album thành công"))
             .catch(data => console.log(data));
+            
     };
-}
+
 
 function adduserAl(qq=""){
     const div = document.createElement('div');
     div.setAttribute("class", "d-flex gap-2");
     div.innerHTML += `
-        <input list="userAs" class="AlbumCreated form-control value=`+qq+`">
+        <input list="userAs" class="AlbumCreated form-control" value="`+qq+`">
         <button class="btn btn-outline-danger">Xóa</button>
-    `;
 
+    `;
+   
+    
 
     let user = document.getElementById("addAluser");
-    user.appendChild(div);
-
-    for (const SectionElemElement of user.children) {
-        const delBtn = SectionElemElement.querySelector("button");
+    user.appendChild(div);    
+        let delBtn = user.lastChild.querySelector("button");
+        console.log(delBtn);
         if (delBtn === null) {
             throw Error("OK???");
+            return;
         }
-        delBtn.addEventListener("click", () => {
-            SectionElemElement.remove();
-        });
-    }
+        delBtn.addEventListener("click", function() {
+            this.closest("div").remove();
+        })
 
 }
 
@@ -176,28 +197,28 @@ function addSongAl(qq=""){
     `;
 
 
-    let user = document.getElementById("addAluser");
+    let user = document.getElementById("addAlSong");
     user.appendChild(div);
 
-    for (const SectionElemElement of user.children) {
-        const delBtn = SectionElemElement.querySelector("button");
-        if (delBtn === null) {
-            throw Error("OK???");
-        }
-        delBtn.addEventListener("click", () => {
-            SectionElemElement.remove();
-        });
+    let delBtn = user.lastChild.querySelector("button");
+    console.log(delBtn);
+    if (delBtn === null) {
+        throw Error("OK???");
+        return;
     }
+    delBtn.addEventListener("click", function() {
+        this.closest("div").remove();
+    })
 
 }
 
 
-AddUserBtn = document.getElementsByName("AddUserBtn");
-AddUserBtn.addEventListener("click", () => {
+let AddUserBtn = document.getElementById("AddUserBtn");
+document.getElementById("AddUserBtn").addEventListener("click", () => {
     adduserAl();
 });
 
-AddUserBtn = document.getElementsByName("AddSongBtn");
-AddUserBtn.addEventListener("click", () => {
+let AddSongBtn = document.getElementById("AddSongBtn");
+AddSongBtn.addEventListener("click", () => {
     addSongAl();
 });
