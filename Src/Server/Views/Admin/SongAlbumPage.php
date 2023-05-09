@@ -15,17 +15,18 @@
                     <div  class="card shadow p-3 bg-white rounded cardItem" style="text-decoration: none">
                         <div>
                         <a href="/{$uri}/{$ID}">
-                            <img class="card-img-top" src="{$image} " alt="Cover" style=" background-position: center; max-height: 100px; object-fit: cover;">
+                            <img class="card-img-top" src="{$image}" alt="Cover" style=" background-position: center; max-height: 100px; object-fit: cover;">
                         </div>
                         <div class="card-body d-flex flex-column align-items-center justify-content-center">
                             <h5 class="card-title">{$name}</h5></a>
                             <div>
                                 <a href="http://localhost/admin/EditAlbum/{$ID} "> <button class="btn btn-primary">Sửa</button></a>
-                                <a href="http://localhost/admin/DeleteAlbum/{$ID}"> <button class="btn btn-secondary">Xóa</button></a>
+                                <a href="http://localhost/admin/DeleteAlbum/{$ID}/{$uri}"> <button class="btn btn-secondary">Xóa</button></a>
                             </div>    
                         </div>
                     </div>
                 WUT;
+
         }
     }
     ?>

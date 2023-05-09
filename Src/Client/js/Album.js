@@ -1,3 +1,4 @@
+let serverAvatarPath = "/Src/Client/img/Album/";
 
 function addAlbum() {
    
@@ -8,12 +9,19 @@ function addAlbum() {
             return;
         }
 
-        // Lấy ra tên file
-        let AlbumAvatar = document.getElementById("AlbumAvatar").value;
-        if (AlbumAvatar.trim() === "") {
-            AlbumAvatar = "NA";
-        }
+        let AlbumID = document.getElementById("AlbumID").innerText;
 
+        // Lấy ra tên file
+        let AlbumAvatar = document.getElementById("AlbumAvatar");
+        console.log("chúy ý:")
+        console.log(AlbumAvatar)
+        // console.log(AlbumID)
+        if (!AlbumAvatar) {
+            AlbumAvatar = "NA";
+        }else {
+            AlbumAvatar = `${serverAvatarPath}${AlbumID}/${AlbumAvatar.children[7].children[0].value.split("\n")[13].split("=>")[1].trim()}`;
+        }
+        console.log(AlbumAvatar)
         let AlbumDescriptions = document.getElementById("AlbumDescriptions").value;
         if (AlbumDescriptions.trim() === "") {
             AlbumDescriptions = "không có nhận xét nào";
@@ -31,7 +39,7 @@ function addAlbum() {
             return;
         }
         let AlbumDate = document.getElementById("AlbumDate").value;
-        if (!(/[0-9]{4}:[0-9]{2}:[0-9]{2}/.test(AlbumDate)||AlbumDate==="")) {
+        if (!(/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(AlbumDate)||AlbumDate==="")) {
             alert("Ngày tạo không đúng đinh dạng");
             return;
         }
@@ -39,16 +47,33 @@ function addAlbum() {
         let Created = document.getElementsByClassName("AlbumCreated");
         let AlbumCreated =[];
         for(const x of Created ){
-            AlbumCreated.push(x.value);
+            console.log(x.value)
+            for(const y of document.getElementById("U").children){
+                
+                if(x.value == y.value){
+
+                    AlbumCreated.push(x.value);
+                }
+            }
+
         }
+        alert("Những nghệ sị không có trong bảng gợi ý sẽ không được ghi nhận");
+        
         console.log("ng tạo")
         console.log(AlbumCreated)
 
         let AlSong = document.getElementsByClassName("AlbumSong");
         let AlbumSong =[];
         for(const x of AlSong ){
-            AlbumSong.push(x.value);
+            for(const y of document.getElementById("S").children){
+                
+                if(x.value == y.value){
+
+                    AlbumSong.push(x.value);
+                }
+            }
         }
+        alert("Những bài hát không có trong gợi ý sẽ không được hệ thống chấn nhận");
         console.log( "song:")
         console.log( AlbumSong)
 
@@ -124,16 +149,41 @@ let editAlbum = document.getElementById("editAlbum");
 
         // 2 cái let dưới chưa xong
         let Created = document.getElementsByClassName("AlbumCreated");
+        
         let AlbumCreated =[];
         for(const x of Created ){
-            AlbumCreated.push(x.value);
+            console.log(x.value)
+            for(const y of document.getElementById("S").children){
+                console.log(y.value);
+                
+                if(x.value == y.value){
+
+                    AlbumCreated.push(x.value);
+                }
+                    
+                    
+            }
+            
         }
+        AlbumCreated = Array.from(new Set(AlbumCreated))
+        alert("Những nghệ sĩ không có trong gợi ý sẽ không được hệ thống chấn nhận");
+
 
         let AlSong = document.getElementsByClassName("AlbumSong");
         let AlbumSong =[];
         for(const x of AlSong ){
-            AlbumSong.push(x.value);
+            console.log(x.value)
+            for(const y of document.getElementById("S").children){
+                
+                if(x.value == y.value){
+
+                    AlbumSong.push(x.value);
+                }
+            }
+
         }
+        AlbumSong = Array.from(new Set(AlbumSong))
+        alert("Những bài hát không có trong gợi ý sẽ không được hệ thống chấn nhận");
         // còn phần  ca sĩ + người lập
 
         let fetchFrom = "/Admin/EditAlbum/Edit";
@@ -167,7 +217,7 @@ function adduserAl(qq=""){
     const div = document.createElement('div');
     div.setAttribute("class", "d-flex gap-2");
     div.innerHTML += `
-        <input list="userAs" class="AlbumCreated form-control" value="`+qq+`">
+        <input list="U" class="AlbumCreated form-control" value="`+qq+`">
         <button class="btn btn-outline-danger">Xóa</button>
 
     `;
@@ -192,7 +242,7 @@ function addSongAl(qq=""){
     const div = document.createElement('div');
     div.setAttribute("class", "d-flex gap-2");
     div.innerHTML += `
-        <input list="SongAl" class="AlbumSong form-control" value=`+qq+`>
+        <input list="S" class="AlbumSong form-control" value=`+qq+`>
         <button class="btn btn-outline-danger">Xóa</button>
     `;
 

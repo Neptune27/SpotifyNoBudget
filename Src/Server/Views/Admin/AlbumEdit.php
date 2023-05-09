@@ -33,7 +33,7 @@ if (!isset($data)) {
 
                 <div class="mt-4">
                     <label for="AlbumAvatar" class="h5">Hình Album</label>
-                    <input type="file" name="AlbumAvatar" class="form-control flex-fill mb-0" id="AlbumAvatar">
+                    <input type="file" name="AlbumAvatar" class="form-control flex-fill mb-0 disabled" id="AlbumAvatar" disabled>
                 </div>
 
                 <div class="mt-4 has-validation">
@@ -73,7 +73,7 @@ if (!isset($data)) {
     const div = document.createElement('div');
     div.setAttribute("class", "d-flex gap-2");
     div.innerHTML += `
-        <input list="userAs" class="AlbumCreated form-control" value="`+qq+`">
+        <input list="U" class="AlbumCreated form-control" value="`+qq+`">
         <button class="btn btn-outline-danger">Xóa</button>
 
     `;
@@ -108,7 +108,7 @@ if (!isset($data)) {
     const div = document.createElement('div');
     div.setAttribute("class", "d-flex gap-2");
     div.innerHTML += `
-        <input list="SongAl" class="AlbumSong form-control" value=`+qq+`>
+        <input list="S" class="AlbumSong form-control" value=`+qq+`>
         <button class="btn btn-outline-danger">Xóa</button>
     `;
 
@@ -144,3 +144,27 @@ if (!isset($data)) {
     </div>
 </div>
 
+<?php 
+                
+                // echo var_dump($data["UAL"]);
+                $dataU ="";
+                for($x=0;$x<count($data["UAL"]);$x++){
+                    $dataU = $dataU."<option value=\"{$data["UAL"][$x]["USER_ID"]}\">{$data["UAL"][$x]["NAME"]}</option>";
+                }
+                $dataU = '<datalist name="U" id="U">' . $dataU . '</datalist>';
+                echo $dataU;
+                
+
+            ?>
+            <?php 
+                
+                // echo var_dump($data["SAL"]);
+                $dataS ="";
+                for($x=0;$x<count($data["SAL"]);$x++){
+                    $dataS = $dataS."<option value=\"{$data["SAL"][$x]["song_id"]}\">{$data["SAL"][$x]["SONG_NAME"]}</option>";
+                }
+                $dataS = '<datalist name="S" id="S">' . $dataS . '</datalist>';
+                echo $dataS;
+                
+
+            ?>
