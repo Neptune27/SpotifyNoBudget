@@ -67,8 +67,8 @@
 
 
                 <div class="d-flex justify-content-center gap-1">
-                     <a href="/admin/AddSongPage" class="btn btn-primary text-break mt-5" style="width: 100%" onclick="addAlbum()">Xác nhận</a>
-                    <a href="/admin/AddSongPage" class="btn btn-secondary text-break mt-5" style="width: 100%">Thoát</a>
+                     <a href="/admin/AddSongPage/<?php echo $data["old"] ?>" class="btn btn-primary text-break mt-5" style="width: 100%" onclick="addAlbum()">Xác nhận</a>
+                    <a href="/admin/AddSongPage/<?php echo $data["old"] ?>" class="btn btn-secondary text-break mt-5" style="width: 100%">Thoát</a>
                 </div>
             </div>
         </section>

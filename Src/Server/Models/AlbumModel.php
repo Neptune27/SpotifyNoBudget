@@ -208,4 +208,24 @@ class AlbumModel extends Model {
         return $this->getData($query);
     }
 
+    public function getIDU($id){
+
+        $query = <<<END
+                        SELECT *
+                        FROM ALBUM
+                        WHERE ALBUM_ID = {$id};
+                        END;
+        return $this->getData($query);
+
+    }
+
+    public function GetArtistByID($id){
+        $query = <<<END
+                        SELECT *
+                        FROM USER
+                        WHERE USER_ID = {$id};
+                        END;
+        return $this->getData($query);
+    }
+
 }

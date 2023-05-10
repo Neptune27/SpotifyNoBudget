@@ -11,6 +11,7 @@
         $uri = $_GET["url"];
         foreach ($data["Albums"] as $index => $datum) {
             ["ALBUM_ID" => $ID, "ALBUM_NAME"=>$name, "ALBUM_IMG"=>$image] = $datum;
+            $QQ = explode("/",$uri)[2];
             echo <<<WUT
                     <div  class="card shadow p-3 bg-white rounded cardItem" style="text-decoration: none">
                         <div>
@@ -20,7 +21,7 @@
                         <div class="card-body d-flex flex-column align-items-center justify-content-center">
                             <h5 class="card-title">{$name}</h5></a>
                             <div>
-                                <a href="http://localhost/admin/EditAlbum/{$ID} "> <button class="btn btn-primary">Sửa</button></a>
+                                <a href="http://localhost/admin/EditAlbum/{$ID}/{$QQ}"> <button class="btn btn-primary">Sửa</button></a>
                                 <a href="http://localhost/admin/DeleteAlbum/{$ID}/{$uri}"> <button class="btn btn-secondary">Xóa</button></a>
                             </div>    
                         </div>

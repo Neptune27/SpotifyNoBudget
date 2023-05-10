@@ -134,7 +134,9 @@
                 <div>
                     <a href="<?php 
                     if($data["Title"]=="Albums"){
-                        echo "http://localhost/admin/AddAlbum" ;
+                        $uri = $_GET["url"];
+                        $QQ = explode("/",$uri)[2];
+                        echo "http://localhost/admin/AddAlbum/{$QQ}" ;
                     } else{
 
                     echo '/' . htmlspecialchars($_GET['url']) . '/0'; 

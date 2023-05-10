@@ -91,6 +91,7 @@ class AdminController extends Controller
             }
 
             $albumsq = $albumModel->GetAlbums($params[0], $query, ($page-1)*20);
+            $artist = $albumModel->GetArtistByID($params[0]);
             $this->view(self::$defaultTemplate, [
                 // "Songs" => $song,
                 "Page" => "SongAlbumPage",
@@ -99,12 +100,13 @@ class AdminController extends Controller
                 "totalPage" => $totalPage,
                 "page" => $page,
                 "query" => $query,
-                "Title" => "Albums"
+                "Title" => "Albums",
             ]);
             return;
 
         }
 
+        $albums = $albumModel->GetIDU($params[1]);
         $songModel = $this->model("SongModel");
         if (!isset($params[2])) {
             $query = "";
@@ -138,11 +140,11 @@ class AdminController extends Controller
             }
 
             $song = $songModel->GetSongs($params[1], $query, ($page-1)*20);
-
+            
             $this->view(self::$defaultTemplate, [
                 "Songs" => $song,
                 "Page" => "SongSongPage",
-                // "Albums" => $albums,
+                "Albums" => $albums,
                 "artist" => $artist,
                 "totalPage" => $totalPage,
                 "page" => $page,
@@ -210,6 +212,10 @@ class AdminController extends Controller
         $AlbumModel = $this->model("AlbumModel");
         $UAL = $AlbumModel->getAllIDUser();
         // $AlbumModel->deleteAlbum(3);
+        $old = "";
+        if (isset($params[0])){
+            $old = $params[0];
+        }
         $SAL = $AlbumModel->getAllIDSong();
         $last = $AlbumModel->createAlbumID();
 
@@ -218,6 +224,7 @@ class AdminController extends Controller
             "UAL" => $UAL,
             "SAL" => $SAL,
             "id" => $last,
+            "old" => $old,
         ]);
     }
 
@@ -243,6 +250,10 @@ class AdminController extends Controller
 
         // $AlbumModel->editAlbum(20,4, 1,1,"","",1,"1", "1" );
         $AlbumID = $params[0];
+        $old = "";
+        if (isset($params[1])){
+            $old = $params[1];
+        }
         $AlbumSongs = $AlbumModel->getDetailAlbumSong($AlbumID);
         $AlbumInfo = $AlbumModel->getDetailAlbum($AlbumID);
         $AlbumUsers = $AlbumModel->getDetailAlbumCreated($AlbumID);
@@ -256,6 +267,7 @@ class AdminController extends Controller
             "AlbumID" => $AlbumID,
             "UAL" => $UAL,
             "SAL" => $SAL,
+            "old" => $old,
         ]);
     }
 
@@ -269,17 +281,7 @@ class AdminController extends Controller
         header ("Location:/".$params[1]."/".$params[2]."/".$params[3]);
     }
 
-    function GetArtistByName() {
-        if (isset($_POST['AlbumName'])) {
-            $i=1;
-            if (isset($_POST['AlbumNumber'])) {
-                $i=$_POST['AlbumNumber'];
-            }
-            $artistModel = $this->model("AlbumModel");
-            $res = ['artists' => $artistModel->getArtistByName($_POST['AlbumName'],$i)];
-            echo json_encode($res);
-        }
-    }
+
 
     function AlbumAvatarUpload($params)
     {

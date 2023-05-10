@@ -13,15 +13,12 @@ function addAlbum() {
 
         // Lấy ra tên file
         let AlbumAvatar = document.getElementById("AlbumAvatar");
-        console.log("chúy ý:")
-        console.log(AlbumAvatar)
-        // console.log(AlbumID)
         if (!AlbumAvatar) {
             AlbumAvatar = "NA";
         }else {
             AlbumAvatar = `${serverAvatarPath}${AlbumID}/${AlbumAvatar.children[7].children[0].value.split("\n")[13].split("=>")[1].trim()}`;
         }
-        console.log(AlbumAvatar)
+
         let AlbumDescriptions = document.getElementById("AlbumDescriptions").value;
         if (AlbumDescriptions.trim() === "") {
             AlbumDescriptions = "không có nhận xét nào";
@@ -47,7 +44,7 @@ function addAlbum() {
         let Created = document.getElementsByClassName("AlbumCreated");
         let AlbumCreated =[];
         for(const x of Created ){
-            console.log(x.value)
+           
             for(const y of document.getElementById("U").children){
                 
                 if(x.value == y.value){
@@ -59,8 +56,7 @@ function addAlbum() {
         }
         alert("Những nghệ sị không có trong bảng gợi ý sẽ không được ghi nhận");
         
-        console.log("ng tạo")
-        console.log(AlbumCreated)
+       
 
         let AlSong = document.getElementsByClassName("AlbumSong");
         let AlbumSong =[];
@@ -74,8 +70,7 @@ function addAlbum() {
             }
         }
         alert("Những bài hát không có trong gợi ý sẽ không được hệ thống chấn nhận");
-        console.log( "song:")
-        console.log( AlbumSong)
+      
 
         // còn phần  ca sĩ + người lập
 
@@ -154,7 +149,7 @@ let editAlbum = document.getElementById("editAlbum");
         for(const x of Created ){
             console.log(x.value)
             for(const y of document.getElementById("S").children){
-                console.log(y.value);
+               
                 
                 if(x.value == y.value){
 
@@ -172,7 +167,7 @@ let editAlbum = document.getElementById("editAlbum");
         let AlSong = document.getElementsByClassName("AlbumSong");
         let AlbumSong =[];
         for(const x of AlSong ){
-            console.log(x.value)
+            
             for(const y of document.getElementById("S").children){
                 
                 if(x.value == y.value){
@@ -227,7 +222,7 @@ function adduserAl(qq=""){
     let user = document.getElementById("addAluser");
     user.appendChild(div);    
         let delBtn = user.lastChild.querySelector("button");
-        console.log(delBtn);
+        
         if (delBtn === null) {
             throw Error("OK???");
             return;
@@ -251,7 +246,7 @@ function addSongAl(qq=""){
     user.appendChild(div);
 
     let delBtn = user.lastChild.querySelector("button");
-    console.log(delBtn);
+    
     if (delBtn === null) {
         throw Error("OK???");
         return;
