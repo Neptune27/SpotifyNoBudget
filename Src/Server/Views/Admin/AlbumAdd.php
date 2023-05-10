@@ -67,8 +67,8 @@
 
 
                 <div class="d-flex justify-content-center gap-1">
-                     <a href="/admin/AddSongPage/<?php echo $data["old"] ?>" class="btn btn-primary text-break mt-5" style="width: 100%" onclick="addAlbum()">Xác nhận</a>
-                    <a href="/admin/AddSongPage/<?php echo $data["old"] ?>" class="btn btn-secondary text-break mt-5" style="width: 100%">Thoát</a>
+                     <button class="btn btn-primary text-break mt-5" style="width: 100%" onclick="addAlbum()">Xác nhận</button>
+                    <button class="btn btn-secondary text-break mt-5" style="width: 100%" onclick="Thoat()">Thoát</button>
                 </div>
             </div>
         </section>
@@ -98,7 +98,9 @@
                 
 
             ?>
-
+<script>
+var page = <?php echo $data["old"]; ?> 
+</script>
 <script>
     const inputElement = document.querySelector('input#AlbumAvatar');
 

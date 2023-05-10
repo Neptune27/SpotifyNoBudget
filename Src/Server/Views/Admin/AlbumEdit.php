@@ -33,7 +33,7 @@ if (!isset($data)) {
 
                 <div class="mt-4">
                     <label for="AlbumAvatar" class="h5">Hình Album</label>
-                    <input type="file" name="AlbumAvatar" class="form-control flex-fill mb-0 disabled" id="AlbumAvatar" disabled>
+                    <input type="file" name="AlbumAvatar" class="form-control flex-fill mb-0" id="AlbumAvatar">
                 </div>
 
                 <div class="mt-4 has-validation">
@@ -136,8 +136,8 @@ if (!isset($data)) {
 
 
                 <div class="d-flex justify-content-center gap-1">
-                    <a href="/admin/AddSongPage/<?php echo $data["old"] ?>" class="btn btn-primary text-break mt-5" style="width: 100%" onclick="editAlbum()">Xác nhận</a>
-                    <a href="/admin/AddSongPage/<?php echo $data["old"] ?>"  class="btn btn-secondary text-break mt-5" style="width: 100%">Thoát</a>
+                    <button class="btn btn-primary text-break mt-5" style="width: 100%" onclick="editAlbum()">Xác nhận</button>
+                    <button  class="btn btn-secondary text-break mt-5" style="width: 100%" onclick="Thoat()">Thoát</button>
                 </div>
             </div>
         </section>
@@ -168,3 +168,79 @@ if (!isset($data)) {
                 
 
             ?>
+            <script>
+var page = <?php echo $data["old"]; ?> 
+</script>
+
+<script>
+    const inputElement = document.querySelector('input#AlbumAvatar');
+
+    window.fileName = "";
+
+    FilePond.registerPlugin(FilePondPluginFileValidateType);
+
+    const pond = FilePond.create(inputElement, {
+        storeAsFile: true,
+        // set allowed file types with mime types
+        acceptedFileTypes: [
+            "image/*"
+        ],
+        allowBrowse: true,
+        server: {
+            process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                // fieldName is the name of the input field
+                // file is the actual file object to send
+                const formData = new FormData();
+
+                formData.append(fieldName, file, file.name);
+                window.fileName = file.name
+
+                const request = new XMLHttpRequest();
+                <?php
+                echo "request.open('POST', '/Admin/AlbumAvatarUpload/{$data['AlbumID']}?type=image');";
+                ?>
+
+                // Should call the progress method to update the progress to 100% before calling load
+                // Setting computable to false switches the loading indicator to infinite mode
+                request.upload.onprogress = (e) => {
+                    progress(e.lengthComputable, e.loaded, e.total);
+                };
+
+                // Should call the load method when done and pass the returned server file id
+                // this server file id is then used later on when reverting or restoring a file
+                // so your server knows which file to return without exposing that info to the client
+                request.onload = function () {
+                    if (request.status >= 200 && request.status < 300) {
+                        // the load method accepts either a string (id) or an object
+                        load(request.responseText);
+                    } else {
+                        // Can call the error method if something is wrong, should exit after
+                        error('oh no');
+                    }
+                };
+
+                request.send(formData);
+
+                // Should expose an abort method so the request can be cancelled
+                return {
+                    abort: () => {
+                        // This function is entered if the user has tapped the cancel button
+                        request.abort();
+
+                        // Let FilePond know the request has been cancelled
+                        abort();
+                    },
+                };
+            },
+            revert: async (source, load, error) => {
+                const res = await fetch(`/Admin/AlbumAvatarUpload/Test?type=image&AlbumName=${fileName}`, {
+                    method: "DELETE"
+                })
+
+                load()
+            }
+        }
+
+    });
+
+</script>

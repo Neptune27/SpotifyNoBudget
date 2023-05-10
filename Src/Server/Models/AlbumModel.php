@@ -30,18 +30,21 @@ class AlbumModel extends Model {
         $this->update("INSERT INTO ALBUM (ALBUM_ID ,TOTAL_LISTENER,ALBUM_NAME,ALBUM_IMG,DESCRIPTIONS, TIME,	DATE) VALUE ({$AlbumID}, {$listen}, '{$name}', '{$IMG}','{$DES}', '{$Time}','{$Date}')");
         // if($song.)
         $Songss=explode(",",$Song);
+        if($Song!=""){
         for($x=0;$x<count($Songss);$x++){
                         $this->update("INSERT INTO song_album (ALBUM_ID ,SONG_ID) VALUES ({$AlbumID}, {$Songss[$x]})");
         }
+    }
         
         $userss=explode(",",$user);
+        if($user!=""){
         for($x=0;$x<count($userss);$x++){
            
             $this->update("INSERT INTO album_created_by (ALBUM_ID ,USER_ID) VALUES ({$AlbumID}, {$userss[$x]})");
             }
             $this->update("UPDATE ALBUM SET NUMBER_OF_SONG = {$this->createAlbumSong($AlbumID) } where ALBUM_ID = {$AlbumID}");
 
-    }
+    }}
 
     function createAlbumSong($id) {
         $i=0;
@@ -112,8 +115,12 @@ class AlbumModel extends Model {
         // $stmt->bind_param("iisssi",
         // $this->createAlbumSong($id),$listen,$name,$IMG,$DES,$id);
         // $stmt->execute();
-
-        $this->update("UPDATE album SET NUMBER_OF_SONG={$this->createAlbumSong($id)},TOTAL_LISTENER=$listen,ALBUM_NAME='{$name}',DESCRIPTIONS='{$DES}',TIME='{$Time}',DATE='{$Date}' WHERE ALBUM_ID= {$id}");
+        if($IMG=="NA"){
+            $this->update("UPDATE album SET NUMBER_OF_SONG={$this->createAlbumSong($id)},TOTAL_LISTENER=$listen,ALBUM_NAME='{$name}',DESCRIPTIONS='{$DES}',TIME='{$Time}',DATE='{$Date}' WHERE ALBUM_ID= {$id}");
+        }else{
+            $this->update("UPDATE album SET NUMBER_OF_SONG={$this->createAlbumSong($id)},ALBUM_IMG='$IMG',TOTAL_LISTENER=$listen,ALBUM_NAME='{$name}',DESCRIPTIONS='{$DES}',TIME='{$Time}',DATE='{$Date}' WHERE ALBUM_ID= {$id}");
+        }
+        
     }
 
     function getDetailAlbumSong($ID) {
