@@ -13,7 +13,7 @@ function addAlbum() {
 
         // Lấy ra tên file
         let AlbumAvatar = document.getElementById("AlbumAvatar");
-        if (!AlbumAvatar) {
+        if (!AlbumAvatar.children[7].children[0]) {
             AlbumAvatar = "NA";
         }else {
             AlbumAvatar = `${serverAvatarPath}${AlbumID}/${AlbumAvatar.children[7].children[0].value.split("\n")[13].split("=>")[1].trim()}`;
@@ -97,7 +97,10 @@ function addAlbum() {
         })
             .then(data => console.log(data))
             .then(() => alert("Thêm Album thành công"))
+            .then(()=> {window.location.replace("http://localhost/admin/AddSongPage/"+page)})
             .catch(data => console.log(data));
+
+        
     
 }
 
@@ -115,9 +118,11 @@ let editAlbum = document.getElementById("editAlbum");
         }
 
         // Lấy ra tên file
-        let AlbumAvatar = document.getElementById("AlbumAvatar").value;
-        if (AlbumAvatar.trim() === "") {
+        let AlbumAvatar = document.getElementById("AlbumAvatar");
+        if (!AlbumAvatar.children[7].children[0]) {
             AlbumAvatar = "NA";
+        }else {
+            AlbumAvatar = `${serverAvatarPath}${AlbumID}/${AlbumAvatar.children[7].children[0].value.split("\n")[13].split("=>")[1].trim()}`;
         }
 
         let AlbumDescriptions = document.getElementById("AlbumDescriptions").value;
@@ -203,6 +208,7 @@ let editAlbum = document.getElementById("editAlbum");
             },
             body: new URLSearchParams(data)
         }).then(() => alert("sửa Album thành công"))
+        .then(()=> {window.location.replace("http://localhost/admin/AddSongPage/"+page)})
             .catch(data => console.log(data));
             
     };
@@ -257,6 +263,9 @@ function addSongAl(qq=""){
 
 }
 
+function Thoat() {
+    window.location.replace("http://localhost/admin/AddSongPage/"+page)
+}
 
 let AddUserBtn = document.getElementById("AddUserBtn");
 document.getElementById("AddUserBtn").addEventListener("click", () => {
