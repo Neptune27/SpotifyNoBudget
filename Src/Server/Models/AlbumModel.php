@@ -42,7 +42,9 @@ class AlbumModel extends Model {
            
             $this->update("INSERT INTO album_created_by (ALBUM_ID ,USER_ID) VALUES ({$AlbumID}, {$userss[$x]})");
             }
-            $this->update("UPDATE ALBUM SET NUMBER_OF_SONG = {$this->createAlbumSong($AlbumID) } where ALBUM_ID = {$AlbumID}");
+            $Time = $this->createAlbumTime($AlbumID);
+            $listen = $this->createAlbumL($AlbumID);
+            $this->update("UPDATE ALBUM SET TIME ='{$Time}', TOTAL_LISTENER = {$listen}  ,NUMBER_OF_SONG = {$this->createAlbumSong($AlbumID) } where ALBUM_ID = {$AlbumID}");
 
     }}
 
@@ -66,6 +68,29 @@ class AlbumModel extends Model {
             } 
         
         return $i;
+    }
+
+    function createAlbumTime($id) {
+        $i=0;
+            $result = mysqli_query($this->con, "SELECT sum(DURATION) as T FROM song,song_album where song.SONG_ID=song_album.SONG_ID and song_album.album_id = {$id}; ");
+            if (mysqli_num_rows($result) > 0) {
+                $row = $result->fetch_assoc();
+                $i = (int)$row["T"];
+            } 
+            $h=$i/3600;
+            $m=$i/60;
+            $s=$i%60;
+        return FLOOR($h).":".FLOOR($m).":".FLOOR($s);
+    }
+
+    function createAlbumL($id) {
+        $i=0;
+            $result = mysqli_query($this->con, "SELECT sum(TOTAL_VIEW) as L  FROM song,song_album where song.SONG_ID=song_album.SONG_ID and song_album.album_id = {$id}; ");
+            if (mysqli_num_rows($result) > 0) {
+                $row = $result->fetch_assoc();
+                $L = (int)$row["L"];
+            } 
+        return $L;
     }
 
     function editAlbum($id,$name, $IMG, $DES,$Time,$Date,$listen,$Song,$user) {
@@ -115,6 +140,9 @@ class AlbumModel extends Model {
         // $stmt->bind_param("iisssi",
         // $this->createAlbumSong($id),$listen,$name,$IMG,$DES,$id);
         // $stmt->execute();
+        $Time = $this->createAlbumTime($id);
+        $listen = $this->createAlbumL($id);
+
         if($IMG=="NA"){
             $this->update("UPDATE album SET NUMBER_OF_SONG={$this->createAlbumSong($id)},TOTAL_LISTENER=$listen,ALBUM_NAME='{$name}',DESCRIPTIONS='{$DES}',TIME='{$Time}',DATE='{$Date}' WHERE ALBUM_ID= {$id}");
         }else{
