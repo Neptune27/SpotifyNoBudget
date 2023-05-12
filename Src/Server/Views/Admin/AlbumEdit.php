@@ -1,7 +1,13 @@
 <?php 
 
-if (!isset($data)) {
-    $data=[];
+if (!isset($data["Album"][0])) {
+    $data["Album"][0]["ALBUM_NAME"]="";
+    $data["Album"][0]["NUMBER_OF_SONG"]="";
+    $data["Album"][0]["DATE"]="";
+    $data["Album"][0]["TIME"]="";
+    $data["Album"][0]["TOTAL_LISTENER"]="";
+    $data["Album"][0]["DESCRIPTIONS"]="";
+    $data["AlbumID"] = "Album không tồn tại";
 }
 
 ?>
@@ -53,7 +59,7 @@ if (!isset($data)) {
                     <label for="AlbumListener" class="h5">Lượt nghe hằng tháng 
                         </label>
                     <input type="number" name="AlbumListener" class="form-control flex-fill mb-0"
-                           placeholder="Lượt nghe" id="AlbumListener" value="<?php echo $data["Album"][0]["TOTAL_LISTENER"]?>">
+                           placeholder="Lượt nghe" id="AlbumListener" value="<?php echo $data["Album"][0]["TOTAL_LISTENER"];?> ">
                 </div>
 
                 <div class="mt-4">
