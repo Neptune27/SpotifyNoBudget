@@ -2,7 +2,9 @@
   position: sticky;
   top: 0;
   left: 0;
+  container-type: inline-size;
   width: 280px;
+  min-width: 50px;
   background: var(--background-color);
   height: 100vh;
   padding: 20px;
@@ -34,6 +36,17 @@
 }
 #sidebar .clicked {
   color: var(--font-color);
+}
+@container (width < 100px) {
+  #sidebar span {
+    display: none;
+  }
+  #sidebar ul {
+    padding: 0 0;
+  }
+  #sidebar img {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=Sidebar.css.map */

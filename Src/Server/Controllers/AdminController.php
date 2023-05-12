@@ -90,6 +90,8 @@ class AdminController extends Controller
         $albumModel = $this->model("AlbumModel");
         $albums = $albumModel->GetAllAlbumFrom($params[0]);
         if (!isset($params[1])) {
+//            Thêm phân trang tại đây
+
             $this->view(self::$defaultTemplate, [
                 "Albums" => $albums,
                 "Page" => "SongAlbumPage",
@@ -115,7 +117,7 @@ class AdminController extends Controller
                 }
             }
 
-            $totalSongQR = $songModel->getTotalSong($params[1], $query);
+            $totalSongQR = $songModel->getTotalSongFromAlbum($params[1], $query);
             $totalSong = $totalSongQR[0]["TOTAL_PAGE"];
             if ($totalSong == 0) {
                 $totalSong = 1;

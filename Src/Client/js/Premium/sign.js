@@ -14,13 +14,22 @@ const validate = async (event) => {
     })
 
     const res = await fetch(uri);
-    const cont = await res.json();
-    console.log(cont["USERNAME"])
-    if (cont["USERNAME"]) {
-        window.location.href = "/"
+    if (res.status !== 403) {
+        const cont = await res.json()
+        if (cont["isAdmin"] === true) {
+            location.href = "/Admin"
+        }
+        else {
+            location.href = "/Play"
+        }
+    }
+    else {
+        const errorElem = document.getElementById("error")
+        errorElem.innerText = "Username hoặc mật khẩu sai"
+        errorElem.setAttribute("style", "")
     }
 
-    event.target.classList.add('was-validated')
+
 }
 
 

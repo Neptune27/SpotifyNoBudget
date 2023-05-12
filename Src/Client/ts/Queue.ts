@@ -159,7 +159,7 @@ class Queue {
         let nQInner = ""
 
         nQInner = nextQueue.reduce((concatString, currentSong, currentIndex)=>{
-            const {artist, imageUrl, songName, albumName, duration, albumID, artistID} = currentSong
+            const {artist, imageUrl, songName, albumName, duration, albumID, artistID, songID} = currentSong
 
             concatString += `
             <div class="queueItem" tabindex="0">
@@ -181,7 +181,7 @@ class Queue {
                     <ul class="option rounded">
                         <li data-artist="${artistID}">Go to Artist</li>
                         <li data-album="${albumID}">Go to Album</li>
-                        <li>Option 3</li>
+                        <li data-playlist="${songID}">Add to playlist</li>
                     </ul>
                 </div>
             </div>

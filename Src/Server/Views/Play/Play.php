@@ -14,11 +14,14 @@
 <link rel="stylesheet" href="/Src/Client/css/HomePane.css">
 <link rel="stylesheet" href="/Src/Client/css/Artist_homepage.css">
 <link rel="stylesheet" href="/Src/Client/css/AlbumContainer.css">
+<link rel="stylesheet" href="/Src/Client/css/HomePagination.css">
 
 <script type="module" src="/Src/Client/js/AudioPlayerQueueController.js" defer></script>
 <script type="module" src="/Src/Client/js/Sidebar.js" defer></script>
 <script type="module" src="/Src/Client/js/Search/search.js" defer></script>
 <script type="module" src="/Src/Client/js/Home.js" defer></script>
+
+
 <main style="display: flex; background-color: var(--background-color)" data-sidebar="Home">
 
 
@@ -69,7 +72,14 @@
         <div id="otherPane" class="otherPane" style="position: relative;">
 
             <div class="homePane" style="">
-                <h1>Recently Added:</h1>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1>Recently Added:</h1>
+                    <div>
+                        <button class="btn btn-secondary homePagination" id="homePrev" style="background-color: #222228 !important;">&lt;</button>
+                        <span id="homeRAPage" class="btn btn-primary">1</span>
+                        <button class="btn btn-secondary homePagination" id="homeNext" data-disable="TRUE" style="background-color: #222228 !important;">&gt;</button>
+                    </div>
+                </div>
                 <div class="queueContainer" id="homeContainer"></div>
             </div>
 

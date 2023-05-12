@@ -12,10 +12,16 @@ if (isset($data["Song"][0])) {
         "DURATION" => $duration
     ] = $data["Song"][0];
 }
-if (isset($data["Song"])) {
-    echo "disabled";
-}
 
+
+//if (isset($data["Song"])) {
+//    echo "disabled";
+//}
+echo count($data["Song"]);
+if (count($data["Song"]) != 0) {
+    echo "A";
+}
+//print_r($data["Song"])
 ?>
 
 
@@ -68,7 +74,9 @@ if (isset($data["Song"])) {
                     <label for="song" class="h5">Bài hát</label>
                     <input type="file" name="song" class="form-control flex-fill mb-0" id="song" <?php
                         if (isset($data["Song"])) {
-                            echo "disabled";
+                            if ($data["Song"][0]["SONG_ID"] != 0) {
+                                echo "disabled";
+                            }
                         }
                     ?>>
                 </div>
