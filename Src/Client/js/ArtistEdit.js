@@ -4,7 +4,7 @@ function validateEmail(email) {
     return regex.test(email);
 }
 
-let serverAvatarPath = "/Src/Client/img/Artist/";
+let serverAvatarPath = "/Src/Client/img/Artist";
 
 // Sự kiện dùng để thêm nghệ sĩ
 let addArtist = document.getElementById("addArtist");
@@ -97,10 +97,10 @@ if (editArtist) {
 
         // Lấy ra tên file
         let artistAvatar = document.getElementById("artistAvatar").value;
-        if (!artistAvatar) {
-            artistAvatar = "NA";
-        } else {
+        if (artistAvatar) {
             artistAvatar = `${serverAvatarPath}/${artistID}/${artistAvatar}`;
+        } else {
+            artistAvatar = `${serverAvatarPath}/${artistID}/${document.querySelector("h3").innerText}`;
         }
 
         let artistGender = document.getElementById("artistGender").value;

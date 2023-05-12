@@ -13,6 +13,7 @@ if (!isset($data)) {
         <section class="m-auto bg-white rounded-4 text-dark">
             <h1 class="text-center p-4 fw-bold">Chỉnh sửa ca sĩ</h1>
             <h2 class="text-center p-2 fw-bold" id="artistID">ID: <?php echo $data["artistID"] ?></h2>
+            <h3 style="display: none;"><?php echo basename($data["artist"][0]["AVATAR"]) ?></h3>
             <div id="signInForm" class="p-4 needs-validation">
 
                 <div class="mt-4 has-validation">
@@ -23,7 +24,7 @@ if (!isset($data)) {
                 <div class="mt-4">
                     <label for="artistAvatar" class="h5">Hình đại diện</label>
                     <input type="file" name="artistAvatar" id="artistAvatar"
-                           class="form-control flex-fill mb-0" value="<?php echo $data["artist"][0]["AVATAR"] ?>">
+                           class="form-control flex-fill mb-0" value="<?php echo basename($data["artist"][0]["AVATAR"]) ?>">
                 </div>
                 <div class="mt-4">
                     <label for="artistGender" class="h5">Giới tính</label>
