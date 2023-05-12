@@ -27,9 +27,8 @@
                            placeholder="Nhập mật khẩu của bạn" id="password" required>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn-sign rounded-5 text-break w-100px mt-5">Đăng nhập</button>
+                    <button type="submit" class="btn-sign rounded-2 text-break w-100px mt-5">Đăng nhập</button>
                 </div>
-                <div class="text-center m-2 pb-2">Bạn chưa tài khoản? <a href="SignUp">Đăng ký</a>.</div>
             </form>
         </section>
     </div>

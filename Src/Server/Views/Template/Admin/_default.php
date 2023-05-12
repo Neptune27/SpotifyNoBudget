@@ -59,22 +59,22 @@
                         Bài hát
                     </a>
                 </li>
-                <!--                <li>-->
-                <!--                    <button-->
-                <!--                            type="button"-->
-                <!--                            aria-haspopup="true"-->
-                <!--                            aria-expanded="true"-->
-                <!--                            aria-controls="dropdown2"-->
-                <!--                    >-->
-                <!--                        Song<span class="arrow"></span>-->
-                <!--                    </button>-->
-                <!--                    <ul class="dropdown" id="dropdown2">-->
-                <!--                        <li><a href="/Admin/AddSongPage">Xem tất cả</a></li>-->
-                <!--                        <li><a href="#">Thêm</a></li>-->
-                <!--                        <li><a href="#">Sửa</a></li>-->
-                <!--                        <li><a href="#">Xóa</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
+<!--                <li>-->
+<!--                    <button-->
+<!--                            type="button"-->
+<!--                            aria-haspopup="true"-->
+<!--                            aria-expanded="true"-->
+<!--                            aria-controls="dropdown2"-->
+<!--                    >-->
+<!--                        Song<span class="arrow"></span>-->
+<!--                    </button>-->
+<!--                    <ul class="dropdown" id="dropdown2">-->
+<!--                        <li><a href="/Admin/AddSongPage">Xem tất cả</a></li>-->
+<!--                        <li><a href="#">Thêm</a></li>-->
+<!--                        <li><a href="#">Sửa</a></li>-->
+<!--                        <li><a href="#">Xóa</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
 
 
             </ul>

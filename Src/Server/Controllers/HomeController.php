@@ -71,6 +71,37 @@ class HomeController extends Controller
         $this->view($this->signTemplate, []);
     }
 
+    function Receipt($params) {
+        $havePremium = $_SESSION["user"]["HAVE_PREMIUM"];
+        $userID = $_SESSION["user"]["USER_ID"];
+        if ($havePremium) {
+            header("Location /");
+            return;
+        }
+
+        $receiptModel = $this->model("ReceiptModel");
+        $receipt = $receiptModel->getReceipt($userID);
+        if (count($receipt) == 0) {
+            $moneyAmount = -1;
+            if ($_GET["type"] == 0) {
+                $moneyAmount = 6000;
+            }
+            if ($_GET["type"] == 1) {
+                $moneyAmount = 59000;
+            }
+            if ($_GET["type"] == 2) {
+                $moneyAmount = 29.500;
+            }
+            $receiptModel->addReceipt($userID, $moneyAmount);
+            $receipt = $receiptModel->getReceipt($userID);
+        }
+
+        $this->view($this->signTemplate, [
+            "receipt" => $receipt[0]
+        ]);
+
+    }
+
     function hello() {
         $this->view($this->homeTemplate, []);
     }
