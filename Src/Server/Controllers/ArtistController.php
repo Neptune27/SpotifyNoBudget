@@ -10,7 +10,7 @@ class ArtistController extends Controller
     }
 
     function getDataArtist($params) {
-        $this->model= $this->model("ArtistModel");
+        $this->model = $this->model("ArtistModel");
         $song_query = <<<END
                         SELECT SA.SONG_ID, SONG_LOCATION, LYRICS, SONG_NAME, SONG_IMG, U.NAME AS ARTIST, 
                                U.USER_ID AS ARTIST_ID, TOTAL_VIEW, DURATION, ALBUM_NAME, SA.ALBUM_ID, U.AVATAR AS ARTIST_IMG

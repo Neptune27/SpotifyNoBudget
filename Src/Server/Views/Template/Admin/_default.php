@@ -59,22 +59,22 @@
                         Bài hát
                     </a>
                 </li>
-                <!--                <li>-->
-                <!--                    <button-->
-                <!--                            type="button"-->
-                <!--                            aria-haspopup="true"-->
-                <!--                            aria-expanded="true"-->
-                <!--                            aria-controls="dropdown2"-->
-                <!--                    >-->
-                <!--                        Song<span class="arrow"></span>-->
-                <!--                    </button>-->
-                <!--                    <ul class="dropdown" id="dropdown2">-->
-                <!--                        <li><a href="/Admin/AddSongPage">Xem tất cả</a></li>-->
-                <!--                        <li><a href="#">Thêm</a></li>-->
-                <!--                        <li><a href="#">Sửa</a></li>-->
-                <!--                        <li><a href="#">Xóa</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
+<!--                <li>-->
+<!--                    <button-->
+<!--                            type="button"-->
+<!--                            aria-haspopup="true"-->
+<!--                            aria-expanded="true"-->
+<!--                            aria-controls="dropdown2"-->
+<!--                    >-->
+<!--                        Song<span class="arrow"></span>-->
+<!--                    </button>-->
+<!--                    <ul class="dropdown" id="dropdown2">-->
+<!--                        <li><a href="/Admin/AddSongPage">Xem tất cả</a></li>-->
+<!--                        <li><a href="#">Thêm</a></li>-->
+<!--                        <li><a href="#">Sửa</a></li>-->
+<!--                        <li><a href="#">Xóa</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
 
 
             </ul>
@@ -131,7 +131,14 @@
 
             <div class="d-flex gap-2">
                 <div>
-                    <a href="<?php echo '/' . htmlspecialchars($_GET['url']) . '/0'; ?>" class="btn btn-primary">Thêm
+                    <a href="<?php
+//                    Chuyen huong sang trang them ca si neu title la ca si
+                                if ($data["Title"] == "Ca Sĩ") {
+                                    echo "/Admin/AddArtist";
+                                } else {
+                                    echo '/' . htmlspecialchars($_GET['url']) . '/0';
+                                }
+                    ?>" class="btn btn-primary">Thêm
                         <?php echo $data["Title"] ?></a>
                 </div>
 

@@ -42,6 +42,37 @@ class AdminController extends Controller
         }
     }
 
+    function AvatarUpload($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            print_r($params);
+            print_r($_GET);
+            print_r($_FILES);
+
+            $target_dir = __DIR__ . "/../../Client/img/Artist/" . $params[0] . "/";
+            $target_file = $target_dir . basename($_FILES["artistAvatar"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            if (!file_exists($target_dir)) {
+                mkdir($target_dir, 0777, true);
+            }
+
+            if (file_exists($target_file)) {
+                unlink($target_file);
+            }
+
+            if (move_uploaded_file($_FILES["artistAvatar"]["tmp_name"], $target_file)) {
+                echo "The file " . htmlspecialchars(basename($_FILES["artistAvatar"]["name"])) . " has been uploaded.";
+            }
+        }
+        if ($_SERVER["REQUEST_METHOD"] === 'DELETE') {
+            print_r($_GET);
+            print_r($params);
+            $a = 2;
+        }
+    }
+
     function AddSongPage($params)
     {
 
@@ -59,6 +90,8 @@ class AdminController extends Controller
         $albumModel = $this->model("AlbumModel");
         $albums = $albumModel->GetAllAlbumFrom($params[0]);
         if (!isset($params[1])) {
+//            Thêm phân trang tại đây
+
             $this->view(self::$defaultTemplate, [
                 "Albums" => $albums,
                 "Page" => "SongAlbumPage",
@@ -84,7 +117,7 @@ class AdminController extends Controller
                 }
             }
 
-            $totalSongQR = $songModel->getTotalSong($params[1], $query);
+            $totalSongQR = $songModel->getTotalSongFromAlbum($params[1], $query);
             $totalSong = $totalSongQR[0]["TOTAL_PAGE"];
             if ($totalSong == 0) {
                 $totalSong = 1;
@@ -151,4 +184,87 @@ class AdminController extends Controller
         }
     }
 
+//    Action cho them nghệ sĩ
+    function AddArtist($params) {
+        if (isset($params[0]) && $params[0] == "Add") {
+//            Đủ thông tin để insert into
+            $artistModel = $this->model("ArtistModel");
+
+            $artistID = $_POST['artistID'];
+            $artistName = $_POST['artistName'];
+            $artistAvatar = $_POST['artistAvatar'];
+            $artistGender = $_POST['artistGender'];
+            $artistDOB = $_POST['artistDOB'];
+            $artistVerify = $_POST['artistVerify'];
+            $artistCountry = $_POST['artistCountry'];
+            $artistEmail = $_POST['artistEmail'];
+            $artistType = $_POST['artistType'];
+            $artistListener = $_POST['artistListener'];
+
+            $artistModel->addArtist($artistID, $artistName, $artistAvatar, $artistGender,
+                $artistDOB, $artistVerify, $artistCountry,
+                $artistEmail, $artistType, $artistListener);
+
+            return;
+        }
+        $this->view(self::$editTemplate, [
+            "Page" => "ArtistAddPage",
+            "id" => $this->CreateUserId(),
+        ]);
+    }
+
+//    Lấy địa chỉ Nghệ sĩ id mới
+    function CreateUserId() {
+        $artistModel = $this->model("ArtistModel");
+        return $artistModel->createUserID();
+    }
+
+//    Action để sửa nghệ sĩ
+    function EditArtist($params) {
+        $artistModel = $this->model("ArtistModel");
+        if (isset($params[0]) && $params[0] == "Edit") {
+//            Đủ thông tin để update
+            $artistID = $_POST['artistID'];
+            $artistName = $_POST['artistName'];
+            $artistAvatar = $_POST['artistAvatar'];
+            $artistGender = $_POST['artistGender'];
+            $artistDOB = $_POST['artistDOB'];
+            $artistVerify = $_POST['artistVerify'];
+            $artistCountry = $_POST['artistCountry'];
+            $artistEmail = $_POST['artistEmail'];
+            $artistType = $_POST['artistType'];
+            $artistListener = $_POST['artistListener'];
+
+            $artistModel->editArtist($artistID, $artistName, $artistAvatar,
+                $artistGender, $artistDOB, $artistVerify,
+                $artistCountry, $artistEmail, $artistType, $artistListener);
+
+            return;
+        }
+
+        $artistID = $params[0];
+        $artistInfo = $artistModel->getDetailArtistInfo($artistID);
+        $this->view(self::$editTemplate, [
+            "Page" => "ArtistEditPage",
+            "artist" => $artistInfo,
+            "artistID" => $artistID,
+        ]);
+    }
+
+//    Action de xoa nghe si
+    function DeleteArtist($params) {
+        if (isset($params[0])) {
+            $artistModel = $this->model("ArtistModel");
+            $artistModel->deleteArtist($params[0]);
+        }
+    }
+
+//    Action de lay du lieu nghe si tim kiem theo ten
+    function GetArtistByName() {
+        if (isset($_POST['artistName'])) {
+            $artistModel = $this->model("ArtistModel");
+            $res = ['artists' => $artistModel->getArtistByName($_POST['artistName'])];
+            echo json_encode($res);
+        }
+    }
 }

@@ -12,6 +12,9 @@ class HomeController extends Controller
         $this->view($this->homeTemplate, []);
     }
 
+    function BuyPremium() {
+        $this->view($this->signTemplate, []);
+    }
 
     function index() : void
     {
@@ -40,7 +43,7 @@ class HomeController extends Controller
 
 
         $model = $this->model("TestModel");
-        $res = $model->getData("SELECT * FROM USER WHERE PASSWORD='{$password}' AND EMAIL='{$username}'");
+        $res = $model->getData("SELECT * FROM USER WHERE PASSWORD='{$password}' AND USERNAME='{$username}'");
 
         if (!isset($res[0])) {
             header('X-PHP-Response-Code: 403', true, 403);
@@ -50,14 +53,53 @@ class HomeController extends Controller
             return;
         }
 
-        echo json_encode($res[0]);
-        $_SESSION["user"] = $username;
-
+        $isAdmin = false;
+        if ($res[0]['TYPE'] == 1)
+        {
+            $isAdmin = true;
+        }
+        echo json_encode([
+                'success' => true,
+                'isAdmin' => $isAdmin
+            ]
+        );
+        $_SESSION["user"] = $res[0];
     }
 
     function SignUp()
     {
         $this->view($this->signTemplate, []);
+    }
+
+    function Receipt($params) {
+        $havePremium = $_SESSION["user"]["HAVE_PREMIUM"];
+        $userID = $_SESSION["user"]["USER_ID"];
+        if ($havePremium) {
+            header("Location /");
+            return;
+        }
+
+        $receiptModel = $this->model("ReceiptModel");
+        $receipt = $receiptModel->getReceipt($userID);
+        if (count($receipt) == 0) {
+            $moneyAmount = -1;
+            if ($_GET["type"] == 0) {
+                $moneyAmount = 6000;
+            }
+            if ($_GET["type"] == 1) {
+                $moneyAmount = 59000;
+            }
+            if ($_GET["type"] == 2) {
+                $moneyAmount = 29.500;
+            }
+            $receiptModel->addReceipt($userID, $moneyAmount);
+            $receipt = $receiptModel->getReceipt($userID);
+        }
+
+        $this->view($this->signTemplate, [
+            "receipt" => $receipt[0]
+        ]);
+
     }
 
     function hello() {

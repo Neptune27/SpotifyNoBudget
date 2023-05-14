@@ -35,13 +35,7 @@ document.querySelectorAll("#sidebar li").forEach(element => {
         e.stopPropagation();
         // Turn clicked li to not-clicked
         mainElem.setAttribute("data-sidebar", element.id)
-
-        switch (element.id) {
-            case "Home":
-                createHomePaneContent()
-                break;
-        }
-
+        mainElem.setAttribute("data-pane", "NONE")
         if (element.classList.contains('not-clicked')) {
             let clicked = element.closest("ul").querySelector('.clicked');
             clicked.classList.remove('clicked');

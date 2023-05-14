@@ -1,11 +1,12 @@
 import { timeConverter } from "./AudioPlayer.js";
 import { AudioPlayerQueueController } from "./AudioPlayerQueueController.js";
 import { setupAlbumConnection, setupArtistConnection, setupThreeDotConnection } from "./Queue.js";
-const getRecentlyAdded = async () => {
+import { addClickEventForAddToPlaylist } from "./AddToPlaylist.js";
+let currentIndex = 1;
+const getRecentlyAdded = async (page = currentIndex) => {
     const homeContainer = document.getElementById("homeContainer");
-    const fetchHandle = await fetch("/Song/RecentlyAdded/10");
-    const data = await fetchHandle.json();
-    return data;
+    const fetchHandle = await fetch(`/Song/RecentlyAdded/${page}/10`);
+    return await fetchHandle.json();
 };
 const createHomePaneContent = async () => {
     const data = await getRecentlyAdded();
@@ -13,7 +14,34 @@ const createHomePaneContent = async () => {
     if (containerElem === null) {
         return;
     }
-    const inner = data?.map((val, index) => `
+    const homePrevBtn = document.getElementById("homePrev");
+    if (homePrevBtn === null) {
+        throw new Error("Home prev btn not found");
+    }
+    const homePageBtn = document.getElementById("homeRAPage");
+    if (homePageBtn === null) {
+        throw new Error("Home prev btn not found");
+    }
+    const homeNextBtn = document.getElementById("homeNext");
+    if (homeNextBtn === null) {
+        throw new Error("Home prev btn not found");
+    }
+    if (data?.isPrev === false) {
+        homePrevBtn.setAttribute("data-disable", "TRUE");
+    }
+    else {
+        homePrevBtn.setAttribute("data-disable", "FALSE");
+    }
+    if (data?.isNext === false) {
+        homeNextBtn.setAttribute("data-disable", "TRUE");
+    }
+    else {
+        homeNextBtn.setAttribute("data-disable", "FALSE");
+    }
+    if (data?.currentPage) {
+        homePageBtn.innerText = data.currentPage;
+    }
+    const inner = data?.SONGS?.map((val, index) => `
             <div class="queueItem" data-song="${val.SONG_ID}" tabindex="0">
                 <div class="queueId">
                     <span>${index + 1}</span>
@@ -33,7 +61,7 @@ const createHomePaneContent = async () => {
                    <ul class="option rounded">
                         <li data-artist="${val.ARTIST_ID}">Go to Artist</li>
                         <li data-album="${val.ALBUM_ID}">Go to Album</li>
-                        <li>Option 3</li>
+                        <li data-playlist="${val.SONG_ID}">Add to Playlist</li>
                     </ul>
                 </div>
             </div>
@@ -45,6 +73,7 @@ const createHomePaneContent = async () => {
     setupAlbumConnection(containerElem);
     setupArtistConnection(containerElem);
     setupThreeDotConnection(containerElem);
+    addClickEventForAddToPlaylist();
     const homeItemElems = document.querySelectorAll("div#homeContainer > div.queueItem");
     for (const homeItemElem of homeItemElems) {
         homeItemElem.addEventListener("dblclick", () => {
@@ -59,5 +88,30 @@ const createHomePaneContent = async () => {
         });
     }
 };
+const addHomePaginationEventListener = () => {
+    const homePrevBtn = document.getElementById("homePrev");
+    if (homePrevBtn === null) {
+        throw new Error("Home prev btn not found");
+    }
+    const homeNextBtn = document.getElementById("homeNext");
+    if (homeNextBtn === null) {
+        throw new Error("Home prev btn not found");
+    }
+    homePrevBtn.addEventListener("click", () => {
+        if (homePrevBtn.getAttribute("data-disable") === "TRUE") {
+            return;
+        }
+        currentIndex--;
+        createHomePaneContent();
+    });
+    homeNextBtn.addEventListener("click", () => {
+        if (homeNextBtn.getAttribute("data-disable") === "TRUE") {
+            return;
+        }
+        currentIndex++;
+        createHomePaneContent();
+    });
+};
+addHomePaginationEventListener();
 export { getRecentlyAdded, createHomePaneContent };
 //# sourceMappingURL=Home.js.map

@@ -14,13 +14,39 @@
 <link rel="stylesheet" href="/Src/Client/css/HomePane.css">
 <link rel="stylesheet" href="/Src/Client/css/Artist_homepage.css">
 <link rel="stylesheet" href="/Src/Client/css/AlbumContainer.css">
+<link rel="stylesheet" href="/Src/Client/css/HomePagination.css">
+<link rel="stylesheet" href="/Src/Client/css/Library.css">
 
 <script type="module" src="/Src/Client/js/AudioPlayerQueueController.js" defer></script>
 <script type="module" src="/Src/Client/js/Sidebar.js" defer></script>
 <script type="module" src="/Src/Client/js/Search/search.js" defer></script>
 <script type="module" src="/Src/Client/js/Home.js" defer></script>
+<script type="module" src="/Src/Client/js/AddToPlaylist.js" defer></script>
+
+
 <main style="display: flex; background-color: var(--background-color)" data-sidebar="Home">
 
+    <dialog id="modalAddPlaylist" class="rounded">
+        <h2 class="userId" style="display: none;"><?php echo $_SESSION['user']['USER_ID'] ?></h2>
+        <h2 class="songId" style="display: none;"></h2>
+        <div class="form-group mb-2">
+            <label for="selectPlaylist">Hãy chọn playlist</label>
+            <select class="form-control" id="selectPlaylist" name="selectPlaylist">
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+                <option>Option 4</option>
+                <option>Option 5</option>
+            </select>
+        </div>
+        <h2>Tạo mới playlist</h2>
+        <div class="form-group mb-2">
+            <label for="playlistName">Nhập tên playlist</label>
+            <input type="text" class="form-control" id="playlistName" name="playlistName" placeholder="Tên playlist">
+        </div>
+        <button class="btn btn-primary" id="addToPlaylist">Thêm vào playlist</button>
+        <button class="btn btn-primary" id="createPlaylist">Tạo mới playlist</button>
+    </dialog>
 
     <div id="sidebar">
         <div style="width: 65%">
@@ -69,7 +95,14 @@
         <div id="otherPane" class="otherPane" style="position: relative;">
 
             <div class="homePane" style="">
-                <h1>Recently Added:</h1>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1>Recently Added:</h1>
+                    <div>
+                        <button class="btn btn-secondary homePagination" id="homePrev" style="background-color: #222228 !important;">&lt;</button>
+                        <span id="homeRAPage" class="btn btn-primary">1</span>
+                        <button class="btn btn-secondary homePagination" id="homeNext" data-disable="TRUE" style="background-color: #222228 !important;">&gt;</button>
+                    </div>
+                </div>
                 <div class="queueContainer" id="homeContainer"></div>
             </div>
 
@@ -285,6 +318,33 @@
                 <!--        End album-->
 
             </div>
+
+            <div class="libraryPane">
+                <h1 class="header-name">Your Library</h1>
+                <div class="song-wrapper">
+
+                    <!--                            Row Song -->
+                    <div class="row align-items-center song-row rounded">
+                        <div class="col-10">
+                            <div class="d-flex align-items-center">
+                                <div class="square d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-play play-for-song"></i>
+                                </div>
+                                <div style="padding-left: 20px;">
+                                    <p class="name-light m-0 playlistName">Playlist's name</p>
+                                    <p class="sub-name m-0 userName">User's name</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex align-items-center flex-row-reverse justify-content-between">
+                                <p class="sub-name m-0 create-date">Created date</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--                            End Row Song -->
+
+                </div>
 
             <div id="albumContainer" class="albumContainer">
 

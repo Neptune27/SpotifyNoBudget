@@ -7,9 +7,9 @@ class SongModel extends Model
         parent::__construct();
     }
 
-    public function getRecentlyAdded($limit): array
+    public function getRecentlyAdded($from, $limit): array
     {
-        $limit = htmlspecialchars($limit);
+        $limit = $this->con->real_escape_string($limit);
         $query = <<<WUT
             SELECT ADDED_DATE, DURATION, LYRICS, SA.SONG_ID, SONG_IMG, SONG_LOCATION, SONG_NAME, TOTAL_VIEW, ALBUM_NAME, A.ALBUM_ID, USER_ID AS ARTIST_ID, NAME AS ARTIST
             FROM SONG
@@ -17,6 +17,7 @@ class SongModel extends Model
             LEFT JOIN ALBUM A on A.ALBUM_ID = SA.ALBUM_ID
             LEFT JOIN SING_BY SB on SONG.SONG_ID = SB.MUSIC_ID
             LEFT JOIN USER U on U.USER_ID = SB.AUTHOR_ID
+            ORDER BY ADDED_DATE DESC LIMIT {$from}, {$limit}
         WUT;
 
 
@@ -26,6 +27,20 @@ class SongModel extends Model
     public function getLyric($id) {
         $query = "SELECT LYRICS FROM SONG WHERE SONG_ID={$id}";
         return $this->getData($query);
+    }
+
+    public function deleteSong($id) {
+        $formattedID = $this->con->real_escape_string($id);
+        $albumQuery = "DELETE FROM SONG_ALBUM WHERE SONG_ID = {$formattedID}";
+        $singByQuery = "DELETE FROM SING_BY WHERE MUSIC_ID = {$formattedID}";
+        $authorQuery = "DELETE FROM AUTHOR_SONG WHERE SONG_ID = {$formattedID}";
+        $historyQuery = "DELETE FROM HISTORY WHERE MUSIC_ID = {$formattedID}";
+        $songQuery = "DELETE FROM SONG WHERE SONG_ID = {$formattedID}";
+        $this->update($albumQuery);
+        $this->update($singByQuery);
+        $this->update($authorQuery);
+        $this->update($historyQuery);
+        $this->update($songQuery);
     }
 
     public function getSongs($id, $song, $from) {
@@ -78,7 +93,7 @@ class SongModel extends Model
         $this->update("UPDATE SONG SET SONG_NAME='{$songName}', SONG_IMG='{$songImg[0]["ALBUM_IMG"]}', DURATION={$duration}, LYRICS='{$encoded}' WHERE SONG_ID={$songID}");
     }
 
-    public function getTotalSong($albumID, $song) {
+    public function getTotalSongFromAlbum($albumID, $song) {
         $secondCond = "";
         if ($song !== "") {
             $secondCond = "AND (SONG.SONG_ID = '{$song}' OR SONG.SONG_NAME like '%{$song}%')";
@@ -87,6 +102,13 @@ class SongModel extends Model
         $query = <<<WUT
             SELECT COUNT(*) AS TOTAL_PAGE FROM SONG LEFT JOIN SONG_ALBUM SA on SONG.SONG_ID = SA.SONG_ID
                                           WHERE SA.ALBUM_ID={$encoded} {$secondCond}; 
+        WUT;
+        return $this->getData($query);
+    }
+
+    public function getTotalSong() {
+        $query = <<<WUT
+            SELECT COUNT(*) AS TOTAL_PAGE FROM SONG; 
         WUT;
         return $this->getData($query);
     }

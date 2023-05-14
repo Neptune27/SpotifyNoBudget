@@ -43,7 +43,7 @@ const setAlbum = async (id: string) => {
                     <ul class="option rounded">
                         <li data-artist="${val.ARTIST_ID}">Go to Artist</li>
                         <li data-album="${val.ALBUM_ID}">Go to Album</li>
-                        <li>Option 3</li>
+                        <li data-playlist="${val.SONG_ID}">Add to Playlist</li>
                     </ul>
                 </div>
             </div>
