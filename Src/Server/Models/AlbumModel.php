@@ -23,4 +23,79 @@ class AlbumModel extends Model {
                         END;
         return $this->getData($song_query);
     }
+
+    function GetPlaylistByUserID($id) {
+        $song_query = <<<END
+                        SELECT ALBUM.ALBUM_ID, ALBUM_NAME 
+                        FROM ALBUM, ALBUM_CREATED_BY, USER
+                        WHERE ALBUM.ALBUM_ID = ALBUM_CREATED_BY.ALBUM_ID AND 
+                              ALBUM_CREATED_BY.USER_ID = USER.USER_ID AND 
+                              USER.USER_ID = {$id};
+                        END;
+        return $this->getData($song_query);
+    }
+
+    function AddSongToPlaylist($songId, $albumId) {
+        $album_query = <<<Thien
+                            INSERT INTO SONG_ALBUM (SONG_ID, ALBUM_ID)
+                            VALUES (?, ?);
+                        Thien;
+
+        $stmt = $this->con->prepare($album_query);
+        $stmt->bind_param("ii", $songId, $albumId);
+        $stmt->execute();
+    }
+
+    function CreateAlbumId() {
+        $i = 1;
+        while (true) {
+            $result = mysqli_query($this->con, "SELECT * FROM ALBUM WHERE ALBUM_ID = $i");
+            if (mysqli_num_rows($result) > 0) {
+                $i = $i + 1;
+                continue;
+            }
+            break;
+        }
+        return $i;
+    }
+
+    function CreatePlaylist($albumName, $userId) {
+        $albumId = $this->CreateAlbumId();
+        $date = date('Y-m-d');
+        $na = "NA";
+
+        $this->con->begin_transaction();
+        try {
+            $album_query = <<<Thien
+                            INSERT INTO ALBUM (ALBUM_ID, ALBUM_NAME, ALBUM_IMG, DESCRIPTIONS, DATE)
+                            VALUES (?, ?, ?, ?, ?);
+                        Thien;
+            $stmt = $this->con->prepare($album_query);
+            $stmt->bind_param("issss", $albumId, $albumName, $na, $na, $date);
+            $stmt->execute();
+
+            $album_query = <<<Thien
+                            INSERT INTO ALBUM_CREATED_BY (USER_ID, ALBUM_ID)
+                            VALUES (?, ?);
+                        Thien;
+            $stmt = $this->con->prepare($album_query);
+            $stmt->bind_param("ii", $userId, $albumId);
+            $stmt->execute();
+
+            $this->con->commit();
+        } catch (Exception $e) {
+            $this->con->rollback();
+        }
+    }
+
+    function GetAlbumDetail($userId) {
+        $album_query = <<<END
+                        SELECT ALBUM.ALBUM_ID, ALBUM_NAME, USERNAME, DATE 
+                        FROM ALBUM, ALBUM_CREATED_BY, USER
+                        WHERE ALBUM.ALBUM_ID = ALBUM_CREATED_BY.ALBUM_ID AND 
+                              ALBUM_CREATED_BY.USER_ID = USER.USER_ID AND 
+                              USER.USER_ID = {$userId};
+                        END;
+        return $this->getData($album_query);
+    }
 }

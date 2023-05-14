@@ -22,6 +22,35 @@ class AlbumController extends Controller
         echo json_encode($model->getData($song_query));
     }
 
+    function GetPlaylist($params) {
+        if (isset($params[0])) {
+            $model = $this->model("AlbumModel");
+            echo json_encode($model->GetPlaylistByUserID($params[0]));
+        }
+    }
+
+    function AddSongToPlaylist($params) {
+        if (isset($params[0]) && isset($params[1])) {
+            $model = $this->model("AlbumModel");
+            $model->AddSongToPlaylist($params[0], $params[1]);
+        }
+
+    }
+
+    function CreatePlaylist() {
+        if (isset($_POST['albumName']) && isset($_POST['userId'])) {
+            $model = $this->model("AlbumModel");
+            $model->CreatePlaylist($_POST['albumName'], $_POST['userId']);
+        }
+    }
+
+    function GetAlbumDetail($params) {
+        if (isset($params[0])) {
+            $model = $this->model("AlbumModel");
+            echo json_encode($model->GetAlbumDetail($params[0]));
+        }
+    }
+
     function index(): void
     {
         // TODO: Implement index() method.

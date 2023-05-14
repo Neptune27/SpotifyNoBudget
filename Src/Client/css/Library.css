@@ -72,3 +72,13 @@
 main[data-sidebar=Library] .libraryPane {
     display: block;
 }
+
+#modalAddPlaylist {
+    color: var(--font-color);
+    background: var(--background-dark-color) !important;
+    padding: 20px 50px;
+}
+
+#modalAddPlaylist::backdrop {
+    background: rgba(0, 0, 0, 0.39);
+}
