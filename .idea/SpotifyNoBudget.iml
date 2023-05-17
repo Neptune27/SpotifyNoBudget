@@ -26,5 +26,7 @@
     <orderEntry type="library" name="all" level="application" />
     <orderEntry type="library" name="filepond" level="application" />
     <orderEntry type="library" name="filepond-plugin-file-validate-type" level="application" />
+    <orderEntry type="library" name="filepond-plugin-file-validate-type" level="application" />
+    <orderEntry type="library" name="filepond" level="application" />
   </component>
 </module>

@@ -1,6 +1,7 @@
 import { timeConverter } from "./AudioPlayer.js";
 import { AudioPlayerQueueController } from "./AudioPlayerQueueController.js";
 import { setupAlbumConnection, setupArtistConnection, setupThreeDotConnection } from "./Queue.js";
+import { addClickEventForAddToPlaylist } from "./AddToPlaylist.js";
 let currentIndex = 1;
 const getRecentlyAdded = async (page = currentIndex) => {
     const homeContainer = document.getElementById("homeContainer");
@@ -72,6 +73,7 @@ const createHomePaneContent = async () => {
     setupAlbumConnection(containerElem);
     setupArtistConnection(containerElem);
     setupThreeDotConnection(containerElem);
+    addClickEventForAddToPlaylist();
     const homeItemElems = document.querySelectorAll("div#homeContainer > div.queueItem");
     for (const homeItemElem of homeItemElems) {
         homeItemElem.addEventListener("dblclick", () => {

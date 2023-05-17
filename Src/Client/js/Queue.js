@@ -169,7 +169,7 @@ class Queue {
         this.nowPlayingQueueElems = nowPlayingQueueElems;
     }
 }
-document.getElementById('mainQueue')?.addEventListener('click', e => {
+document.querySelector('body').addEventListener('click', e => {
     removeShowOption();
 });
 export { Queue, setupAlbumConnection, setupArtistConnection, setupThreeDotConnection };
