@@ -71,6 +71,32 @@ class HomeController extends Controller
         $this->view($this->signTemplate, []);
     }
 
+    public function GetSignUp() {
+        ["password"=>$password, "username"=>$username] = $_GET;
+        if (!isset($username)) {
+            header('X-PHP-Response-Code: 404', true, 404);
+            echo json_encode([
+                "status" => 404
+            ]);
+            return;
+        }
+
+
+        $model = $this->model("UserModel");
+        $res = $model->getData("SELECT * FROM USER WHERE USERNAME='{$username}'");
+
+        if (!isset($res[0])) {
+            echo json_encode([
+                    'success' => true,
+                ]
+            );
+        }
+//        else {
+//            $model->createUser
+//        }
+    }
+
+
     function Receipt($params) {
         $havePremium = $_SESSION["user"]["HAVE_PREMIUM"];
         $userID = $_SESSION["user"]["USER_ID"];

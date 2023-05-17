@@ -6,4 +6,8 @@ class UserModel extends Model
         $query = "SELECT * FROM USER WHERE USER_ID = {$userID}";
         return $this->getData($query);
     }
+
+    public function createUser() {
+
+    }
 }

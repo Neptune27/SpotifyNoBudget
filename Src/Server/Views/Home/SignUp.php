@@ -9,7 +9,7 @@
         <section class="m-auto mt-5 mb-5 bg-white rounded-4 text-dark">
             <h1 class="text-center p-4 fw-bold">Đăng ký</h1>
 
-            <form action="" onsubmit="validate(event)" id="signUpForm" class="p-4 needs-validation" novalidate>
+            <form action="" onsubmit="validateSignUp(event)" id="signUpForm" class="p-4 needs-validation" novalidate>
                 <div class="mt-4">
                     <label class="h5" for="username">Tên tài khoản</label>
                     <input id="username" type=text class="form-control flex-fill mb-0 sign"
