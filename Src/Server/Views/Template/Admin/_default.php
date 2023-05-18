@@ -156,14 +156,22 @@
 
 
             <div class="d-flex gap-2">
+
                 <div>
                     <a href="<?php
 //                    Chuyen huong sang trang them ca si neu title la ca si
-                                if ($data["Title"] == "Ca Sĩ") {
-                                    echo "/Admin/AddArtist";
-                                } else {
-                                    echo '/' . htmlspecialchars($_GET['url']) . '/0';
-                                }
+                        if ($data["Title"] == "Ca Sĩ") {
+                            echo "/Admin/AddArtist";
+                        } else {
+                            echo '/' . htmlspecialchars($_GET['url']) . '/0';
+                        }
+                        if($data["Title"]=="Albums"){
+                            $uri = $_GET["url"];
+                            $QQ = explode("/",$uri)[2];
+                            echo "http://localhost/admin/AddAlbum/{$QQ}" ;
+                        } else{
+                            echo '/' . htmlspecialchars($_GET['url']) . '/0';
+                        }
                     ?>" class="btn btn-primary">Thêm
                         <?php echo $data["Title"] ?></a>
                 </div>

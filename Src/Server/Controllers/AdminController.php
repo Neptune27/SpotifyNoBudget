@@ -88,21 +88,58 @@ class AdminController extends Controller
         }
 
         $albumModel = $this->model("AlbumModel");
-        $albums = $albumModel->GetAllAlbumFrom($params[0]);
+        // $albums = $albumModel->GetAllAlbumFrom($params[0]);
         if (!isset($params[1])) {
 //            Thêm phân trang tại đây
 
+
+            $query = "";
+            if (isset($_GET["q"])) {
+                $query = $_GET["q"];
+            }
+            $page = 1;
+            if (isset($_GET["p"])) {
+                $val = $_GET["p"];
+                if (is_numeric($val)) {
+                    $page = $val;
+                }
+            }
+
+            $totalAlbumQR = $albumModel->getTotalAlbum($params[0], $query);
+            $totalAlbum = $totalAlbumQR[0]["TOTAL_PAGE"];
+            if ($totalAlbum == 0) {
+                $totalAlbum = 1;
+            }
+            $totalPage = floor($totalAlbum / 20);
+            if ($totalAlbum % 20 !== 0) {
+                $totalPage += 1;
+            }
+
+            if ($page > $totalPage) {
+                $secondCond = "";
+                if ($query !== "") {
+                    $secondCond = "?q={$query}";
+                }
+                header("Location: /Admin/AddSongPage/{$params[0]}{$secondCond}");
+            }
+
+            $albumsq = $albumModel->GetAlbums($params[0], $query, ($page-1)*20);
+            $artist = $albumModel->GetArtistByID($params[0]);
             $this->view(self::$defaultTemplate, [
-                "Albums" => $albums,
+                // "Songs" => $song,
                 "Page" => "SongAlbumPage",
+                "Albums" => $albumsq,
                 "artist" => $artist,
-                "Title" => "Albums"
-
-
+                "totalPage" => $totalPage,
+                "page" => $page,
+                "query" => $query,
+                "Title" => "Albums",
             ]);
             return;
+
         }
 
+        $albums = $albumModel->GetIDU($params[1]);
         $songModel = $this->model("SongModel");
         if (!isset($params[2])) {
             $query = "";
@@ -183,6 +220,135 @@ class AdminController extends Controller
 
         }
     }
+
+
+    function AddAlbum($params) {
+        if (isset($params[0]) && $params[0] == "Add") {
+//            Đủ thông tin để insert into
+            $AlbumModel = $this->model("AlbumModel");
+            // if(is_array($_POST['AlbumSong'])){
+            $AlbumName = $_POST['AlbumName'];
+            $AlbumAvatar = $_POST['AlbumAvatar'];
+            $AlbumListener = $_POST['AlbumListener'];
+            $AlbumDescriptions = $_POST['AlbumDescriptions'];
+            $AlbumTime = $_POST['AlbumTime'];
+            $AlbumDate = $_POST['AlbumDate'];
+            $AlbumSong = $_POST['AlbumSong'];
+            $AlbumCreated=  $_POST['AlbumCreated'];
+            $AlbumModel->addAlbum($AlbumName, $AlbumAvatar, $AlbumDescriptions ,$AlbumTime,$AlbumDate,$AlbumListener,$AlbumSong, $AlbumCreated );
+            // }
+
+
+            return;
+        }
+        // echo '<script>alert("Welcome to Geeks for Geeks")</script>';
+        $AlbumModel = $this->model("AlbumModel");
+        $UAL = $AlbumModel->getAllIDUser();
+        // $AlbumModel->deleteAlbum(3);
+        $old = "";
+        if (isset($params[0])){
+            $old = $params[0];
+        }
+        $SAL = $AlbumModel->getAllIDSong();
+        $last = $AlbumModel->createAlbumID();
+
+        $this->view(self::$editTemplate, [
+            "Page" => "AlbumAdd",
+            "UAL" => $UAL,
+            "SAL" => $SAL,
+            "id" => $last,
+            "old" => $old,
+        ]);
+    }
+
+
+    function EditAlbum($params) {
+        $AlbumModel = $this->model("AlbumModel");
+        if (isset($params[0]) && $params[0] == "Edit") {
+//            Đủ thông tin để update
+        $AlbumID = $_POST['AlbumID'];
+        $AlbumName = $_POST['AlbumName'];
+        $AlbumAvatar = $_POST['AlbumAvatar'];
+        $AlbumListener = $_POST['AlbumListener'];
+        $AlbumDescriptions = $_POST['AlbumDescriptions'];
+        $AlbumTime = $_POST['AlbumTime'];
+        $AlbumDate = $_POST['AlbumDate'];
+        $AlbumSong = $_POST['AlbumSong'];
+        $AlbumUser=  $_POST['AlbumCreated'];
+
+            $AlbumModel->editAlbum($AlbumID,$AlbumName, $AlbumAvatar,$AlbumDescriptions,$AlbumTime,$AlbumDate,$AlbumListener,$AlbumSong, $AlbumUser );
+
+            return;
+        }
+
+        // $AlbumModel->editAlbum(20,4, 1,1,"","",1,"1", "1" );
+        $AlbumID = $params[0];
+        $old = "";
+        if (isset($params[1])){
+            $old = $params[1];
+        }
+        $AlbumSongs = $AlbumModel->getDetailAlbumSong($AlbumID);
+        $AlbumInfo = $AlbumModel->getDetailAlbum($AlbumID);
+        $AlbumUsers = $AlbumModel->getDetailAlbumCreated($AlbumID);
+        $UAL = $AlbumModel->getAllIDUser();
+        $SAL = $AlbumModel->getAllIDSong();
+        $this->view(self::$editTemplate, [
+            "Page" => "AlbumEdit",
+            "Album" => $AlbumInfo,
+            "User" => $AlbumUsers,
+            "Song" => $AlbumSongs,
+            "AlbumID" => $AlbumID,
+            "UAL" => $UAL,
+            "SAL" => $SAL,
+            "old" => $old,
+        ]);
+    }
+
+
+    function DeleteAlbum($params) {
+        if (isset($params[0])) {
+            $AlbumModel = $this->model("AlbumModel");
+            $AlbumModel->deleteAlbum($params[0]);
+
+        }
+        header ("Location:/".$params[1]."/".$params[2]."/".$params[3]);
+    }
+
+
+
+    function AlbumAvatarUpload($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            print_r($params);
+            print_r($_GET);
+            print_r($_FILES);
+
+            $target_dir = __DIR__ . "/../../Client/img/Album/" . $params[0] . "/";
+            $target_file = $target_dir . basename($_FILES["AlbumAvatar"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            if (!file_exists($target_dir)) {
+                mkdir($target_dir, 0777, true);
+            }
+
+            if (file_exists($target_file)) {
+                unlink($target_file);
+            }
+
+            if (move_uploaded_file($_FILES["AlbumAvatar"]["tmp_name"], $target_file)) {
+                echo "The file " . htmlspecialchars(basename($_FILES["AlbumtAvatar"]["name"])) . " has been uploaded.";
+            }
+        }
+        if ($_SERVER["REQUEST_METHOD"] === 'DELETE') {
+            print_r($_GET);
+            print_r($params);
+            $a = 2;
+        }
+    }
+
+}
+
 
 //    Action cho them nghệ sĩ
     function AddArtist($params) {
