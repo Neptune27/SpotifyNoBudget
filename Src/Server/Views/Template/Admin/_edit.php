@@ -15,7 +15,7 @@
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet"/>
 
     <link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"
           type="text/css"/>
 
     <script src="/Bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -20,6 +20,14 @@ const setAlbum = async (id: string) => {
     const res = await fetch(`/Album/GetAlbum/${id}`)
     const data : ISong[] = await res.json();
 
+    const resAlbumCreator = await fetch(`/Album/GetAlbumCreator/${id}`)
+    const dataAC : {
+        ALBUM_ID: string,
+        ALBUM_NAME: string,
+        NAME: string,
+        AVATAR: string,
+        USER_ID?: string
+    } = await resAlbumCreator.json();
 
 
     const innerQueue = data?.map(( val, index)=>
@@ -50,6 +58,9 @@ const setAlbum = async (id: string) => {
         `).join(" ")
 
     const tmp = data[0]
+    if (tmp.ALBUM_IMG === "NA") {
+        tmp.ALBUM_IMG = tmp.SONG_IMG
+    }
 
     const innerAlbum = `
         <div style="padding: 1rem 2rem; color: white" class="d-flex flex-column gap-2">
@@ -60,11 +71,11 @@ const setAlbum = async (id: string) => {
                 <div class="d-flex flex-column" style="justify-content: space-evenly">
                     <div>Album</div>
                     <div>
-                        <h2 style="font-size: 4rem">${tmp.ALBUM_NAME}</h2>
+                        <h2 style="font-size: 4rem">${dataAC.ALBUM_NAME}</h2>
                     </div>
                     <div class="d-flex">
-                        <img src="${tmp?.ARTIST_IMG}" style="border-radius: 100%; height: 2rem; padding-right: 1rem">
-                        <a href="#" style="all: unset; cursor: pointer;font-size: 2rem" data-artist="${tmp.ARTIST_ID}">${tmp.ARTIST}</a>
+                        <img src="${dataAC?.AVATAR}" style="border-radius: 100%; height: 2rem; padding-right: 1rem">
+                        <a href="#" style="all: unset; cursor: pointer;font-size: 2rem" data-artist="${dataAC?.USER_ID}">${dataAC.NAME}</a>
                     </div>
                 </div>
             </div>
@@ -87,6 +98,7 @@ const setAlbum = async (id: string) => {
     setupArtistConnection(albumElem)
     setupAlbumConnection(albumElem);
     setupThreeDotConnection(albumElem)
+
 
 
     const homeItemElems = document.querySelectorAll("[data-song]")

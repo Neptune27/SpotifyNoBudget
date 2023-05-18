@@ -7,6 +7,16 @@ class PlayController extends Controller
     private string $emptyTemplate = "Empty";
     function Play(): void
     {
+        if (!isset($_SESSION["user"])) {
+            header("Location: /Home/SignIn");
+            return;
+        }
+
+        if ($_SESSION["user"]["HAVE_PREMIUM"] == 0) {
+            header("Location: /Home/BuyPremium?type=2");
+            return;
+        }
+
         $this->view($this->defaultTemplate, []);
     }
 

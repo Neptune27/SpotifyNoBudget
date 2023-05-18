@@ -1,3 +1,5 @@
+import {setupAlbumConnection} from "./Queue.js";
+
 function addClickEventForAddToPlaylist() {
     document.querySelectorAll("li[data-playlist]").forEach(element => {
         element.onclick = function (e) {
@@ -13,12 +15,12 @@ function addClickEventForAddToPlaylist() {
             // hien modal add song
             main.querySelector("#modalAddPlaylist").showModal();
 
-        //     Lay playlist hien thi len cho nguoi dung
+            //     Lay playlist hien thi len cho nguoi dung
             let userID = main.querySelector("#modalAddPlaylist .userId").innerText;
             fetch(`/Album/GetPlaylist/${userID}`)
                 .then(res => res.json())
                 .then(data => {
-                //     Tao combo box cho playlist
+                    //     Tao combo box cho playlist
                     let playlistCb = main.querySelector("#selectPlaylist");
                     playlistCb.innerHTML = data
                         .map(element => `<option value="${element.ALBUM_ID}">${element.ALBUM_NAME}</option>`)
@@ -89,36 +91,37 @@ document.getElementById("createPlaylist").onclick = function (e) {
 };
 
 // Them su kien khi click library
-document.getElementById("Library").onclick = function (e) {
+document.getElementById("Library").addEventListener('click', async function (e) {
     let userId = this.closest("main").querySelector("#modalAddPlaylist .userId").innerText;
     let libraryPane = this.closest("main").querySelector(".libraryPane .song-wrapper");
 
-    fetch(`/Album/GetAlbumDetail/${userId}`)
-        .then(res => res.json())
-        .then(data => {
-            // Hien danh sach playlist
-            libraryPane.innerHTML = data.map(element => `<div class="row align-items-center song-row rounded" id="${element.ALBUM_ID}">
-                        <div class="col-10">
-                            <div class="d-flex align-items-center">
-                                <div class="square d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-play play-for-song"></i>
-                                </div>
-                                <div style="padding-left: 20px;">
-                                    <p class="name-light m-0 playlistName">${element.ALBUM_NAME}</p>
-                                    <p class="sub-name m-0 userName">${element.USERNAME}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="d-flex align-items-center flex-row-reverse justify-content-between">
-                                <p class="sub-name m-0 create-date">${element.DATE}</p>
-                            </div>
-                        </div>
-                    </div>`).join('');
+    const res = await fetch(`/Album/GetAlbumDetail/${userId}`)
+    const data = await res.json()
+    // Hien danh sach playlist
+    libraryPane.innerHTML =
+        data.map(element =>
+        `<div class="row align-items-center song-row rounded" data-album="${element.ALBUM_ID}">
+            <div class="col-10">
+                <div class="d-flex align-items-center">
+                    <div class="square d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-play play-for-song"></i>
+                    </div>
+                    <div style="padding-left: 20px;">
+                        <p class="name-light m-0 playlistName">${element.ALBUM_NAME}</p>
+                        <p class="sub-name m-0 userName">${element.USERNAME}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="d-flex align-items-center flex-row-reverse justify-content-between">
+                    <p class="sub-name m-0 create-date">${element.DATE}</p>
+                </div>
+            </div>
+        </div>`).join('');
 
-        })
-        .catch(err => console.log(err));
-};
+    setupAlbumConnection(libraryPane);
+
+});
 
 // Khi click ra ngoai thi dong modal
 document.getElementById("modalAddPlaylist").onclick = function (e) {
@@ -132,4 +135,4 @@ document.getElementById("modalAddPlaylist").onclick = function (e) {
     }
 };
 
-export { addClickEventForAddToPlaylist };
+export {addClickEventForAddToPlaylist};

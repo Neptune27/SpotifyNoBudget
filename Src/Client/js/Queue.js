@@ -2,6 +2,8 @@ import { timeConverter } from "./AudioPlayer.js";
 import { createAlbum } from "./Albums.js";
 // @ts-ignore
 import { fetchArtistByID } from "../js/Search/search.js";
+// @ts-ignore
+import { addClickEventForAddToPlaylist } from "./AddToPlaylist.js";
 export const queueItemCreator = (data) => {
     return data?.map((val, index) => `
             <div class="queueItem" data-song="${val.SONG_ID}" tabindex="0">
@@ -67,6 +69,7 @@ const setupThreeDotConnection = (rootElem) => {
             this.nextElementSibling.classList.add('showOption');
         });
     }
+    addClickEventForAddToPlaylist();
 };
 class Queue {
     constructor(functionProps, elems) {
@@ -169,7 +172,7 @@ class Queue {
         this.nowPlayingQueueElems = nowPlayingQueueElems;
     }
 }
-document.querySelector('body').addEventListener('click', e => {
+document.querySelector('body')?.addEventListener('click', e => {
     removeShowOption();
 });
 export { Queue, setupAlbumConnection, setupArtistConnection, setupThreeDotConnection };

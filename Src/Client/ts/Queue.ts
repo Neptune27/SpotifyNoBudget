@@ -4,6 +4,8 @@ import {ISong} from "./DatabaseInterface";
 import {createAlbum} from "./Albums.js";
 // @ts-ignore
 import {fetchArtistByID} from "../js/Search/search.js";
+// @ts-ignore
+import { addClickEventForAddToPlaylist } from "./AddToPlaylist.js";
 
 export const queueItemCreator = (data: any[]) => {
     return data?.map((val, index) =>
@@ -80,6 +82,7 @@ const setupThreeDotConnection = (rootElem: Element) => {
             this.nextElementSibling.classList.add('showOption');
         });
     }
+    addClickEventForAddToPlaylist();
 }
 
 class Queue {
@@ -203,7 +206,7 @@ class Queue {
 
 }
 
-document.getElementById('mainQueue')?.addEventListener('click', e => {
+document.querySelector('body')?.addEventListener('click', e => {
     removeShowOption();
 });
 

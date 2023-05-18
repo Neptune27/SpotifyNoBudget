@@ -98,4 +98,15 @@ class AlbumModel extends Model {
                         END;
         return $this->getData($album_query);
     }
+
+    function GetAlbumCreator($userId) {
+        $album_query = <<<END
+                        SELECT ALBUM.ALBUM_ID, ALBUM_NAME, USER.NAME, USER.USER_ID, TYPE, USER.AVATAR, DATE 
+                        FROM ALBUM, ALBUM_CREATED_BY, USER
+                        WHERE ALBUM.ALBUM_ID = ALBUM_CREATED_BY.ALBUM_ID AND 
+                              ALBUM_CREATED_BY.USER_ID = USER.USER_ID AND 
+                              ALBUM.ALBUM_ID={$userId};
+                        END;
+        return $this->getData($album_query);
+    }
 }

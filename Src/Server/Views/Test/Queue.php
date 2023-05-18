@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/Src/Client/css/GlobalStyle.css">
 <link rel="stylesheet" href="/Src/Client/css/Queue.css">
-<link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" type="text/css" />
 
 <div id="mainQueue" style="color: white;background: #14141a; height: 100vh; width: 100vw; padding: 2rem 1rem">
     <h3>Queue</h3>

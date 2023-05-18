@@ -44,6 +44,18 @@ class AlbumController extends Controller
         }
     }
 
+    function GetAlbumCreator($params) {
+        if (isset($params[0])) {
+            $model = $this->model("AlbumModel");
+            $data = $model->GetAlbumCreator($params[0])[0];
+
+            if ($data["TYPE"] < 2) {
+                unset($data["USER_ID"]);
+            }
+            echo json_encode($data);
+        }
+    }
+
     function GetAlbumDetail($params) {
         if (isset($params[0])) {
             $model = $this->model("AlbumModel");

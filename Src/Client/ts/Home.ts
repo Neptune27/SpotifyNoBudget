@@ -4,6 +4,7 @@ import {fetchArtistByID} from "../js/Search/search.js"
 import {AudioPlayerQueueController} from "./AudioPlayerQueueController.js";
 import {setupAlbumConnection, setupArtistConnection, setupThreeDotConnection} from "./Queue.js";
 
+
 let currentIndex = 1
 
 const getRecentlyAdded = async (page: number = currentIndex) => {

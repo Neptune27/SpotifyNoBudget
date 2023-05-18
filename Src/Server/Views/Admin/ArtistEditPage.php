@@ -5,6 +5,8 @@ if (!isset($data)) {
 
 ?>
 
+
+
 <link rel="stylesheet" href="/Src/Client/css/Login/Login.css">
 <script src="/Src/Client/js/ArtistEdit.js" defer></script>
 

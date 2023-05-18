@@ -17,6 +17,12 @@ class SongModel extends Model
             LEFT JOIN ALBUM A on A.ALBUM_ID = SA.ALBUM_ID
             LEFT JOIN SING_BY SB on SONG.SONG_ID = SB.MUSIC_ID
             LEFT JOIN USER U on U.USER_ID = SB.AUTHOR_ID
+            WHERE A.ALBUM_ID NOT IN (
+                SELECT AL.ALBUM_ID FROM ALBUM AL 
+                    LEFT JOIN ALBUM_CREATED_BY ACB on AL.ALBUM_ID = ACB.ALBUM_ID
+                    LEFT JOIN USER U2 on U2.USER_ID = ACB.USER_ID
+                                   WHERE U2.VERIFY = 0
+            )
             ORDER BY ADDED_DATE DESC LIMIT {$from}, {$limit}
         WUT;
 

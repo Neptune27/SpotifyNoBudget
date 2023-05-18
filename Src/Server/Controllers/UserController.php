@@ -1,6 +1,6 @@
 <?php
 
-class UserController extends Controller
+class  UserController extends Controller
 {
     protected string $defaultView = "User/";
     protected string $defaultTemplate = "User/UserDefault";

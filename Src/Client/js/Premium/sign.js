@@ -38,10 +38,23 @@ const validateSignUp = async (event) => {
         event.stopPropagation()
     }
 
+    let sex = ""
+    for (let i = 5; i <= 7; i++) {
+        if (event.target[i].checked) {
+            sex = event.target[i].id
+        }
+    }
+
+
     const uri = "GetSignUp?" + new URLSearchParams({
         username: event.target[0].value,
-        password: event.target[1].value,
+        email: event.target[1].value,
+        password: event.target[2].value,
+        name: event.target[3].value,
+        bDay: event.target[4].value,
+        sex: sex
     })
+    console.log(uri)
 
     const res = await fetch(uri, {
         method: "POST"

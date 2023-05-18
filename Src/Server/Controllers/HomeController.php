@@ -72,18 +72,26 @@ class HomeController extends Controller
     }
 
     public function GetSignUp() {
-        ["password"=>$password, "username"=>$username] = $_GET;
+        ["password"=>$password, "username"=>$username, "name" => $name, "bDay"=>$bDay, "sex"=>$sex, "email" => $email] = $_GET;
         if (!isset($username)) {
-            header('X-PHP-Response-Code: 404', true, 404);
+            header('X-PHP-Response-Code: 404', true, 403);
             echo json_encode([
-                "status" => 404
+                "status" => 403
             ]);
             return;
         }
 
 
         $model = $this->model("UserModel");
-        $res = $model->getData("SELECT * FROM USER WHERE USERNAME='{$username}'");
+        $res = $model->createUser($username, $password, $email, $name, $bDay, $sex);
+        if (!$res) {
+            header('X-PHP-Response-Code: 403', true, 403);
+            echo json_encode([
+                    'success' => false,
+                ]
+            );
+            return;
+        }
 
         if (!isset($res[0])) {
             echo json_encode([
@@ -91,9 +99,6 @@ class HomeController extends Controller
                 ]
             );
         }
-//        else {
-//            $model->createUser
-//        }
     }
 
 

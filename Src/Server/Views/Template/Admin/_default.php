@@ -15,7 +15,7 @@
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet"/>
 
     <link rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"
           type="text/css"/>
 
     <script src="/Bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -25,6 +25,12 @@
     <link rel="stylesheet" href="/Src/Client/css/ResGrid.css">
     <link rel="stylesheet" href="/Src/Client/css/User/UserOverview.css">
     <link rel="stylesheet" href="/Src/Client/css/Breadcrumb.css">
+
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 
 
     <style>
@@ -57,6 +63,26 @@
                        aria-controls="dropdown1"
                     >
                         Bài hát
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/Playlist"
+                       type="button"
+                       aria-haspopup="true"
+                       aria-expanded="true"
+                       aria-controls="dropdown1"
+                    >
+                        Playlist
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/Payment"
+                       type="button"
+                       aria-haspopup="true"
+                       aria-expanded="true"
+                       aria-controls="dropdown1"
+                    >
+                        Thanh toán
                     </a>
                 </li>
 <!--                <li>-->
@@ -151,7 +177,9 @@
                         }
                         ?>" placeholder="Tìm kiếm" name="q">
                         <button class="btn btn-secondary" type="submit" id="button-addon2">
-                            <i class="fa fa-regular fa-search"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
                         </button>
                     </div>
 

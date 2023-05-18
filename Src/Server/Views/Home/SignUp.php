@@ -3,13 +3,17 @@
 <link rel="stylesheet" href="/Src/Client/css/User/UserOverview.css">
 
 <script src="/Src/Client/js/Premium/sign.js" defer></script>
-
+<style>
+    .errorMsg {
+        color: red;
+    }
+</style>
 <main class="loginMain d-flex flex-column align-items-center">
     <div class="loginContent">
         <section class="m-auto mt-5 mb-5 bg-white rounded-4 text-dark">
             <h1 class="text-center p-4 fw-bold">Đăng ký</h1>
-
-            <form action="" onsubmit="validateSignUp(event)" id="signUpForm" class="p-4 needs-validation" novalidate>
+            <h3 class="p-4 text-center fw-bold errorMsg" id="error" style="display: none"></h3>
+            <form action="" onsubmit="validateSignUp(event)" id="signUpForm" class="p-4 needs-validation">
                 <div class="mt-4">
                     <label class="h5" for="username">Tên tài khoản</label>
                     <input id="username" type=text class="form-control flex-fill mb-0 sign"
@@ -21,7 +25,7 @@
                 <div class="mt-4">
                     <label class="h5">Địa chỉ email </label>
                     <input name="sign" type="email" class="form-control flex-fill mb-0 sign"
-                           placeholder="Nhập địa chỉ email" pattern="\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                           placeholder="Nhập địa chỉ email" pattern="[0-9a-zA-z]+@[0-9a-zA-z]+.[0-9a-zA-z]+"
                            required>
                     <div class="invalid-feedback">
                         Vui lòng nhập email dưới dạng user@mail.url.
@@ -53,12 +57,12 @@
                 </div>
                 <div class="mt-4">
                     <h5>Giới tính</h5>
-                    <label for="male" class="ms-4">Nam</label>
-                    <input id="male" type="radio" name="sign" value="male" required>
-                    <label for="female" class="ms-4">Nữ</label>
-                    <input id="female" type="radio" name="sign" value="female" required>
-                    <label for="other" class="ms-4">Khác</label>
-                    <input id="other" type="radio" name="sign" value="Other" required>
+                    <label for="0" class="ms-4">Nam</label>
+                    <input id="0" type="radio" name="sign" value="male" required>
+                    <label for="1" class="ms-4">Nữ</label>
+                    <input id="1" type="radio" name="sign" value="female" required>
+                    <label for="2" class="ms-4">Khác</label>
+                    <input id="2" type="radio" name="sign" value="Other" required>
                 </div>
                 <p class="text-center mt-4 text-size-16">Bằng việc nhấp vào nút Đăng ký, bạn đồng ý với
                     <a href="#">Điều khoản và điều kiện sử dụng</a> của Spotify.</p>
