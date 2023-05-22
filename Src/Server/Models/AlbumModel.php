@@ -12,7 +12,7 @@ class AlbumModel extends Model {
     }
 
     function GetAlbum($id) {
-        $song_query = <<<END
+        $SONG_query = <<<END
                         SELECT SA.SONG_ID, SONG_LOCATION, LYRICS, SONG_NAME, SONG_IMG, U.NAME AS ARTIST, U.USER_ID AS ARTIST_ID, TOTAL_VIEW, DURATION, ALBUM_NAME, SA.ALBUM_ID, ALBUM_IMG, U.AVATAR AS ARTIST_IMG
                         FROM SONG
                             LEFT JOIN SONG_ALBUM SA on SONG.SONG_ID = SA.SONG_ID
@@ -21,28 +21,28 @@ class AlbumModel extends Model {
                             LEFT JOIN USER U on U.USER_ID = SB.AUTHOR_ID
                         WHERE A.ALBUM_ID = {$id};
                         END;
-        return $this->getData($song_query);
+        return $this->getData($SONG_query);
     }
 
     function GetPlaylistByUserID($id) {
-        $song_query = <<<END
+        $SONG_query = <<<END
                         SELECT ALBUM.ALBUM_ID, ALBUM_NAME 
                         FROM ALBUM, ALBUM_CREATED_BY, USER
                         WHERE ALBUM.ALBUM_ID = ALBUM_CREATED_BY.ALBUM_ID AND 
                               ALBUM_CREATED_BY.USER_ID = USER.USER_ID AND 
                               USER.USER_ID = {$id};
                         END;
-        return $this->getData($song_query);
+        return $this->getData($SONG_query);
     }
 
-    function AddSongToPlaylist($songId, $albumId) {
+    function AddSongToPlaylist($SONGId, $albumId) {
         $album_query = <<<Thien
                             INSERT INTO SONG_ALBUM (SONG_ID, ALBUM_ID)
                             VALUES (?, ?);
                         Thien;
 
         $stmt = $this->con->prepare($album_query);
-        $stmt->bind_param("ii", $songId, $albumId);
+        $stmt->bind_param("ii", $SONGId, $albumId);
         $stmt->execute();
     }
 
@@ -114,11 +114,11 @@ class AlbumModel extends Model {
     function addAlbum($name, $IMG, $DES,$Time,$Date,$listen,$Song,$user) {
         $AlbumID = $this->createAlbumID();
         $this->update("INSERT INTO ALBUM (ALBUM_ID ,TOTAL_LISTENER,ALBUM_NAME,ALBUM_IMG,DESCRIPTIONS, TIME,	DATE) VALUE ({$AlbumID}, {$listen}, '{$name}', '{$IMG}','{$DES}', '{$Time}','{$Date}')");
-        // if($song.)
+        // if($SONG.)
         $Songss=explode(",",$Song);
         if($Song!=""){
         for($x=0;$x<count($Songss);$x++){
-                        $this->update("INSERT INTO song_album (ALBUM_ID ,SONG_ID) VALUES ({$AlbumID}, {$Songss[$x]})");
+                        $this->update("INSERT INTO SONG_ALBUM (ALBUM_ID ,SONG_ID) VALUES ({$AlbumID}, {$Songss[$x]})");
         }
     }
 
@@ -126,7 +126,7 @@ class AlbumModel extends Model {
         if($user!=""){
         for($x=0;$x<count($userss);$x++){
 
-            $this->update("INSERT INTO album_created_by (ALBUM_ID ,USER_ID) VALUES ({$AlbumID}, {$userss[$x]})");
+            $this->update("INSERT INTO ALBUM_CREATED_BY (ALBUM_ID ,USER_ID) VALUES ({$AlbumID}, {$userss[$x]})");
             }
             $Time = $this->createAlbumTime($AlbumID);
             $listen = $this->createAlbumL($AlbumID);
@@ -136,7 +136,7 @@ class AlbumModel extends Model {
 
     function createAlbumSong($id) {
         $i=0;
-        $result = mysqli_query($this->con, "SELECT count(*) as ID FROM song_album where ALBUM_ID = {$id}  ");
+        $result = mysqli_query($this->con, "SELECT count(*) as ID FROM SONG_ALBUM where ALBUM_ID = {$id}  ");
         if (mysqli_num_rows($result) > 0) {
             $row = $result->fetch_assoc();
             $i = (int)$row["ID"];
@@ -145,20 +145,20 @@ class AlbumModel extends Model {
     return $i;
 }
 
-    function createAlbumID() {
-        $i=0;
-            $result = mysqli_query($this->con, "SELECT Max(ALBUM_ID) as ID FROM album ");
-            if (mysqli_num_rows($result) > 0) {
-                $row = $result->fetch_assoc();
-                $i = (int)$row["ID"]+1;
-            }
-
-        return $i;
-    }
+//    function createAlbumID() {
+//        $i=0;
+//            $result = mysqli_query($this->con, "SELECT Max(ALBUM_ID) as ID FROM album ");
+//            if (mysqli_num_rows($result) > 0) {
+//                $row = $result->fetch_assoc();
+//                $i = (int)$row["ID"]+1;
+//            }
+//
+//        return $i;
+//    }
 
     function createAlbumTime($id) {
         $i=0;
-            $result = mysqli_query($this->con, "SELECT sum(DURATION) as T FROM song,song_album where song.SONG_ID=song_album.SONG_ID and song_album.album_id = {$id}; ");
+            $result = mysqli_query($this->con, "SELECT sum(DURATION) as T FROM SONG,SONG_ALBUM where SONG.SONG_ID=SONG_ALBUM.SONG_ID and SONG_ALBUM.album_id = {$id}; ");
             if (mysqli_num_rows($result) > 0) {
                 $row = $result->fetch_assoc();
                 $i = (int)$row["T"];
@@ -171,7 +171,7 @@ class AlbumModel extends Model {
 
     function createAlbumL($id) {
         $i=0;
-            $result = mysqli_query($this->con, "SELECT sum(TOTAL_VIEW) as L  FROM song,song_album where song.SONG_ID=song_album.SONG_ID and song_album.album_id = {$id}; ");
+            $result = mysqli_query($this->con, "SELECT sum(TOTAL_VIEW) as L  FROM SONG,SONG_ALBUM where SONG.SONG_ID=SONG_ALBUM.SONG_ID and SONG_ALBUM.album_id = {$id}; ");
             if (mysqli_num_rows($result) > 0) {
                 $row = $result->fetch_assoc();
                 $L = (int)$row["L"];
@@ -181,12 +181,12 @@ class AlbumModel extends Model {
 
     function editAlbum($id,$name, $IMG, $DES,$Time,$Date,$listen,$Song,$user) {
 
-        $del_query = "DELETE FROM album_created_by WHERE ALBUM_ID = ?;";
+        $del_query = "DELETE FROM ALBUM_CREATED_BY WHERE ALBUM_ID = ?;";
         $stmt = $this->con->prepare($del_query);
         $stmt->bind_param("i", $id);
         $stmt->execute();
 
-        $del_query = "DELETE FROM song_album WHERE ALBUM_ID = ?;";
+        $del_query = "DELETE FROM SONG_ALBUM WHERE ALBUM_ID = ?;";
         $stmt = $this->con->prepare($del_query);
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -195,7 +195,7 @@ class AlbumModel extends Model {
         if($Song!=""){
         for($x=0;$x<count($Songss);$x++){
             $Album_query = <<<r
-                                INSERT INTO song_album (ALBUM_ID ,SONG_ID)
+                                INSERT INTO SONG_ALBUM (ALBUM_ID ,SONG_ID)
                                 VALUES (?, ?);
                             r;
 
@@ -209,7 +209,7 @@ class AlbumModel extends Model {
             if($user!=""){
             for($x=0;$x<count($userss);$x++){
                 $Album_query = <<<r
-                                    INSERT INTO album_created_by (ALBUM_ID ,USER_ID)
+                                    INSERT INTO ALBUM_CREATED_BY (ALBUM_ID ,USER_ID)
                                     VALUES (?, ?);
                                 r;
 
@@ -230,26 +230,26 @@ class AlbumModel extends Model {
         $listen = $this->createAlbumL($id);
 
         if($IMG=="NA"){
-            $this->update("UPDATE album SET NUMBER_OF_SONG={$this->createAlbumSong($id)},TOTAL_LISTENER=$listen,ALBUM_NAME='{$name}',DESCRIPTIONS='{$DES}',TIME='{$Time}',DATE='{$Date}' WHERE ALBUM_ID= {$id}");
+            $this->update("UPDATE ALBUM SET NUMBER_OF_SONG={$this->createAlbumSong($id)},TOTAL_LISTENER=$listen,ALBUM_NAME='{$name}',DESCRIPTIONS='{$DES}',TIME='{$Time}',DATE='{$Date}' WHERE ALBUM_ID= {$id}");
         }else{
-            $this->update("UPDATE album SET NUMBER_OF_SONG={$this->createAlbumSong($id)},ALBUM_IMG='$IMG',TOTAL_LISTENER=$listen,ALBUM_NAME='{$name}',DESCRIPTIONS='{$DES}',TIME='{$Time}',DATE='{$Date}' WHERE ALBUM_ID= {$id}");
+            $this->update("UPDATE ALBUM SET NUMBER_OF_SONG={$this->createAlbumSong($id)},ALBUM_IMG='$IMG',TOTAL_LISTENER=$listen,ALBUM_NAME='{$name}',DESCRIPTIONS='{$DES}',TIME='{$Time}',DATE='{$Date}' WHERE ALBUM_ID= {$id}");
         }
 
     }
 
     function getDetailAlbumSong($ID) {
         $Album_query = <<<qqq
-                            SELECT a.song_id,SONG_NAME
-                            FROM song_album as a,song as s
-                            WHERE ALBUM_ID = {$ID} and a.song_id = s.song_id ;
+                            SELECT a.SONG_ID,SONG_NAME
+                            FROM SONG_ALBUM as a,SONG as s
+                            WHERE ALBUM_ID = {$ID} and a.SONG_ID = s.SONG_ID ;
                         qqq;
         return $this->getData($Album_query);
     }
 
     function getAllIDSong() {
         $Album_query = <<<qqq
-                            SELECT song_id,SONG_NAME
-                            FROM song;
+                            SELECT SONG_ID,SONG_NAME
+                            FROM SONG;
                         qqq;
         return $this->getData($Album_query);
     }
@@ -257,7 +257,7 @@ class AlbumModel extends Model {
     function getAllIDUser() {
         $Album_query = <<<qqq
                             SELECT USER_ID,NAME
-                            FROM user
+                            FROM USER
                             where type = 2 or type = 4;
                         qqq;
         return $this->getData($Album_query);
@@ -266,7 +266,7 @@ class AlbumModel extends Model {
     function getDetailAlbum($ID) {
         $Album_query = <<<qqq
                             SELECT *
-                            FROM album
+                            FROM ALBUM
                             WHERE ALBUM_ID = {$ID};
                         qqq;
         return $this->getData($Album_query);
@@ -275,7 +275,7 @@ class AlbumModel extends Model {
     function getDetailAlbumCreated($ID) {
         $Album_query = <<<qqq
                             SELECT a.USER_ID,NAME
-                            FROM album_created_by as a,user as u
+                            FROM ALBUM_CREATED_BY as a,USER as u
                              WHERE ALBUM_ID = {$ID} and a.USER_ID = u.USER_ID ;
                         qqq;
         return $this->getData($Album_query);
@@ -283,23 +283,27 @@ class AlbumModel extends Model {
 
     function deleteAlbum($id) {
 
-        $del_query = "DELETE FROM album_created_by WHERE ALBUM_ID = ?;";
+        $del_query = "DELETE FROM ALBUM_CREATED_BY WHERE ALBUM_ID = ?;";
         $stmt = $this->con->prepare($del_query);
         $stmt->bind_param("i", $id);
         $stmt->execute();
 
-        $del_query = "DELETE FROM song_album WHERE ALBUM_ID = ?;";
+        $del_query = "DELETE FROM SONG_ALBUM WHERE ALBUM_ID = ?;";
         $stmt = $this->con->prepare($del_query);
         $stmt->bind_param("i", $id);
         $stmt->execute();
 
 
-        $del_query = "DELETE FROM album WHERE ALBUM_ID = ?;";
+        $del_query = "DELETE FROM ALBUM WHERE ALBUM_ID = ?;";
         $stmt = $this->con->prepare($del_query);
         $stmt->bind_param("i", $id);
         $stmt->execute();
     }
 
+
+    public function getAllPlaylist() {
+
+    }
 
     public function getTotalAlbum($UserID, $Album1) {
         $secondCond = "";
@@ -311,6 +315,34 @@ class AlbumModel extends Model {
             SELECT COUNT(*) AS TOTAL_PAGE FROM ALBUM LEFT JOIN ALBUM_CREATED_BY U on ALBUM.ALBUM_ID = U.ALBUM_ID
                                           WHERE U.USER_ID={$encoded} {$secondCond}; 
         WUT;
+        return $this->getData($query);
+    }
+
+    public function getTotalPlaylist($Album1) {
+        $secondCond = "";
+        if ($Album1 !== "") {
+            $secondCond = "AND (ALBUM.ALBUM_ID = '{$Album1}' OR ALBUM.ALBUM_NAME like '%{$Album1}%')";
+        }
+        $query = <<<WUT
+            SELECT COUNT(*) AS TOTAL_PAGE FROM ALBUM 
+                LEFT JOIN ALBUM_CREATED_BY U on ALBUM.ALBUM_ID = U.ALBUM_ID 
+                LEFT JOIN USER U2 on U2.USER_ID = U.USER_ID
+            WHERE U2.VERIFY=0 {$secondCond}; 
+        WUT;
+        return $this->getData($query);
+    }
+
+    public function getPlaylists($album, $from) {
+        $secondCond = "";
+        if ($album !== "") {
+            $secondCond = "AND (ALBUM.ALBUM_ID = '{$album}' OR ALBUM.ALBUM_NAME like '%{$album}%')";
+        }
+        $query = <<<END
+                        SELECT * FROM ALBUM
+                            JOIN ALBUM_CREATED_BY ALU on ALBUM.ALBUM_ID=ALU.ALBUM_ID
+                            JOIN USER U on U.USER_ID = ALU.USER_ID
+                        WHERE U.VERIFY = 0 {$secondCond} LIMIT {$from}, 20;
+                        END;
         return $this->getData($query);
     }
 
@@ -332,10 +364,9 @@ class AlbumModel extends Model {
     public function getIDU($id){
 
         $query = <<<END
-                        SELECT *
-                        FROM ALBUM
-                        WHERE ALBUM_ID = {$id};
-                        END;
+                    SELECT * FROM ALBUM
+                    WHERE ALBUM_ID = {$id};
+                    END;
         return $this->getData($query);
 
     }

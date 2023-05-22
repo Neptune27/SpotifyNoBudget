@@ -30,7 +30,7 @@ const setAlbum = async (id: string) => {
     } = await resAlbumCreator.json();
 
 
-    const innerQueue = data?.map(( val, index)=>
+    const innerQueue = data["SONGS"]?.map(( val, index)=>
         `
             <div class="queueItem" data-song="${val.SONG_ID}" tabindex="0">
                 <div class="queueId">
@@ -57,7 +57,7 @@ const setAlbum = async (id: string) => {
             </div>
         `).join(" ")
 
-    const tmp = data[0]
+    const tmp = data["SONGS"][0]
     if (tmp.ALBUM_IMG === "NA") {
         tmp.ALBUM_IMG = tmp.SONG_IMG
     }

@@ -132,7 +132,7 @@ if (!isset($data["Album"][0])) {
                     </script>
                 <?php
                         for ($x = 0; $x < count($data["Song"]); $x++) {
-                             echo '<script>addSongAl("'.$data["Song"][$x]["song_id"].'")</script>';
+                             echo '<script>addSongAl("'.$data["Song"][$x]["SONG_ID"].'")</script>';
                         }
                 ?>
 
@@ -167,7 +167,7 @@ if (!isset($data["Album"][0])) {
                 // echo var_dump($data["SAL"]);
                 $dataS ="";
                 for($x=0;$x<count($data["SAL"]);$x++){
-                    $dataS = $dataS."<option value=\"{$data["SAL"][$x]["song_id"]}\">{$data["SAL"][$x]["SONG_NAME"]}</option>";
+                    $dataS = $dataS."<option value=\"{$data["SAL"][$x]["SONG_ID"]}\">{$data["SAL"][$x]["SONG_NAME"]}</option>";
                 }
                 $dataS = '<datalist name="S" id="S">' . $dataS . '</datalist>';
                 echo $dataS;

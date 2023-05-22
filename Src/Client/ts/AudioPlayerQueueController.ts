@@ -296,7 +296,8 @@ class AudioPlayerQueueController {
         ARTIST_ID: string,
         ARTIST: string
     }[]) => {
-        let queue: IMusic[] = data.map(val => {
+        // @ts-ignore
+        let queue: IMusic[] = data["SONGS"].map(val => {
             return {
                 lyric: JSON.parse(val.LYRICS),
                 artist: val.ARTIST,

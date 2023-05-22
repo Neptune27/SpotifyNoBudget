@@ -8,7 +8,9 @@ class AdminController extends Controller
 
     function index(): void
     {
-        $this->view(self::$defaultTemplate, []);
+        $this->view(self::$defaultTemplate, [
+            "Title" => "Trang chủ"
+        ]);
     }
 
     function SongUpload($params)
@@ -73,6 +75,53 @@ class AdminController extends Controller
         }
     }
 
+    function Playlist($params) {
+        $albumModel = $this->model("AlbumModel");
+        // $albums = $albumModel->GetAllAlbumFrom($params[0]);
+//            Thêm phân trang tại đây
+
+        $query = "";
+        if (isset($_GET["q"])) {
+            $query = $_GET["q"];
+        }
+        $page = 1;
+        if (isset($_GET["p"])) {
+            $val = $_GET["p"];
+            if (is_numeric($val)) {
+                $page = $val;
+            }
+        }
+
+        $totalAlbumQR = $albumModel->getTotalPlaylist($query);
+        $totalAlbum = $totalAlbumQR[0]["TOTAL_PAGE"];
+        if ($totalAlbum == 0) {
+            $totalAlbum = 1;
+        }
+        $totalPage = floor($totalAlbum / 20);
+        if ($totalAlbum % 20 !== 0) {
+            $totalPage += 1;
+        }
+
+        if ($page > $totalPage) {
+            $secondCond = "";
+            if ($query !== "") {
+                $secondCond = "?q={$query}";
+            }
+            header("Location: /Admin/AddSongPage/{$params[0]}{$secondCond}");
+        }
+
+        $albumsq = $albumModel->getPlaylists($query, ($page - 1) * 20);
+        $this->view(self::$defaultTemplate, [
+            // "Songs" => $song,
+            "Albums" => $albumsq,
+            "artist" => "Playlist",
+            "totalPage" => $totalPage,
+            "page" => $page,
+            "query" => $query,
+            "Title" => "Albums",
+        ]);
+    }
+
     function AddSongPage($params)
     {
 
@@ -91,7 +140,6 @@ class AdminController extends Controller
         // $albums = $albumModel->GetAllAlbumFrom($params[0]);
         if (!isset($params[1])) {
 //            Thêm phân trang tại đây
-
 
             $query = "";
             if (isset($_GET["q"])) {
@@ -123,7 +171,7 @@ class AdminController extends Controller
                 header("Location: /Admin/AddSongPage/{$params[0]}{$secondCond}");
             }
 
-            $albumsq = $albumModel->GetAlbums($params[0], $query, ($page-1)*20);
+            $albumsq = $albumModel->GetAlbums($params[0], $query, ($page - 1) * 20);
             $artist = $albumModel->GetArtistByID($params[0]);
             $this->view(self::$defaultTemplate, [
                 // "Songs" => $song,
@@ -136,7 +184,6 @@ class AdminController extends Controller
                 "Title" => "Albums",
             ]);
             return;
-
         }
 
         $albums = $albumModel->GetIDU($params[1]);
@@ -172,7 +219,7 @@ class AdminController extends Controller
                 header("Location: /Admin/AddSongPage/{$params[0]}/{$params[1]}{$secondCond}");
             }
 
-            $song = $songModel->GetSongs($params[1], $query, ($page-1)*20);
+            $song = $songModel->GetSongs($params[1], $query, ($page - 1) * 20);
 
             $this->view(self::$defaultTemplate, [
                 "Songs" => $song,
@@ -213,8 +260,7 @@ class AdminController extends Controller
             $songModel = $this->model("SongModel");
             if ($params[2] === "0") {
                 $songModel->addSong($val->songName, $loc, $val->duration, json_encode($val->lyrics), $params[1], $params[0]);
-            }
-            else {
+            } else {
                 $songModel->alterSong($val->songName, $loc, $val->duration, json_encode($val->lyrics), $params[1], $params[0], $params[2]);
             }
 
@@ -222,7 +268,8 @@ class AdminController extends Controller
     }
 
 
-    function AddAlbum($params) {
+    function AddAlbum($params)
+    {
         if (isset($params[0]) && $params[0] == "Add") {
 //            Đủ thông tin để insert into
             $AlbumModel = $this->model("AlbumModel");
@@ -234,8 +281,8 @@ class AdminController extends Controller
             $AlbumTime = $_POST['AlbumTime'];
             $AlbumDate = $_POST['AlbumDate'];
             $AlbumSong = $_POST['AlbumSong'];
-            $AlbumCreated=  $_POST['AlbumCreated'];
-            $AlbumModel->addAlbum($AlbumName, $AlbumAvatar, $AlbumDescriptions ,$AlbumTime,$AlbumDate,$AlbumListener,$AlbumSong, $AlbumCreated );
+            $AlbumCreated = $_POST['AlbumCreated'];
+            $AlbumModel->addAlbum($AlbumName, $AlbumAvatar, $AlbumDescriptions, $AlbumTime, $AlbumDate, $AlbumListener, $AlbumSong, $AlbumCreated);
             // }
 
 
@@ -246,7 +293,7 @@ class AdminController extends Controller
         $UAL = $AlbumModel->getAllIDUser();
         // $AlbumModel->deleteAlbum(3);
         $old = "";
-        if (isset($params[0])){
+        if (isset($params[0])) {
             $old = $params[0];
         }
         $SAL = $AlbumModel->getAllIDSong();
@@ -262,21 +309,22 @@ class AdminController extends Controller
     }
 
 
-    function EditAlbum($params) {
+    function EditAlbum($params)
+    {
         $AlbumModel = $this->model("AlbumModel");
         if (isset($params[0]) && $params[0] == "Edit") {
 //            Đủ thông tin để update
-        $AlbumID = $_POST['AlbumID'];
-        $AlbumName = $_POST['AlbumName'];
-        $AlbumAvatar = $_POST['AlbumAvatar'];
-        $AlbumListener = $_POST['AlbumListener'];
-        $AlbumDescriptions = $_POST['AlbumDescriptions'];
-        $AlbumTime = $_POST['AlbumTime'];
-        $AlbumDate = $_POST['AlbumDate'];
-        $AlbumSong = $_POST['AlbumSong'];
-        $AlbumUser=  $_POST['AlbumCreated'];
+            $AlbumID = $_POST['AlbumID'];
+            $AlbumName = $_POST['AlbumName'];
+            $AlbumAvatar = $_POST['AlbumAvatar'];
+            $AlbumListener = $_POST['AlbumListener'];
+            $AlbumDescriptions = $_POST['AlbumDescriptions'];
+            $AlbumTime = $_POST['AlbumTime'];
+            $AlbumDate = $_POST['AlbumDate'];
+            $AlbumSong = $_POST['AlbumSong'];
+            $AlbumUser = $_POST['AlbumCreated'];
 
-            $AlbumModel->editAlbum($AlbumID,$AlbumName, $AlbumAvatar,$AlbumDescriptions,$AlbumTime,$AlbumDate,$AlbumListener,$AlbumSong, $AlbumUser );
+            $AlbumModel->editAlbum($AlbumID, $AlbumName, $AlbumAvatar, $AlbumDescriptions, $AlbumTime, $AlbumDate, $AlbumListener, $AlbumSong, $AlbumUser);
 
             return;
         }
@@ -284,7 +332,7 @@ class AdminController extends Controller
         // $AlbumModel->editAlbum(20,4, 1,1,"","",1,"1", "1" );
         $AlbumID = $params[0];
         $old = "";
-        if (isset($params[1])){
+        if (isset($params[1])) {
             $old = $params[1];
         }
         $AlbumSongs = $AlbumModel->getDetailAlbumSong($AlbumID);
@@ -304,16 +352,51 @@ class AdminController extends Controller
         ]);
     }
 
+    function Payment() {
 
-    function DeleteAlbum($params) {
+        $model = $this->model("ReceiptModel");
+        $data = $model->getAllReceipt();
+
+
+        $this->view(self::$defaultTemplate, [
+            "Title" => "Thanh toán",
+            "receipt" => $data
+        ]);
+    }
+
+    function PaymentAccept($params) {
+        if (!isset($params[0])) {
+            header("Location: /Admin/Payment");
+            return;
+        }
+
+        $model = $this->model("ReceiptModel");
+        $model->accept($params[0]);
+        header("Location: /Admin/Payment");
+
+    }
+
+    function PaymentDelete($params) {
+        if (!isset($params[0])) {
+            header("Location: /Admin/Payment");
+            return;
+        }
+
+        $model = $this->model("ReceiptModel");
+        $model->delete($params[0]);
+        header("Location: /Admin/Payment");
+
+    }
+
+    function DeleteAlbum($params)
+    {
         if (isset($params[0])) {
             $AlbumModel = $this->model("AlbumModel");
             $AlbumModel->deleteAlbum($params[0]);
 
         }
-        header ("Location:/".$params[1]."/".$params[2]."/".$params[3]);
+        header("Location: {$_GET["url"]}");
     }
-
 
 
     function AlbumAvatarUpload($params)
@@ -347,11 +430,10 @@ class AdminController extends Controller
         }
     }
 
-}
-
 
 //    Action cho them nghệ sĩ
-    function AddArtist($params) {
+    function AddArtist($params)
+    {
         if (isset($params[0]) && $params[0] == "Add") {
 //            Đủ thông tin để insert into
             $artistModel = $this->model("ArtistModel");
@@ -380,13 +462,15 @@ class AdminController extends Controller
     }
 
 //    Lấy địa chỉ Nghệ sĩ id mới
-    function CreateUserId() {
+    function CreateUserId()
+    {
         $artistModel = $this->model("ArtistModel");
         return $artistModel->createUserID();
     }
 
 //    Action để sửa nghệ sĩ
-    function EditArtist($params) {
+    function EditArtist($params)
+    {
         $artistModel = $this->model("ArtistModel");
         if (isset($params[0]) && $params[0] == "Edit") {
 //            Đủ thông tin để update
@@ -418,7 +502,8 @@ class AdminController extends Controller
     }
 
 //    Action de xoa nghe si
-    function DeleteArtist($params) {
+    function DeleteArtist($params)
+    {
         if (isset($params[0])) {
             $artistModel = $this->model("ArtistModel");
             $artistModel->deleteArtist($params[0]);
@@ -426,11 +511,13 @@ class AdminController extends Controller
     }
 
 //    Action de lay du lieu nghe si tim kiem theo ten
-    function GetArtistByName() {
+    function GetArtistByName()
+    {
         if (isset($_POST['artistName'])) {
             $artistModel = $this->model("ArtistModel");
             $res = ['artists' => $artistModel->getArtistByName($_POST['artistName'])];
             echo json_encode($res);
         }
     }
+
 }

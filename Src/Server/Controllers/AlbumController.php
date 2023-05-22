@@ -19,7 +19,7 @@ class AlbumController extends Controller
                         WHERE A.ALBUM_ID = {$params[0]};
                         END;
 
-        echo json_encode($model->getData($song_query));
+        echo json_encode(["SONGS" => $model->getData($song_query)]);
     }
 
     function GetPlaylist($params) {

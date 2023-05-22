@@ -121,7 +121,7 @@ class HomeController extends Controller
                 $moneyAmount = 59000;
             }
             if ($_GET["type"] == 2) {
-                $moneyAmount = 29.500;
+                $moneyAmount = 29500;
             }
             $receiptModel->addReceipt($userID, $moneyAmount);
             $receipt = $receiptModel->getReceipt($userID);

@@ -51,7 +51,7 @@ CREATE TABLE `ALBUM` (
 
 LOCK TABLES `ALBUM` WRITE;
 /*!40000 ALTER TABLE `ALBUM` DISABLE KEYS */;
-INSERT INTO `ALBUM` VALUES (1,1,10,'Akuma no Ko','/Src/Client/img/Album/AkumaNoKo.jpg','','00:02:47','2022-10-01'),(2,NULL,NULL,'a','/Src/Client/img/Album/Romance.jpg',' ',NULL,NULL);
+INSERT INTO `ALBUM` VALUES (1,1,10,'Akuma no Ko','/Src/Client/img/Album/AkumaNoKo.jpg','','00:02:47','2022-10-01'),(2,NULL,NULL,'a','/Src/Client/img/Album/Romance.jpg',' ',NULL,NULL),(3,3,0,'Test','NA','NA','00:02:23','2023-05-17'),(4,NULL,0,'B-Side 2','/Src/Client/img/Album/4/Romance.jpg','không có nhận xét nào','00:00:00','2022-12-12'),(5,0,0,'B-Side 2','/Src/Client/img/Album/5/Romance.jpg','không có nhận xét nào','00:00:00','2022-12-12'),(6,NULL,NULL,'Hello','NA','NA',NULL,'2023-05-19'),(7,NULL,NULL,'Hello','NA','NA',NULL,'2023-05-19');
 /*!40000 ALTER TABLE `ALBUM` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,7 +78,7 @@ CREATE TABLE `ALBUM_CREATED_BY` (
 
 LOCK TABLES `ALBUM_CREATED_BY` WRITE;
 /*!40000 ALTER TABLE `ALBUM_CREATED_BY` DISABLE KEYS */;
-INSERT INTO `ALBUM_CREATED_BY` VALUES (1,1);
+INSERT INTO `ALBUM_CREATED_BY` VALUES (1,1),(2,3),(3,5),(6,6),(7,7);
 /*!40000 ALTER TABLE `ALBUM_CREATED_BY` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,7 +105,7 @@ CREATE TABLE `AUTHOR_SONG` (
 
 LOCK TABLES `AUTHOR_SONG` WRITE;
 /*!40000 ALTER TABLE `AUTHOR_SONG` DISABLE KEYS */;
-INSERT INTO `AUTHOR_SONG` VALUES (1,1),(3,1),(4,1),(5,1),(6,1),(7,1);
+INSERT INTO `AUTHOR_SONG` VALUES (1,1),(3,1),(2,3);
 /*!40000 ALTER TABLE `AUTHOR_SONG` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,11 +177,11 @@ CREATE TABLE `RECEIPT` (
                            `TOTAL_PRICE` int DEFAULT NULL,
                            `PAYMENT` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
                            `PRODUCT` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-                           `IS_VERIFY` tinyint(1) DEFAULT NULL,
+                           `IS_VERIFY` int DEFAULT NULL,
                            PRIMARY KEY (`ID_RECEIPT`),
                            KEY `FK_RECE_BUY_USER` (`ID_USER`),
                            CONSTRAINT `RECEIPT_ibfk_1` FOREIGN KEY (`ID_USER`) REFERENCES `USER` (`USER_ID`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +190,7 @@ CREATE TABLE `RECEIPT` (
 
 LOCK TABLES `RECEIPT` WRITE;
 /*!40000 ALTER TABLE `RECEIPT` DISABLE KEYS */;
-INSERT INTO `RECEIPT` VALUES (1,2,'2023-05-05 04:05:33',30,'Transfer','Premium',0);
+INSERT INTO `RECEIPT` VALUES (1,2,'2023-05-05 04:05:33',30,'Transfer','Premium',1),(2,4,'2023-05-18 19:50:30',30,'Transfer','Premium',2),(3,4,'2023-05-18 19:54:33',30,'Transfer','Premium',2),(4,4,'2023-05-18 19:54:48',30,'Transfer','Premium',1),(5,4,'2023-05-18 19:56:11',29500,'Transfer','Premium',1),(6,6,'2023-05-19 02:19:59',29500,'Transfer','Premium',1),(7,7,'2023-05-19 03:23:44',29500,'Transfer','Premium',1),(8,7,'2023-05-19 03:25:14',29500,'Transfer','Premium',1);
 /*!40000 ALTER TABLE `RECEIPT` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,7 @@ CREATE TABLE `SING_BY` (
 
 LOCK TABLES `SING_BY` WRITE;
 /*!40000 ALTER TABLE `SING_BY` DISABLE KEYS */;
-INSERT INTO `SING_BY` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7);
+INSERT INTO `SING_BY` VALUES (1,1),(3,2),(1,3);
 /*!40000 ALTER TABLE `SING_BY` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +247,7 @@ CREATE TABLE `SONG` (
 
 LOCK TABLES `SONG` WRITE;
 /*!40000 ALTER TABLE `SONG` DISABLE KEYS */;
-INSERT INTO `SONG` VALUES (1,'Akuma no Ko','/Src/Client/img/Album/AkumaNoKo.jpg',0,224,'/Src/Client/mp3/AkumaNoKo.mp3','[[1, \"鉄の弾が 正義の証明\"], [3, \"貫けば 英雄に近づいた\"], [6, \"その目を閉じて 触れてみれば\"], [9, \"同じ形 同じ体温の悪魔\"], [14, \"僕はダメで あいつはいいの？\"], [17, \"そこに壁があっただけなのに\"], [20, \"生まれてしまった 運命嘆くな\"]]','2023-04-07 01:35:49'),(2,'Romance','/Src/Client/img/Album/Romance.jpg',0,140,'/Src/Client/mp3/Romance.mp3','[]','2023-04-07 01:38:49'),(3,'Romance2','/Src/Client/img/Album/AkumaNoKo.jpg',0,194,'/Src/Client/mp3/1/1/AkumaNoKo2.mp3','[[0, \"Hello World!\"]]','2023-04-27 20:49:04'),(4,'Welcome to the Internet','/Src/Client/img/Album/AkumaNoKo.jpg',0,280,'/Src/Client/mp3/1/1/Welcome to the Internet.mp3','[[0, \"Welcome to the Internet\"]]','2023-04-27 20:50:38'),(5,'WTF','/Src/Client/img/Album/AkumaNoKo.jpg',0,280,'/Src/Client/mp3/1/1/AkumaNoKo2.mp3','[[0, \"Hello\"]]','2023-04-28 02:17:26'),(6,'c','/Src/Client/img/Album/AkumaNoKo.jpg',0,3,'/Src/Client/mp3/1/1/AkumaNoKo2cas.mp3','[[0, \".\"]]','2023-04-28 02:22:59'),(7,'ciahs','/Src/Client/img/Album/AkumaNoKo.jpg',0,0,'/Src/Client/mp3/1/1/ncaiosnvias.mp3','[]','2023-05-05 04:15:23');
+INSERT INTO `SONG` VALUES (1,'Akuma no Ko','/Src/Client/img/Album/AkumaNoKo.jpg',0,224,'/Src/Client/mp3/AkumaNoKo.mp3','[[1, \"鉄の弾が 正義の証明\"], [3, \"貫けば 英雄に近づいた\"], [6, \"その目を閉じて 触れてみれば\"], [9, \"同じ形 同じ体温の悪魔\"], [14, \"僕はダメで あいつはいいの？\"], [17, \"そこに壁があっただけなのに\"], [20, \"生まれてしまった 運命嘆くな\"], [24, \"僕らはみんな 自由なんだから\"], [26, \"鳥のように 羽があれば\"], [31, \"どこへだって行けるけど\"], [36, \"帰る場所が なければ\"], [41, \"きっとどこへも行けない\"], [46, \"ただただ生きるのは嫌だ\"], [51, \"世界は残酷だ それでも君を愛すよ\"], [62, \"なにを犠牲にしても それでも君を守るよ\"], [72, \"間違いだとしても 疑ったりしない\"], [78, \"正しさとは 自分のこと 強く信じることだ\"], [93, \"鉄の雨が 降り散る情景\"], [96, \"テレビの中 映画に見えたんだ\"], [98, \"戦争なんて 愚かな凶暴\"], [101, \"関係ない 知らない国の話\"], [103, \"それならなんで あいつ憎んで\"], [106, \"黒い気持ち 隠しきれない理由\"], [109, \"説明だって できやしないんだ\"], [111, \"僕らはなんて 矛盾ばっかなんだ\"], [136, \"この言葉も 訳されれば\"], [142, \"本当の意味は伝わらない\"], [147, \"信じるのは その目を開いて\"], [153, \"触れた世界だけ\"], [157, \"ただただ生きるのは嫌だ\"], [165, \"世界は残酷だ それでも君を愛すよ\"], [176, \"なにを犠牲にしても それでも君を守るよ\"], [186, \"選んだ人の影 捨てたものの屍\"], [191, \"気づいたんだ 自分の中 育つのは悪魔の子\"], [196, \"正義の裏 犠牲の中 心には悪魔の子\"]]','2023-04-07 01:35:49'),(2,'Romance','/Src/Client/img/Album/5/Romance.jpg',0,166,'/Src/Client/mp3/3/5/Romance.mp3','[[0, \"Chu01b0a cu00f3 lu1eddi\"]]','2023-05-19 02:47:40'),(3,'h','/Src/Client/img/Album/AkumaNoKo.jpg',0,0,'/Src/Client/mp3/1/1/Welcome to the Internet.mp3','[[0, \"Hello world\"], [10, \"Loi 2\"], [20, \"Loi 3\"]]','2023-05-19 03:29:17');
 /*!40000 ALTER TABLE `SONG` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +274,7 @@ CREATE TABLE `SONG_ALBUM` (
 
 LOCK TABLES `SONG_ALBUM` WRITE;
 /*!40000 ALTER TABLE `SONG_ALBUM` DISABLE KEYS */;
-INSERT INTO `SONG_ALBUM` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1);
+INSERT INTO `SONG_ALBUM` VALUES (1,1),(3,1),(2,5),(1,6),(2,7);
 /*!40000 ALTER TABLE `SONG_ALBUM` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +286,7 @@ DROP TABLE IF EXISTS `USER`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `USER` (
-                        `USER_ID` int AUTO_INCREMENT NOT NULL,
+                        `USER_ID` int NOT NULL AUTO_INCREMENT,
                         `NAME` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
                         `USERNAME` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
                         `PASSWORD` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
@@ -300,7 +300,7 @@ CREATE TABLE `USER` (
                         `TYPE` int DEFAULT NULL,
                         `MONTHLY_LISTENER` int DEFAULT NULL,
                         PRIMARY KEY (`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +309,7 @@ CREATE TABLE `USER` (
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` VALUES (1,'Ai Higuchi','AUTO-GENERATED','','/Src/Client/img/Album/AkumaNoKo.jpg',1,'2003-07-27',1,'Japan','',1,2,100),(2,'Nep','Nep','123',' ',0,'2003-07-27',0,'VN','vominhtri13@gmail.com',0,0,0);
+INSERT INTO `USER` VALUES (1,'Ai Higuchi','AUTO-GENERATED','','/Src/Client/img/Album/AkumaNoKo.jpg',1,'2003-07-27',1,'Japan','',1,2,100),(2,'Nep','Nep','123',' ',0,'2003-07-27',0,'VN','vominhtri13@gmail.com',1,0,0),(3,'Yoasobi',NULL,NULL,'/Src/Client/img/Artist/3/Yoasobi_banner.jpg',1,'2019-09-23',1,'Japan','a@b.c',NULL,2,0),(4,'Neptune','Nep3','123','NA',0,'2023-05-18',0,'VN','a@b.c',1,0,0),(5,'a','Nep2','123','NA',0,'2023-05-18',0,'VN','a@b.c',0,0,0),(6,'Vo Mi','Nep4','123','NA',0,'2023-05-19',0,'VN','a@v.c',1,0,0),(7,'Neptune','Nep6','12345678','NA',0,'2023-05-19',0,'VN','a@v.c',1,0,0);
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -322,4 +322,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-12  3:20:04
+-- Dump completed on 2023-05-22  8:56:45

@@ -12,10 +12,11 @@ class PlayController extends Controller
             return;
         }
 
-        if ($_SESSION["user"]["HAVE_PREMIUM"] == 0) {
-            header("Location: /Home/BuyPremium?type=2");
-            return;
-        }
+//
+//        if ($_SESSION["user"]["HAVE_PREMIUM"] == 0) {
+//            header("Location: /Home/BuyPremium?type=2");
+//            return;
+//        }
 
         $this->view($this->defaultTemplate, []);
     }

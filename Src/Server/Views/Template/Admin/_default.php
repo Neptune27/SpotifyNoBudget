@@ -162,13 +162,11 @@
 //                    Chuyen huong sang trang them ca si neu title la ca si
                         if ($data["Title"] == "Ca Sĩ") {
                             echo "/Admin/AddArtist";
-                        } else {
-                            echo '/' . htmlspecialchars($_GET['url']) . '/0';
                         }
-                        if($data["Title"]=="Albums"){
+                        else if($data["Title"]=="Albums"){
                             $uri = $_GET["url"];
                             $QQ = explode("/",$uri)[2];
-                            echo "http://localhost/admin/AddAlbum/{$QQ}" ;
+                            echo "/Admin/AddAlbum/{$QQ}" ;
                         } else{
                             echo '/' . htmlspecialchars($_GET['url']) . '/0';
                         }

@@ -1,3 +1,7 @@
+<?php
+    print_r($data)
+?>
+
 <link rel="stylesheet" href="/Src/Client/css/Login/Login.css">
 <script src="/Src/Client/js/Album.js" defer></script>
 
@@ -91,7 +95,7 @@
                 // echo var_dump($data["SAL"]);
                 $dataS ="";
                 for($x=0;$x<count($data["SAL"]);$x++){
-                    $dataS = $dataS."<option value=\"{$data["SAL"][$x]["song_id"]}\">{$data["SAL"][$x]["SONG_NAME"]}</option>";
+                    $dataS = $dataS."<option value=\"{$data["SAL"][$x]["SONG_ID"]}\">{$data["SAL"][$x]["SONG_NAME"]}</option>";
                 }
                 $dataS = '<datalist name="S" id="S">' . $dataS . '</datalist>';
                 echo $dataS;
@@ -99,7 +103,7 @@
 
             ?>
 <script>
-var page = <?php echo $data["old"]; ?> 
+    let page = <?php echo $data["old"]; ?>;
 </script>
 <script>
     const inputElement = document.querySelector('input#AlbumAvatar');

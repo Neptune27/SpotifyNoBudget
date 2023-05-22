@@ -240,7 +240,8 @@ class AudioPlayerQueueController {
             this.resetToNewPlaylist(newSong, 0);
         };
         this.playFromPlaylist = async (id, data) => {
-            let queue = data.map(val => {
+            // @ts-ignore
+            let queue = data["SONGS"].map(val => {
                 return {
                     lyric: JSON.parse(val.LYRICS),
                     artist: val.ARTIST,

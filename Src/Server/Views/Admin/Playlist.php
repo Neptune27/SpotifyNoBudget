@@ -1,7 +1,7 @@
 <?php
-    if (!isset($data)) {
-        $data=[];
-    }
+if (!isset($data)) {
+    $data=[];
+}
 //    print_r($data["Albums"]);
 ?>
 
@@ -11,7 +11,10 @@
         $uri = $_GET["url"];
         foreach ($data["Albums"] as $index => $datum) {
             ["ALBUM_ID" => $ID, "ALBUM_NAME"=>$name, "ALBUM_IMG"=>$image] = $datum;
-            $QQ = explode("/",$uri)[2];
+//            $QQ = explode("/",$uri)[2];
+            if ($image === "NA") {
+                $image = "https://i.dailymail.co.uk/i/pix/2016/03/18/15/324D202500000578-3498922-image-a-33_1458315465874.jpg";
+            }
             echo <<<WUT
                     <div  class="card shadow p-3 bg-white rounded cardItem" style="text-decoration: none">
                         <div>
@@ -21,8 +24,8 @@
                         <div class="card-body d-flex flex-column align-items-center justify-content-center">
                             <h5 class="card-title">{$name}</h5></a>
                             <div>
-                                <a href="Admin/EditAlbum/{$ID}/{$QQ}"> <button class="btn btn-primary">Sửa</button></a>
-                                <a href="/Admin/DeleteAlbum/{$ID}"> <button class="btn btn-secondary">Xóa</button></a>
+                                <a href="/Admin/EditAlbum/{$ID}/{$ID}"> <button class="btn btn-primary">Sửa</button></a>
+                                <a href="/Admin/DeleteAlbum/{$ID}/{$uri}"> <button class="btn btn-secondary">Xóa</button></a>
                             </div>    
                         </div>
                     </div>
